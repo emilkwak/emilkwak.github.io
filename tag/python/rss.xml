@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+   
+      <title>emilkwak.github.io/</title>
+   
+   <link></link>
+   <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
+   <language>en-uk</language>
+   <managingEditor> </managingEditor>
+   <atom:link href="rss" rel="self" type="application/rss+xml" />
+   
+	<item>
+	  <title>Python in Office</title>
+	  <link>//test</link>
+	  <author></author>
+	  <pubDate>2018-09-15T19:18:00+09:00</pubDate>
+	  <guid>//test</guid>
+	  <description><![CDATA[
+	     <p>파이선을 사무실에서 사용하기 위한 여러가지 팁을 소개한다. 파이선은 엑셀을 대체할 수 있는 강력한 수단이다.
+그 이유를 살펴보자.</p>
+
+<ul>
+  <li>이러이러</li>
+  <li>저러저러</li>
+  <li>소근소근</li>
+</ul>
+
+	  ]]></description>
+	</item>
+
+
+</channel>
+</rss>

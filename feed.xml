@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>사무실에서 쓰는 Python - Articles</title>
+    <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
+    <link>
+    </link>
+    
+      
+      <item>
+        <title>Python in Office</title>
+        
+          <description>&lt;p&gt;파이선을 사무실에서 사용하기 위한 여러가지 팁을 소개한다. 파이선은 엑셀을 대체할 수 있는 강력한 수단이다.
+그 이유를 살펴보자.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 15 Sep 2018 19:18:00 +0900</pubDate>
+        <link>
+        /test</link>
+        <guid isPermaLink="true">/test</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>Jekyll 정적 웹사이트 Github Pages에 호스팅하기</title>
+        
+          <description>&lt;ul&gt;
+  &lt;li&gt;설치 환경: Ubuntu(Linux)&lt;/li&gt;
+  &lt;li&gt;Ruby 개발환경 설치
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install ruby-dev
+gem install jekyll bundler
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Jekyll 테마 복제(clone)받기
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/jekyller/jasper.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;이 경우 &lt;code class=&quot;highlighter-rouge&quot;&gt;jasper&lt;/code&gt;라는 디렉토리가 생겨 그 곳에 소스와 파일들이 내려받아짐.&lt;/li&gt;
+      &lt;li&gt;Jekyll 테마는 &lt;a href=&quot;https://jekyllthemes.io/&quot;&gt;jekyllthemes.io&lt;/a&gt;와 같은 곳에서 찾아 내려받거나 Github에서 복제받을 수 있음.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;의존성 있는 Ruby 라이브러리 일괄 설치하기
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd jasper
+sudo bundle install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;복제받은 테마의 &lt;code class=&quot;highlighter-rouge&quot;&gt;Gemfile.lock&lt;/code&gt; 파일을 참조해 의존성 있는 모든 Ruby 라이브러리를 일괄 설치함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Jekyll 서버 로컬로 구동하기
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd jasper
+sudo nano _config.yml
+sudo bundle exec jekyll serve
+sudo bundle exec jekyll serve --host 0:0:0:0 --port 7070
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;의 baseurl을 다음과 같이 변경(이렇게 해야 테마 assets(이미지, 레이아웃 등)가 적용되지 않거나 깨져 적용되는 현상을 없앨 수 있음.)
+        &lt;blockquote&gt;
+          &lt;p&gt;(변경 전) baseurl: /some/path/
+(변경 후) baseurl: /&lt;/p&gt;
+        &lt;/blockquote&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle&lt;/code&gt;과 함께 실행하는 이유: &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle install&lt;/code&gt;로 설치한 루비 라이브러리들이 적용되는 환경에서 실행하기 위함.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--host&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;--port&lt;/code&gt;: Jekyll 서버를 구동할 IP 주소와 포트를 명시함. 별도 명시하지 않을 경우 localhost:4000으로 구동함.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--host 0.0.0.0&lt;/code&gt;: 모든 IP 주소 허용 - 외부 공개를 위한 설정&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;(참고) 서버 실행 없이 Jekyll 빌드만 하기
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo bundle exec jekyll build --verbose
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;를 하면 자동으로 빌드까지 한 후 서버를 구동함.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll build&lt;/code&gt;는 서버 구동 없이 빌드만 시킴.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--verbose&lt;/code&gt;: 빌드 과정(빌드 대상, 결과) 로그를 표시하면서 빌드함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;(참고) 특정 포트가 이미 점유된 경우, 점유한 프로세스 강제 종료하기
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo lsof -i :7070
+sudo kill 582
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;7070 포트를 점유하고 있는 프로세스의 ID인 582를 확인해 &lt;code class=&quot;highlighter-rouge&quot;&gt;kill&lt;/code&gt;함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;나의 Github Pages로 배포하기 위한 준비
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote -v
+git remote set-url origin https://github.com/emilkwak/emilkwak.github.io
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git remote -v&lt;/code&gt;를 보면, 현재 복제받은 Github 주소를 그대로 origin으로 갖고 있음을 확인할 수 있음. 이대로 둔 채 &lt;code class=&quot;highlighter-rouge&quot;&gt;git push&lt;/code&gt;하게 되면 ‘남의 repository’로 배포하는 의도치 않은(?) 시도를 하게 됨.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git remote set-url&lt;/code&gt;을 통해 origin이 나의 Github Pages용 repository를 향하도록 함.&lt;/li&gt;
+      &lt;li&gt;이 경우 emilkwak.github.io라는 repository가 나의 Github에 이미 생성되어 있음을 전제로 함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;(참고) origin을 유지한 채 origin2를 새로 만들어 사용하기
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote add orign2 https://github.com/emilkwak/emilkwak.github.io
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;나의 Github Pages로 동기화하기
+    &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git add .
+git commit -m &quot;something to say&quot;
+git push origin master
+git push -f origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git push -f&lt;/code&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;git pull&lt;/code&gt;을 통한 동기화 없이 강제로 배포(overwrite)하게 함.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        
+        <pubDate>Sat, 15 Sep 2018 09:00:00 +0900</pubDate>
+        <link>
+        /jekyll-github-pages</link>
+        <guid isPermaLink="true">/jekyll-github-pages</guid>
+      </item>
+      
+    
+  </channel>
+</rss>
