@@ -5,7 +5,7 @@
    
       <title>emilkwak.github.io/</title>
    
-   <link>http://0.0.0.0:8080</link>
+   <link></link>
    <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
    <language>en-uk</language>
    <managingEditor> </managingEditor>
@@ -66,6 +66,13 @@ sudo bundle exec jekyll serve --host 0:0:0:0 --port 7070
       <li><code class="highlighter-rouge">jekyll serve</code>를 하면 자동으로 빌드까지 한 후 서버를 구동함.</li>
       <li><code class="highlighter-rouge">jekyll build</code>는 서버 구동 없이 빌드만 시킴.</li>
       <li><code class="highlighter-rouge">--verbose</code>: 빌드 과정(빌드 대상, 결과) 로그를 표시하면서 빌드함.</li>
+    </ul>
+  </li>
+  <li>(참고) 미래 일자 포스트 빌드하기
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo bundle exec jekyll build --future
+</code></pre></div>    </div>
+    <ul>
+      <li><code class="highlighter-rouge">--future</code>: 원래는 미래 일자 포스트 빌드가 불가하나 <code class="highlighter-rouge">--future</code> 부여 시 가능함.</li>
     </ul>
   </li>
   <li>(참고) 특정 포트가 이미 점유된 경우, 점유한 프로세스 강제 종료하기
