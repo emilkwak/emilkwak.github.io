@@ -8,6 +8,41 @@
     
       
       <item>
+        <title>Jekyll 블로그 사이트맵(sitemap) 설치(플러그인) 방법</title>
+        
+          <description>&lt;p&gt;개인 블로그(홈페이지 등)의 페이지들이 Google 검색에 잘 노출되게 하기 위해 Google Search Console에 사이트맵(sitemap)을 제출해 두면 좋습니다. 바닐라 Jekyll에는 없지만, Jekyll 플러그인을 설치하면 Jekyll 블로그의 사이트맵을 빌드 때마다 자동 생성(xml)할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;아래와 같이 우선 사이트맵 플러그인을 설치합니다.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo gem install jekyll-sitemap
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Gemfile에 플러그인 설치 명령어를 추가해 둡니다.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo nano Gemfile
+ㅁ
+... (파일 하단에 아래와 같이 추가) ...
+gem 'jekyll-sitemap'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;설정 파일 플러그인 부분에 설치된 플러그인을 추가합니다.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo nano _config.yml
+
+... (파일 내 plugins 부분을 아래와 같이 편집 - 내용 추가) ...
+plugins [..., jekyll-sitemap]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;이제 Jekyll 빌드를 다시 한 후 서버 구동해 보시지요.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo bundle exec jekyll build --verbose
+sudo bundle exec jekyll serve --host 0.0.0.0 --port 7070
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;이제 &lt;code class=&quot;highlighter-rouge&quot;&gt;your.jekyll.blog.url/sitemap.xml&lt;/code&gt;로 사이트맵 접속이 가능합니다. 이 주소를 Google Search Console에 사이트맵으로 제출하세요. 그러면 블로그 포스팅이 늘어날 때 Google이 보다 효율적으로 주소를 긁어 갈 수 있게 됩니다.&lt;/p&gt;
+</description>
+        
+        <pubDate>Thu, 17 Jan 2019 07:30:00 +0900</pubDate>
+        <link>
+        /jekyll-sitemap-plugin-installation</link>
+        <guid isPermaLink="true">/jekyll-sitemap-plugin-installation</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>메모리 덜 쓰고 Pandas DataFrame 병합을 빠르게 하는 방법(여러 개의 용량 큰 파일)</title>
         
           <description>&lt;p&gt;여러 개의 Excel 파일(또는 csv, pickle 등)로부터 같은 형태의 DataFrame을 차례로 읽어 들여 하나의 큰 DataFrame으로 합치려 한다고 합시다. 각 Excel 파일의 DataFrame의 컬럼 목록은 모두 같다고 하죠. 실제 사례를 상상해 보면, 날짜별, 시간별 로그 데이터가 파일 형태로 저장되어 있는 경우를 생각해 볼 수 있겠네요.&lt;/p&gt;
