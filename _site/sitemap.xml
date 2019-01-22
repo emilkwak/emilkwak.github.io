@@ -21,6 +21,10 @@
 <lastmod>2019-01-17T07:30:00+09:00</lastmod>
 </url>
 <url>
+<loc>https://emilkwak.github.io/pandas-contains-multiple</loc>
+<lastmod>2019-01-23T08:30:00+09:00</lastmod>
+</url>
+<url>
 <loc>https://emilkwak.github.io/</loc>
 </url>
 <url>
@@ -33,7 +37,13 @@
 <loc>https://emilkwak.github.io/author/tech/</loc>
 </url>
 <url>
+<loc>https://emilkwak.github.io/author/tech/page2/</loc>
+</url>
+<url>
 <loc>https://emilkwak.github.io/tag/tech/</loc>
+</url>
+<url>
+<loc>https://emilkwak.github.io/tag/tech/page2/</loc>
 </url>
 <url>
 <loc>https://emilkwak.github.io/tag/jekyll/</loc>
@@ -64,5 +74,8 @@
 </url>
 <url>
 <loc>https://emilkwak.github.io/tag/concat/</loc>
+</url>
+<url>
+<loc>https://emilkwak.github.io/page2/</loc>
 </url>
 </urlset>
