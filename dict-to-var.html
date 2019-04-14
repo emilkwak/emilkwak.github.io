@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Page Meta -->
-    <title>Jekyll 정적 웹사이트 Github Pages에 호스팅하기</title>
+    <title>Python 딕셔너리(dict) 키(key)를 변수로 만들기</title>
     <meta name="description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
 
     <!-- Mobile Meta -->
@@ -26,21 +26,21 @@
     <style>.hljs { background: none; }</style>
 
     <!-- Ghost outputs important style and meta data with this tag -->
-        <link rel="canonical" href="https://emilkwak.github.io//jekyll-github-pages" />
+        <link rel="canonical" href="https://emilkwak.github.io//dict-to-var" />
     <meta name="referrer" content="origin" />
     <link rel="next" href="/page2/" />
 
     <meta property="og:site_name" content="직장인을 위한 Python" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Jekyll 정적 웹사이트 Github Pages에 호스팅하기" />
+    <meta property="og:title" content="Python 딕셔너리(dict) 키(key)를 변수로 만들기" />
     <meta property="og:description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
-    <meta property="og:url" content="https://emilkwak.github.io//jekyll-github-pages" />
+    <meta property="og:url" content="https://emilkwak.github.io//dict-to-var" />
     <meta property="og:image" content="/assets/images/office01.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Jekyll 정적 웹사이트 Github Pages에 호스팅하기" />
+    <meta name="twitter:title" content="Python 딕셔너리(dict) 키(key)를 변수로 만들기" />
     <meta name="twitter:description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
-    <meta name="twitter:url" content="https://emilkwak.github.io//jekyll-github-pages" />
+    <meta name="twitter:url" content="https://emilkwak.github.io//dict-to-var" />
     <meta name="twitter:image:src" content="/assets/images/office01.jpg" />
 
     <script type="application/ld+json">
@@ -48,8 +48,8 @@
     "@context": "http://schema.org",
     "@type": "Website",
     "publisher": "직장인을 위한 Python",
-    "name": "Jekyll 정적 웹사이트 Github Pages에 호스팅하기",
-    "url": "https://emilkwak.github.io//jekyll-github-pages",
+    "name": "Python 딕셔너리(dict) 키(key)를 변수로 만들기",
+    "url": "https://emilkwak.github.io//dict-to-var",
     "image": "/assets/images/office01.jpg",
     "description": "Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 "
 }
@@ -114,7 +114,7 @@
     <article class="post tag-speeches">
 
         <header class="post-header">
-            <h1 class="post-title">Jekyll 정적 웹사이트 Github Pages에 호스팅하기</h1>
+            <h1 class="post-title">Python 딕셔너리(dict) 키(key)를 변수로 만들기</h1>
             <section class="post-meta">
             <!-- <a href='/'></a> -->
 
@@ -133,7 +133,7 @@
                     <a href='/author/emil'>Emil Kwak</a>
                 
             
-            <time class="post-date" datetime="2018-09-15">15 Sep 2018</time>
+            <time class="post-date" datetime="2019-04-15">15 Apr 2019</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -143,11 +143,11 @@
                     
                 
                     
-                       <a href='/tag/jekyll'>Jekyll</a>,
+                       <a href='/tag/python'>Python</a>,
                     
                 
                     
-                       <a href='/tag/git'>Git</a>
+                       <a href='/tag/numpy'>Numpy</a>
                     
                 
                 
@@ -156,96 +156,24 @@
 
         <section class="post-content">
 
-            <ul>
-  <li>설치 환경: Ubuntu(Linux)</li>
-  <li>Ruby 개발환경 설치
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install ruby-dev
-gem install jekyll bundler
-</code></pre></div>    </div>
-  </li>
-  <li>Jekyll 테마 복제(clone)받기
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/jekyller/jasper.git
-</code></pre></div>    </div>
-    <ul>
-      <li>이 경우 <code class="highlighter-rouge">jasper</code>라는 디렉토리가 생겨 그 곳에 소스와 파일들이 내려받아짐.</li>
-      <li>Jekyll 테마는 <a href="https://jekyllthemes.io/">jekyllthemes.io</a>와 같은 곳에서 찾아 내려받거나 Github에서 복제받을 수 있음.</li>
-    </ul>
-  </li>
-  <li>의존성 있는 Ruby 라이브러리 일괄 설치하기
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd jasper
-sudo bundle install
-</code></pre></div>    </div>
-    <ul>
-      <li>복제받은 테마의 <code class="highlighter-rouge">Gemfile.lock</code> 파일을 참조해 의존성 있는 모든 Ruby 라이브러리를 일괄 설치함.</li>
-    </ul>
-  </li>
-  <li>Jekyll 서버 로컬로 구동하기
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd jasper
-sudo nano _config.yml
-sudo bundle exec jekyll serve
-sudo bundle exec jekyll serve --host 0.0.0.0 --port 7070
-</code></pre></div>    </div>
-    <ul>
-      <li><code class="highlighter-rouge">_config.yml</code>의 baseurl을 다음과 같이 변경(이렇게 해야 테마 assets(이미지, 레이아웃 등)가 적용되지 않거나 깨져 적용되는 현상을 없앨 수 있음.)
-        <blockquote>
-          <p>(변경 전) baseurl: /some/path/
-(변경 후) baseurl: /</p>
-        </blockquote>
-      </li>
-      <li><code class="highlighter-rouge">jekyll serve</code>를 <code class="highlighter-rouge">bundle</code>과 함께 실행하는 이유: <code class="highlighter-rouge">bundle install</code>로 설치한 루비 라이브러리들이 적용되는 환경에서 실행하기 위함.</li>
-      <li><code class="highlighter-rouge">--host</code>, <code class="highlighter-rouge">--port</code>: Jekyll 서버를 구동할 IP 주소와 포트를 명시함. 별도 명시하지 않을 경우 localhost:4000으로 구동함.</li>
-      <li><code class="highlighter-rouge">--host 0.0.0.0</code>: 모든 IP 주소 허용 - 외부 공개를 위한 설정</li>
-    </ul>
-  </li>
-  <li>(참고) 서버 실행 없이 Jekyll 빌드만 하기
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo bundle exec jekyll build --verbose
-</code></pre></div>    </div>
-    <ul>
-      <li><code class="highlighter-rouge">jekyll serve</code>를 하면 자동으로 빌드까지 한 후 서버를 구동함.</li>
-      <li><code class="highlighter-rouge">jekyll build</code>는 서버 구동 없이 빌드만 시킴.</li>
-      <li><code class="highlighter-rouge">--verbose</code>: 빌드 과정(빌드 대상, 결과) 로그를 표시하면서 빌드함.</li>
-    </ul>
-  </li>
-  <li>(참고) 미래 일자 포스트 빌드하기
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo bundle exec jekyll build --future
-</code></pre></div>    </div>
-    <ul>
-      <li><code class="highlighter-rouge">--future</code>: 원래는 미래 일자 포스트 빌드가 불가하나 <code class="highlighter-rouge">--future</code> 부여 시 가능함.</li>
-    </ul>
-  </li>
-  <li>(참고) 특정 포트가 이미 점유된 경우, 점유한 프로세스 강제 종료하기
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo lsof -i :7070
-sudo kill 582
-</code></pre></div>    </div>
-    <ul>
-      <li>7070 포트를 점유하고 있는 프로세스의 ID인 582를 확인해 <code class="highlighter-rouge">kill</code>함.</li>
-    </ul>
-  </li>
-  <li>나의 Github Pages로 배포하기 위한 준비
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote -v
-git remote set-url origin https://github.com/emilkwak/emilkwak.github.io
-</code></pre></div>    </div>
-    <ul>
-      <li><code class="highlighter-rouge">git remote -v</code>를 보면, 현재 복제받은 Github 주소를 그대로 origin으로 갖고 있음을 확인할 수 있음. 이대로 둔 채 <code class="highlighter-rouge">git push</code>하게 되면 ‘남의 repository’로 배포하는 의도치 않은(?) 시도를 하게 됨.</li>
-      <li><code class="highlighter-rouge">git remote set-url</code>을 통해 origin이 나의 Github Pages용 repository를 향하도록 함.</li>
-      <li>이 경우 emilkwak.github.io라는 repository가 나의 Github에 이미 생성되어 있음을 전제로 함.</li>
-    </ul>
-  </li>
-  <li>(참고) origin을 유지한 채 origin2를 새로 만들어 사용하기
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git remote add orign2 https://github.com/emilkwak/emilkwak.github.io
-</code></pre></div>    </div>
-  </li>
-  <li>나의 Github Pages로 동기화하기
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add .
-git commit -m "something to say"
-git push origin master
-git push -f origin master
-</code></pre></div>    </div>
-    <ul>
-      <li><code class="highlighter-rouge">git push -f</code>: <code class="highlighter-rouge">git pull</code>을 통한 동기화 없이 강제로 배포(overwrite)하게 함.</li>
-    </ul>
-  </li>
-</ul>
+            <p>Python의 딕셔너리(<code class="highlighter-rouge">dict</code>)는 C++나 Java의 그것보다 훨씬 유연하고 사용하기도 편합니다. 딕셔너리가 Python에서 자주 사용되는 이유이기도 하지요. 딕셔너리를 선언하고 정의하는 방법도 매우 간단합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">'var_a'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+     <span class="s">'var_b'</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+     <span class="s">'var_c'</span><span class="p">:</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],}</span>
+</code></pre></div></div>
+
+<p>이렇게 정의된 딕셔너리의 각 요소는 <code class="highlighter-rouge">d['var_a']</code>와 같이 접근할 수 있지요.</p>
+
+<p>한편, 경우에 따라서 <code class="highlighter-rouge">print(d['var_a'])</code>처럼 사용하는 것보다 <code class="highlighter-rouge">print(var_a)</code>처럼 변수로 만들어 사용하는 것이 편할 때가 있지요. 작업중이던 변수들을 딕셔너리로 묶어 <code class="highlighter-rouge">pickle.dump()</code>했다가 다시 <code class="highlighter-rouge">pickle.load()</code>할 때 등이 대표적인 경우이겠죠.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">exec</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s = </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>위와 같이 하면 딕셔너리의 각 요소를 변수로 만들 수 있습니다. 두 줄짜리 간단한 코드지만 원하는 바를 쉽게 달성하게 해 주죠. 위 코드를 간단히 살펴 봅시다. <code class="highlighter-rouge">d.items()</code>는 딕셔너리를 키(key)와 값(value)의 쌍으로 나열시키고, 이를 <code class="highlighter-rouge">for</code>로 iteration합니다. 각 iteration에서 키를 변수명으로 삼아 변수에 값을 할당하는 구문을 문자열로 만들고 이 문자열을 <code class="highlighter-rouge">exec()</code>에 입력시킵니다. <code class="highlighter-rouge">exec()</code>은 말그대로 주어진 문자열을 Python 구문으로 여겨 실행시키지요.</p>
+
+<p>생각보다 간단하고 짧은 <code class="highlighter-rouge">for</code> 루프만으로 딕셔너리 각 요소의 변수로의 전환이 가능하지요?</p>
 
 
         </section>
@@ -288,15 +216,15 @@ git push -f origin master
 
                     <section class="share">
                         <h4>Share this post</h4>
-                        <a class="icon-twitter" href="http://twitter.com/share?text=Jekyll 정적 웹사이트 Github Pages에 호스팅하기&amp;url=https://emilkwak.github.iojekyll-github-pages"
+                        <a class="icon-twitter" href="http://twitter.com/share?text=Python 딕셔너리(dict) 키(key)를 변수로 만들기&amp;url=https://emilkwak.github.iodict-to-var"
                             onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                             <span class="hidden">Twitter</span>
                         </a>
-                        <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://emilkwak.github.iojekyll-github-pages"
+                        <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://emilkwak.github.iodict-to-var"
                             onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                             <span class="hidden">Facebook</span>
                         </a>
-                        <a class="icon-google-plus" href="https://plus.google.com/share?url=https://emilkwak.github.iojekyll-github-pages"
+                        <a class="icon-google-plus" href="https://plus.google.com/share?url=https://emilkwak.github.iodict-to-var"
                            onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                             <span class="hidden">Google+</span>
                         </a>
@@ -317,15 +245,15 @@ git push -f origin master
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story " style="background-image: url(/assets/images/office01.jpg)" href="/making-windows-web-server-not-stopping">
-            <section class="post">
-                <h2>Windows CLI로 구동한 웹 서버 멈춤 현상 해결 - 빠른 편집 모드 해제</h2>
-                <p>Windows OS에서 웹 서버를 구동해야 할 일이 종종 있습니다. Microsoft IIS가 Windows의 대표적인 웹 서버...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
+    
+        <a class="read-next-story prev " style="background-image: url(/assets/images/office01.jpg)" href="/numpy-argmax-argmin-argwhere">
+            <section class="post">
+                <h2>numpy의 argmax(), argmin() 그리고 argwhere() - 최대, 최소, 특정 값 찾기</h2>
+                <p>학부 저학년 시절 첫 프로그래밍 언어를 접할 때, 정수형 array에서 최대 값의 위치를 찾기 위해...</p>
+            </section>
+        </a>
     
     <!-- [[! /prev_post ]] -->
 </aside>
