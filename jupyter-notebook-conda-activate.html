@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Page Meta -->
-    <title>Python 딕셔너리(dict) 키(key)를 변수로 만들기</title>
+    <title>Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결</title>
     <meta name="description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
 
     <!-- Mobile Meta -->
@@ -26,21 +26,21 @@
     <style>.hljs { background: none; }</style>
 
     <!-- Ghost outputs important style and meta data with this tag -->
-        <link rel="canonical" href="https://emilkwak.github.io//dict-to-var" />
+        <link rel="canonical" href="https://emilkwak.github.io//jupyter-notebook-conda-activate" />
     <meta name="referrer" content="origin" />
     <link rel="next" href="/page2/" />
 
     <meta property="og:site_name" content="직장인을 위한 Python" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Python 딕셔너리(dict) 키(key)를 변수로 만들기" />
+    <meta property="og:title" content="Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결" />
     <meta property="og:description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
-    <meta property="og:url" content="https://emilkwak.github.io//dict-to-var" />
+    <meta property="og:url" content="https://emilkwak.github.io//jupyter-notebook-conda-activate" />
     <meta property="og:image" content="/assets/images/office01.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Python 딕셔너리(dict) 키(key)를 변수로 만들기" />
+    <meta name="twitter:title" content="Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결" />
     <meta name="twitter:description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
-    <meta name="twitter:url" content="https://emilkwak.github.io//dict-to-var" />
+    <meta name="twitter:url" content="https://emilkwak.github.io//jupyter-notebook-conda-activate" />
     <meta name="twitter:image:src" content="/assets/images/office01.jpg" />
 
     <script type="application/ld+json">
@@ -48,8 +48,8 @@
     "@context": "http://schema.org",
     "@type": "Website",
     "publisher": "직장인을 위한 Python",
-    "name": "Python 딕셔너리(dict) 키(key)를 변수로 만들기",
-    "url": "https://emilkwak.github.io//dict-to-var",
+    "name": "Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결",
+    "url": "https://emilkwak.github.io//jupyter-notebook-conda-activate",
     "image": "/assets/images/office01.jpg",
     "description": "Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 "
 }
@@ -114,7 +114,7 @@
     <article class="post tag-speeches">
 
         <header class="post-header">
-            <h1 class="post-title">Python 딕셔너리(dict) 키(key)를 변수로 만들기</h1>
+            <h1 class="post-title">Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결</h1>
             <section class="post-meta">
             <!-- <a href='/'></a> -->
 
@@ -133,7 +133,7 @@
                     <a href='/author/emil'>Emil Kwak</a>
                 
             
-            <time class="post-date" datetime="2019-04-15">15 Apr 2019</time>
+            <time class="post-date" datetime="2019-04-18">18 Apr 2019</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -147,7 +147,19 @@
                     
                 
                     
-                       <a href='/tag/numpy'>Numpy</a>
+                       <a href='/tag/jupyter'>Jupyter</a>,
+                    
+                
+                    
+                       <a href='/tag/anaconda'>Anaconda</a>,
+                    
+                
+                    
+                       <a href='/tag/conda'>Conda</a>,
+                    
+                
+                    
+                       <a href='/tag/spyder'>Spyder</a>
                     
                 
                 
@@ -156,24 +168,28 @@
 
         <section class="post-content">
 
-            <p>Python의 딕셔너리(<code class="highlighter-rouge">dict</code>)는 C++나 Java의 그것보다 훨씬 유연하고 사용하기도 편합니다. 딕셔너리가 Python에서 자주 사용되는 이유이기도 하지요. 딕셔너리를 선언하고 정의하는 방법도 매우 간단합니다.</p>
+            <p>Anaconda3로 Python 환경을 설치하고 나서 Jupyter Notebook을 사용하려 할 때, 다음과 같은 오류가 발생할 때가 있습니다. Windows 운영체제라고 가정할 때(다른 OS도 크게 다를 것은 없습니다만), 명령 프롬프트(cmd)를 실행해 <code class="highlighter-rouge">C:\Users\ABC\Anaconda3\Scripts</code> 디렉토리로 이동한 후 <code class="highlighter-rouge">jupyter.exe notebook</code>을 실행하게 되지요.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">'var_a'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
-     <span class="s">'var_b'</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
-     <span class="s">'var_c'</span><span class="p">:</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],}</span>
+<blockquote>
+  <p>ImportError: DLL load failed: 지정된 모듈을 찾을 수 없습니다.</p>
+</blockquote>
+
+<p>conda 환경이 아닌 맥락(context)으로 Anaconda3로 설치된 도구를 실행했기 때문으로 추정됩니다. 명확한 원인을 공식적으로 확인하지는 못했습니다. Scripts 디렉토리 내에 있는 다른 도구를 실행해도 유사한 오류가 발생하는 것을 보아 그렇게 추정이 됩니다.</p>
+
+<p>Jupyter Notebook뿐 아니라, Python IDE인 Spyder 또한 실행되지 않습니다. Jupyter Notebook과는 다른 오류가 뜨지만 상황은 비슷해 보입니다. conda 환경에 맞춰 구성된 requirements와 dependencies가 충분히 해소되지 않기 때문이지요. 같은 <code class="highlighter-rouge">Scripts</code> 디렉토리에서 <code class="highlighter-rouge">spyder.exe</code>를 실행해 보시지요.</p>
+
+<blockquote>
+  <p>qtpy.PythonQtError: No Qt bindings could be found</p>
+</blockquote>
+
+<p>이를 해결하기 위한 여러가지 방법이 있겠지만, 가장 손쉬운 방법은 ‘conda 환경 갖추기’가 되겠습니다. 방법은 간단합니다. <code class="highlighter-rouge">Scripts</code> 디렉토리에서 <code class="highlighter-rouge">activate.bat</code>를 먼저 실행하면 됩니다. 아래처럼 하면 Jupyter Notebook이 위에서 살펴 본 오류 없이 잘 실행됩니다.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd C:\Users\ABC\Anaconda3\Scripts
+activate.bat
+jupyter.exe notebook
 </code></pre></div></div>
 
-<p>이렇게 정의된 딕셔너리의 각 요소는 <code class="highlighter-rouge">d['var_a']</code>와 같이 접근할 수 있지요.</p>
-
-<p>한편, 경우에 따라서 <code class="highlighter-rouge">print(d['var_a'])</code>처럼 사용하는 것보다 <code class="highlighter-rouge">print(var_a)</code>처럼 변수로 만들어 사용하는 것이 편할 때가 있지요. 작업중이던 변수들을 딕셔너리로 묶어 <code class="highlighter-rouge">pickle.dump()</code>했다가 다시 <code class="highlighter-rouge">pickle.load()</code>할 때 등이 대표적인 경우이겠죠.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="k">exec</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s = </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
-</code></pre></div></div>
-
-<p>위와 같이 하면 딕셔너리의 각 요소를 변수로 만들 수 있습니다. 두 줄짜리 간단한 코드지만 원하는 바를 쉽게 달성하게 해 주죠. 위 코드를 간단히 살펴 봅시다. <code class="highlighter-rouge">d.items()</code>는 딕셔너리를 키(key)와 값(value)의 쌍으로 나열시키고, 이를 <code class="highlighter-rouge">for</code>로 iteration합니다. 각 iteration에서 키를 변수명으로 삼아 변수에 값을 할당하는 구문을 문자열로 만들고 이 문자열을 <code class="highlighter-rouge">exec()</code>에 입력시킵니다. <code class="highlighter-rouge">exec()</code>은 말그대로 주어진 문자열을 Python 구문으로 여겨 실행시키지요.</p>
-
-<p>생각보다 간단하고 짧은 <code class="highlighter-rouge">for</code> 루프만으로 딕셔너리 각 요소의 변수로의 전환이 가능하지요?</p>
+<p><code class="highlighter-rouge">activate.bat</code>을 하고 나면 명령 프롬프트 커서 행의 좌측에 ‘(base)’라는 표시가 생깁니다. conda 환경, 정확히는 conda의 base 환경이 갖춰진 상태임을 뜻합니다. 이 상태에서는 Jupyter Notebook뿐 아니라 Spyder도 오류 없이 정상 구동됩니다.</p>
 
 
         </section>
@@ -216,15 +232,15 @@
 
                     <section class="share">
                         <h4>Share this post</h4>
-                        <a class="icon-twitter" href="http://twitter.com/share?text=Python 딕셔너리(dict) 키(key)를 변수로 만들기&amp;url=https://emilkwak.github.iodict-to-var"
+                        <a class="icon-twitter" href="http://twitter.com/share?text=Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결&amp;url=https://emilkwak.github.iojupyter-notebook-conda-activate"
                             onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                             <span class="hidden">Twitter</span>
                         </a>
-                        <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://emilkwak.github.iodict-to-var"
+                        <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://emilkwak.github.iojupyter-notebook-conda-activate"
                             onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                             <span class="hidden">Facebook</span>
                         </a>
-                        <a class="icon-google-plus" href="https://plus.google.com/share?url=https://emilkwak.github.iodict-to-var"
+                        <a class="icon-google-plus" href="https://plus.google.com/share?url=https://emilkwak.github.iojupyter-notebook-conda-activate"
                            onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                             <span class="hidden">Google+</span>
                         </a>
@@ -245,20 +261,13 @@
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story " style="background-image: url(/assets/images/office01.jpg)" href="/jupyter-notebook-conda-activate">
-            <section class="post">
-                <h2>Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결</h2>
-                <p>Anaconda3로 Python 환경을 설치하고 나서 Jupyter Notebook을 사용하려 할 때, 다음과 같은 오류가 발생할 때가...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev " style="background-image: url(/assets/images/office01.jpg)" href="/numpy-argmax-argmin-argwhere">
+        <a class="read-next-story prev " style="background-image: url(/assets/images/office01.jpg)" href="/dict-to-var">
             <section class="post">
-                <h2>numpy의 argmax(), argmin() 그리고 argwhere() - 최대, 최소, 특정 값 찾기</h2>
-                <p>학부 저학년 시절 첫 프로그래밍 언어를 접할 때, 정수형 array에서 최대 값의 위치를 찾기 위해...</p>
+                <h2>Python 딕셔너리(dict) 키(key)를 변수로 만들기</h2>
+                <p>Python의 딕셔너리(dict)는 C++나 Java의 그것보다 훨씬 유연하고 사용하기도 편합니다. 딕셔너리가 Python에서 자주 사용되는 이유이기도 하지요....</p>
             </section>
         </a>
     
