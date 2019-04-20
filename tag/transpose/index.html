@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Page Meta -->
-    <title>Finding The Way Home</title>
+    <title>직장인을 위한 Python</title>
     <meta name="description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
 
     <!-- Mobile Meta -->
@@ -26,31 +26,31 @@
     <style>.hljs { background: none; }</style>
 
     <!-- Ghost outputs important style and meta data with this tag -->
-        <link rel="canonical" href="https://emilkwak.github.io//" />
+        <link rel="canonical" href="https://emilkwak.github.io//tag/transpose/" />
     <meta name="referrer" content="origin" />
     <link rel="next" href="/page2/" />
 
     <meta property="og:site_name" content="직장인을 위한 Python" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Finding The Way Home" />
+    <meta property="og:title" content="직장인을 위한 Python" />
     <meta property="og:description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
-    <meta property="og:url" content="https://emilkwak.github.io//" />
-    <meta property="og:image" content="/assets/images/office02.jpg" />
+    <meta property="og:url" content="https://emilkwak.github.io//tag/transpose/" />
+    <meta property="og:image" content="/assets/images/cover2.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Finding The Way Home" />
+    <meta name="twitter:title" content="직장인을 위한 Python" />
     <meta name="twitter:description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
-    <meta name="twitter:url" content="https://emilkwak.github.io//" />
-    <meta name="twitter:image:src" content="/assets/images/office02.jpg" />
+    <meta name="twitter:url" content="https://emilkwak.github.io//tag/transpose/" />
+    <meta name="twitter:image:src" content="/assets/images/cover2.jpg" />
 
     <script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "Website",
     "publisher": "직장인을 위한 Python",
-    "name": "Finding The Way Home",
-    "url": "https://emilkwak.github.io//",
-    "image": "/assets/images/office02.jpg",
+    "name": "직장인을 위한 Python",
+    "url": "https://emilkwak.github.io//tag/transpose/",
+    "image": "/assets/images/cover2.jpg",
     "description": "Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 "
 }
     </script>
@@ -60,7 +60,7 @@
 
 
 </head>
-<body class="home-template nav-closed">
+<body class="tag-template nav-closed">
 
     <!-- The blog navigation links -->
     <div class="nav">
@@ -69,7 +69,7 @@
         <span class="hidden">Close</span>
     </a>
     <ul>
-        <li class="nav-home  nav-current" role="presentation"><a href="/">Home</a></li>
+        <li class="nav-home " role="presentation"><a href="/">Home</a></li>
         <li class="nav-about " role="presentation"><a href="/about">About</a></li>
         <!--<li class="nav-fables " role="presentation"><a href="/tag/fables">Fables</a></li>-->
         <!--<li class="nav-speeches " role="presentation"><a href="/tag/speeches">Speeches</a></li>-->
@@ -92,25 +92,30 @@
     <div class="site-wrapper">
 
         <!-- All the main content gets inserted here, index.hbs, post.hbs, etc -->
-        <!-- < default -->
+        <!-- dynamically overriding backgrounds for tags as well as descriptions -->
+
+
+<!-- default -->
 <!-- The tag above means - insert everything in this file into the [body] of the default.hbs template -->
 
-<!-- The big featured header  -->
-<header class="main-header "
-        style="background-image: url(/assets/images/office02.jpg) ">
+<!-- If we have a tag cover, display that - else blog cover - else nothing -->
+<header class="main-header tag-head " style="background-image: url(/assets/images/cover2.jpg) ">
     <nav class="main-nav overlay clearfix">
-        <a class="blog-logo" href="/"><img src="/assets/images/pooh03.png" alt="Blog Logo" /></a>
+        <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
         
             <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
         
     </nav>
     <div class="vertical">
         <div class="main-header-content inner">
-            <h1 class="page-title">직장인을 위한 Python</h1>
-            <h2 class="page-description">Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </h2>
+            <h1 class="page-title">Transpose</h1>
+            <h2 class="page-description">
+            
+			    A 1-post collection
+            
+            </h2>
         </div>
     </div>
-    <a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
 </header>
 
 <!-- The main content area on the homepage -->
@@ -122,9 +127,7 @@
         
             <nav class="pagination" role="pagination">
     
-    <span class="page-number"> Page 1 of 2 </span>
-     
-        <a class="older-posts" href="/page2/" title="Next Page">Older Posts &raquo;</a>
+    <span class="page-number"> Page 1 of 1 </span>
      
 </nav>
         
@@ -201,222 +204,12 @@
         </footer>
     </article>
     
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/jupyter-notebook-conda-activate">Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>Anaconda3로 Python 환경을 설치하고 나서 Jupyter Notebook을 사용하려 할 때, 다음과 같은 오류가 발생할 때가 있습니다. Windows 운영체제라고 가정할 때(다른 OS도 크게 다를 것은 없습니다만), 명령... <a class="read-more" href="/jupyter-notebook-conda-activate">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-
-                <img class="author-thumb" src="/assets/images/pooh01.jpg" alt="Author image" nopin="nopin" />
-                <!-- author -->
-                <a href='/author/emil'>Emil Kwak</a>
-
-                
-            
-
-            <!-- [[tags prefix=" on "]] -->
-            
-                on
-                
-                    
-                       <a href='/tag/tech'>Tech</a>,
-                    
-                
-                    
-                       <a href='/tag/python'>Python</a>,
-                    
-                
-                    
-                       <a href='/tag/jupyter'>Jupyter</a>,
-                    
-                
-                    
-                       <a href='/tag/anaconda'>Anaconda</a>,
-                    
-                
-                    
-                       <a href='/tag/conda'>Conda</a>,
-                    
-                
-                    
-                       <a href='/tag/spyder'>Spyder</a>
-                    
-                
-            
-            <time class="post-date" datetime="2019-04-18">18 Apr 2019</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/dict-to-var">Python 딕셔너리(dict) 키(key)를 변수로 만들기</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>Python의 딕셔너리(dict)는 C++나 Java의 그것보다 훨씬 유연하고 사용하기도 편합니다. 딕셔너리가 Python에서 자주 사용되는 이유이기도 하지요. 딕셔너리를 선언하고 정의하는 방법도 매우 간단합니다. d = {'var_a': [1, 2,... <a class="read-more" href="/dict-to-var">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-
-                <img class="author-thumb" src="/assets/images/pooh01.jpg" alt="Author image" nopin="nopin" />
-                <!-- author -->
-                <a href='/author/emil'>Emil Kwak</a>
-
-                
-            
-
-            <!-- [[tags prefix=" on "]] -->
-            
-                on
-                
-                    
-                       <a href='/tag/tech'>Tech</a>,
-                    
-                
-                    
-                       <a href='/tag/python'>Python</a>,
-                    
-                
-                    
-                       <a href='/tag/numpy'>Numpy</a>
-                    
-                
-            
-            <time class="post-date" datetime="2019-04-15">15 Apr 2019</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/numpy-argmax-argmin-argwhere">numpy의 argmax(), argmin() 그리고 argwhere() - 최대, 최소, 특정 값 찾기</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>학부 저학년 시절 첫 프로그래밍 언어를 접할 때, 정수형 array에서 최대 값의 위치를 찾기 위해 자연스럽게 loop을 사용했습니다. 아래처럼 말이죠. a = [3, 2, 1, 10,... <a class="read-more" href="/numpy-argmax-argmin-argwhere">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-
-                <img class="author-thumb" src="/assets/images/pooh01.jpg" alt="Author image" nopin="nopin" />
-                <!-- author -->
-                <a href='/author/emil'>Emil Kwak</a>
-
-                
-            
-
-            <!-- [[tags prefix=" on "]] -->
-            
-                on
-                
-                    
-                       <a href='/tag/tech'>Tech</a>,
-                    
-                
-                    
-                       <a href='/tag/python'>Python</a>,
-                    
-                
-                    
-                       <a href='/tag/numpy'>Numpy</a>
-                    
-                
-            
-            <time class="post-date" datetime="2019-04-13">13 Apr 2019</time>
-        </footer>
-    </article>
-    
-    <article class="post">
-        <header class="post-header">
-            <h2 class="post-title"><a href="/pandas-contains-multiple">Pandas DataFrame(Series)의 문자열 contains(), startswith() 여러 값 적용하는 방법</a></h2>
-        </header>
-        <section class="post-excerpt">
-            <p>Pandas Series는 강력한 문자열 처리 기능을 갖고 있습니다. Series.str.contains()는 특정 문자열을 포함하는 요소를 찾아 주고 Series.str.startswith(), Series.str.endswith()는 특정 문자열로 시작되거나 끝나는 요소를 찾아 줍니다. Series뿐 아니라... <a class="read-more" href="/pandas-contains-multiple">&raquo;</a></p>
-        </section>
-        <footer class="post-meta">
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-            
-                
-
-                <img class="author-thumb" src="/assets/images/pooh01.jpg" alt="Author image" nopin="nopin" />
-                <!-- author -->
-                <a href='/author/emil'>Emil Kwak</a>
-
-                
-            
-
-            <!-- [[tags prefix=" on "]] -->
-            
-                on
-                
-                    
-                       <a href='/tag/tech'>Tech</a>,
-                    
-                
-                    
-                       <a href='/tag/python'>Python</a>,
-                    
-                
-                    
-                       <a href='/tag/pandas'>Pandas</a>
-                    
-                
-            
-            <time class="post-date" datetime="2019-01-23">23 Jan 2019</time>
-        </footer>
-    </article>
-    
 
     <!-- Previous/next page links - displayed on every page -->
     
         <nav class="pagination" role="pagination">
     
-    <span class="page-number"> Page 1 of 2 </span>
-     
-        <a class="older-posts" href="/page2/" title="Next Page">Older Posts &raquo;</a>
+    <span class="page-number"> Page 1 of 1 </span>
      
 </nav>
     

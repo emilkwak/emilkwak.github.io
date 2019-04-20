@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Page Meta -->
-    <title>Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결</title>
+    <title>Python 2차원 리스트(list)의 특정 열(column) 골라 취하기</title>
     <meta name="description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
 
     <!-- Mobile Meta -->
@@ -26,21 +26,21 @@
     <style>.hljs { background: none; }</style>
 
     <!-- Ghost outputs important style and meta data with this tag -->
-        <link rel="canonical" href="https://emilkwak.github.io//jupyter-notebook-conda-activate" />
+        <link rel="canonical" href="https://emilkwak.github.io//python-2d-list-certain-column" />
     <meta name="referrer" content="origin" />
     <link rel="next" href="/page2/" />
 
     <meta property="og:site_name" content="직장인을 위한 Python" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결" />
+    <meta property="og:title" content="Python 2차원 리스트(list)의 특정 열(column) 골라 취하기" />
     <meta property="og:description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
-    <meta property="og:url" content="https://emilkwak.github.io//jupyter-notebook-conda-activate" />
+    <meta property="og:url" content="https://emilkwak.github.io//python-2d-list-certain-column" />
     <meta property="og:image" content="/assets/images/office01.jpg" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결" />
+    <meta name="twitter:title" content="Python 2차원 리스트(list)의 특정 열(column) 골라 취하기" />
     <meta name="twitter:description" content="Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 " />
-    <meta name="twitter:url" content="https://emilkwak.github.io//jupyter-notebook-conda-activate" />
+    <meta name="twitter:url" content="https://emilkwak.github.io//python-2d-list-certain-column" />
     <meta name="twitter:image:src" content="/assets/images/office01.jpg" />
 
     <script type="application/ld+json">
@@ -48,8 +48,8 @@
     "@context": "http://schema.org",
     "@type": "Website",
     "publisher": "직장인을 위한 Python",
-    "name": "Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결",
-    "url": "https://emilkwak.github.io//jupyter-notebook-conda-activate",
+    "name": "Python 2차원 리스트(list)의 특정 열(column) 골라 취하기",
+    "url": "https://emilkwak.github.io//python-2d-list-certain-column",
     "image": "/assets/images/office01.jpg",
     "description": "Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 "
 }
@@ -74,7 +74,7 @@
         <!--<li class="nav-fables " role="presentation"><a href="/tag/fables">Fables</a></li>-->
         <!--<li class="nav-speeches " role="presentation"><a href="/tag/speeches">Speeches</a></li>-->
         <!--<li class="nav-fiction " role="presentation"><a href="/tag/fiction">Fiction</a></li>-->
-        <li class="nav-python " role="presentation"><a href="/tag/python">Python</a></li>
+        <li class="nav-python  nav-current" role="presentation"><a href="/tag/python">Python</a></li>
         <li class="nav-python " role="presentation"><a href="/tag/tech">Tech</a></li>
         <!--<li class="nav-author " role="presentation"><a href="/author/casper">Casper</a></li>-->
         <!--<li class="nav-author " role="presentation"><a href="/author/edgar">Edgar</a></li>-->
@@ -114,7 +114,7 @@
     <article class="post tag-speeches">
 
         <header class="post-header">
-            <h1 class="post-title">Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결</h1>
+            <h1 class="post-title">Python 2차원 리스트(list)의 특정 열(column) 골라 취하기</h1>
             <section class="post-meta">
             <!-- <a href='/'></a> -->
 
@@ -133,7 +133,7 @@
                     <a href='/author/emil'>Emil Kwak</a>
                 
             
-            <time class="post-date" datetime="2019-04-18">18 Apr 2019</time>
+            <time class="post-date" datetime="2019-04-20">20 Apr 2019</time>
                 <!-- [[tags prefix=" on "]] -->
                 
                 on
@@ -147,19 +147,27 @@
                     
                 
                     
-                       <a href='/tag/jupyter'>Jupyter</a>,
+                       <a href='/tag/list'>List</a>,
                     
                 
                     
-                       <a href='/tag/anaconda'>Anaconda</a>,
+                       <a href='/tag/array'>Array</a>,
                     
                 
                     
-                       <a href='/tag/conda'>Conda</a>,
+                       <a href='/tag/zip'>Zip</a>,
                     
                 
                     
-                       <a href='/tag/spyder'>Spyder</a>
+                       <a href='/tag/numpy'>Numpy</a>,
+                    
+                
+                    
+                       <a href='/tag/pandas'>Pandas</a>,
+                    
+                
+                    
+                       <a href='/tag/transpose'>Transpose</a>
                     
                 
                 
@@ -168,28 +176,59 @@
 
         <section class="post-content">
 
-            <p>Anaconda3로 Python 환경을 설치하고 나서 Jupyter Notebook을 사용하려 할 때, 다음과 같은 오류가 발생할 때가 있습니다. Windows 운영체제라고 가정할 때(다른 OS도 크게 다를 것은 없습니다만), 명령 프롬프트(cmd)를 실행해 <code class="highlighter-rouge">C:\Users\ABC\Anaconda3\Scripts</code> 디렉토리로 이동한 후 <code class="highlighter-rouge">jupyter.exe notebook</code>을 실행하게 되지요.</p>
+            <p>C나 C++에서 2차원 배열(2-dimension array) 개념을 많이 사용합니다. 배열을 요소(element)로 하는 배열로 표현을 하지요. Python에서도 리스트(list)를 2차원으로 사용하여 2차원 배열과 동일한 효과를 낼 수 있습니다.</p>
 
-<blockquote>
-  <p>ImportError: DLL load failed: 지정된 모듈을 찾을 수 없습니다.</p>
-</blockquote>
-
-<p>conda 환경이 아닌 맥락(context)으로 Anaconda3로 설치된 도구를 실행했기 때문으로 추정됩니다. 명확한 원인을 공식적으로 확인하지는 못했습니다. Scripts 디렉토리 내에 있는 다른 도구를 실행해도 유사한 오류가 발생하는 것을 보아 그렇게 추정이 됩니다.</p>
-
-<p>Jupyter Notebook뿐 아니라, Python IDE인 Spyder 또한 실행되지 않습니다. Jupyter Notebook과는 다른 오류가 뜨지만 상황은 비슷해 보입니다. conda 환경에 맞춰 구성된 requirements와 dependencies가 충분히 해소되지 않기 때문이지요. 같은 <code class="highlighter-rouge">Scripts</code> 디렉토리에서 <code class="highlighter-rouge">spyder.exe</code>를 실행해 보시지요.</p>
-
-<blockquote>
-  <p>qtpy.PythonQtError: No Qt bindings could be found</p>
-</blockquote>
-
-<p>이를 해결하기 위한 여러가지 방법이 있겠지만, 가장 손쉬운 방법은 ‘conda 환경 갖추기’가 되겠습니다. 방법은 간단합니다. <code class="highlighter-rouge">Scripts</code> 디렉토리에서 <code class="highlighter-rouge">activate.bat</code>를 먼저 실행하면 됩니다. 아래처럼 하면 Jupyter Notebook이 위에서 살펴 본 오류 없이 잘 실행됩니다.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd C:\Users\ABC\Anaconda3\Scripts
-activate.bat
-jupyter.exe notebook
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+<span class="p">]</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">activate.bat</code>을 하고 나면 명령 프롬프트 커서 행의 좌측에 ‘(base)’라는 표시가 생깁니다. conda 환경, 정확히는 conda의 base 환경이 갖춰진 상태임을 뜻합니다. 이 상태에서는 Jupyter Notebook뿐 아니라 Spyder도 오류 없이 정상 구동됩니다.</p>
+<p>2차원 리스트의 특정 열(column)을 취해 처리해야 할 경우에는 어떻게 해야 할까요? Python의 기본 문법을 이용한 가장 C/C++적인 방법은 루프(loop)를 돌면서 처리하는 것이겠지요.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c"># [0, 2, 4, 6, 8]</span>
+</code></pre></div></div>
+
+<p>Python답게 inline for loop를 사용해 봅시다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c"># [0, 2, 4, 6, 8]</span>
+</code></pre></div></div>
+
+<p>zip을 이용한 방법도 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">b</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c"># (0, 2, 4, 6, 8)</span>
+</code></pre></div></div>
+
+<p>Python 기본 문법을 넘어서 numpy나 pandas 등 라이브러리를 사용하면 훨씬 우아한 코드가 가능합니다. 아래는 numpy를 사용한 방법입니다. numpy의 array로 전환한 후 전치(transpose)시킨 후 인덱싱하는 순서입니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c"># [0 2 4 6 8]</span>
+</code></pre></div></div>
+
+<p>위의 numpy 코드를 보면 매우 수학적인 느낌이 들지요? 2차원 리스트를 행렬로 인식한 후 전치행렬로 바꾼 다음 행 번호로 접근하는 과정이지요. 아래와 같이 pandas를 이용한 방법도 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">a</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">to_list</span><span class="p">())</span>
+<span class="c"># [0, 2, 4, 6, 8]</span>
+</code></pre></div></div>
+
+<p>pandas에 익숙한 분은 아시겠지만 pandas는 Excel 같은 스프레드시트 관점으로 접근합니다. 위 코드로는 정확히 느낌이 오지 않을 수 있지만, 2차원 리스트를 스프레드시트라 볼 수 있는 데이터프레임으로 바꾼 후 0열을 취하는 과정입니다.</p>
+
+<p>Python 2차원 리스트의 특정 열만 골라서 선택적으로 취하는 방법을 알아 봤습니다. C/C++식 루프 돌리는 방법, inline for loop 이용한 방법, zip 이용한 방법, numpy나 pandas를 통한 방법이 있었습니다.</p>
 
 
         </section>
@@ -232,15 +271,15 @@ jupyter.exe notebook
 
                     <section class="share">
                         <h4>Share this post</h4>
-                        <a class="icon-twitter" href="http://twitter.com/share?text=Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결&amp;url=https://emilkwak.github.iojupyter-notebook-conda-activate"
+                        <a class="icon-twitter" href="http://twitter.com/share?text=Python 2차원 리스트(list)의 특정 열(column) 골라 취하기&amp;url=https://emilkwak.github.iopython-2d-list-certain-column"
                             onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                             <span class="hidden">Twitter</span>
                         </a>
-                        <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://emilkwak.github.iojupyter-notebook-conda-activate"
+                        <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://emilkwak.github.iopython-2d-list-certain-column"
                             onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                             <span class="hidden">Facebook</span>
                         </a>
-                        <a class="icon-google-plus" href="https://plus.google.com/share?url=https://emilkwak.github.iojupyter-notebook-conda-activate"
+                        <a class="icon-google-plus" href="https://plus.google.com/share?url=https://emilkwak.github.iopython-2d-list-certain-column"
                            onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                             <span class="hidden">Google+</span>
                         </a>
@@ -261,20 +300,13 @@ jupyter.exe notebook
 
     <!-- [[! next_post ]] -->
     
-        <a class="read-next-story " style="background-image: url(/assets/images/office01.jpg)" href="/python-2d-list-certain-column">
-            <section class="post">
-                <h2>Python 2차원 리스트(list)의 특정 열(column) 골라 취하기</h2>
-                <p>C나 C++에서 2차원 배열(2-dimension array) 개념을 많이 사용합니다. 배열을 요소(element)로 하는 배열로 표현을 하지요. Python에서도...</p>
-            </section>
-        </a>
-    
     <!-- [[! /next_post ]] -->
     <!-- [[! prev_post ]] -->
     
-        <a class="read-next-story prev " style="background-image: url(/assets/images/office01.jpg)" href="/dict-to-var">
+        <a class="read-next-story prev " style="background-image: url(/assets/images/office01.jpg)" href="/jupyter-notebook-conda-activate">
             <section class="post">
-                <h2>Python 딕셔너리(dict) 키(key)를 변수로 만들기</h2>
-                <p>Python의 딕셔너리(dict)는 C++나 Java의 그것보다 훨씬 유연하고 사용하기도 편합니다. 딕셔너리가 Python에서 자주 사용되는 이유이기도 하지요....</p>
+                <h2>Anaconda3(conda) 환경 Jupyter Notebook 오류(ImportError) 해결</h2>
+                <p>Anaconda3로 Python 환경을 설치하고 나서 Jupyter Notebook을 사용하려 할 때, 다음과 같은 오류가 발생할 때가...</p>
             </section>
         </a>
     
