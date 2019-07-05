@@ -12,6 +12,90 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Python 별표(*) 문법(asterisk/star syntax), *args와 **kwargs</title>
+	  <link>//python-star-asterisk-args-kwargs</link>
+	  <author></author>
+	  <pubDate>2019-07-06T07:00:00+09:00</pubDate>
+	  <guid>//python-star-asterisk-args-kwargs</guid>
+	  <description><![CDATA[
+	     <p>Python에는 우리나라에서 흔히 별표라 부르는 asterisk(<code class="highlighter-rouge">*</code>)를 활용한 특이한 문법(syntax)가 있습니다. <code class="highlighter-rouge">*args</code>, <code class="highlighter-rouge">**kwargs</code>라고 해도 통합니다. C나 C++이 아닌 Python에서 <code class="highlighter-rouge">*</code>와 <code class="highlighter-rouge">**</code>를 문두에 사용하는 문법이 있다니 어색하긴 하지만, 용도를 제대로 알면 유용히 쓸 수 있습니다.</p>
+
+<h3 id="메서드-정의-시-파라미터parameter로-쓰일-때">메서드 정의 시 파라미터(parameter)로 쓰일 때</h3>
+
+<p>메서드 정의 시 파라미터(parameter)로 <code class="highlighter-rouge">*args</code>가 사용되면 그 메서드 내에서 <code class="highlighter-rouge">args</code>는 메서드 호출 시 투입된 아규먼트(argument)의 튜플(tuple)이 됩니다. 파라미터의 개수가 고정적이지 않은 메서드의 정의 시 사용됩니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">args_as_parameter</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+	<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+<span class="n">args_as_parameter</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'2'</span><span class="p">,</span> <span class="s">'three'</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">)</span>
+<span class="c"># &lt;class 'tuple'&gt;</span>
+<span class="c"># (1, '2', 'three', 4.0)</span>
+</code></pre></div></div>
+
+<p>메서드 정의 시 파라미터로 <code class="highlighter-rouge">**kwargs</code>가 사용되면 그 메서드 내에서 <code class="highlighter-rouge">kwargs</code>는 메서드 호출 시 투입된 아규먼트의 딕셔너리(dict)가 됩니다. 당연히 아규먼트는 key-value 형태여야 합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">kwargs_as_parameter</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+	<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>
+	<span class="k">print</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="n">kwargs_as_parameter</span><span class="p">(</span><span class="n">first</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="s">'2'</span><span class="p">,</span> <span class="n">third</span><span class="o">=</span><span class="s">'three'</span><span class="p">,</span> <span class="n">fourth</span><span class="o">=</span><span class="mf">4.0</span><span class="p">)</span>
+<span class="c"># &lt;class 'dict'&gt;</span>
+<span class="c"># {'first': 1, 'second': '2', 'third': 'three', 'fourth': 4.0}</span>
+</code></pre></div></div>
+
+<h3 id="메서드-호출-시-아규먼트argument로-쓰일-때">메서드 호출 시 아규먼트(argument)로 쓰일 때</h3>
+
+<p>메서드 호출 시 아규먼트로 <code class="highlighter-rouge">*args</code>를 투입한다 가정할 때, <code class="highlighter-rouge">args</code>는 튜플(또는 리스트, list 등)이어야 합니다. 따라서 앞서 정의한 메서드 <code class="highlighter-rouge">args_as_parameter()</code>를 다음과 같이 호출할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">input_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">'2'</span><span class="p">,</span> <span class="s">'three'</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">)</span>
+<span class="n">args_as_parameter</span><span class="p">(</span><span class="o">*</span><span class="n">input_tuple</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>메서드 호출 시 아규먼트로 <code class="highlighter-rouge">**kwargs</code>를 투입한다 가정할 때, <code class="highlighter-rouge">kwargs</code>는 딕셔너리이어야 합니다. 따라서 앞서 정의한 메서드 <code class="highlighter-rouge">kwargs_as_parameter()</code>를 다음과 같이 호출할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">input_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'first'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'second'</span><span class="p">:</span> <span class="s">'2'</span><span class="p">,</span> <span class="s">'third'</span><span class="p">:</span> <span class="s">'three'</span><span class="p">,</span> <span class="s">'fourth'</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">}</span>
+<span class="n">kwargs_as_parameter</span><span class="p">(</span><span class="o">**</span><span class="n">input_dict</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="args와-kwargs를-메서드-호출-아규먼트로-유용히-쓸-수-있는-용례"><code class="highlighter-rouge">*args</code>와 <code class="highlighter-rouge">**kwargs</code>를 메서드 호출 아규먼트로 유용히 쓸 수 있는 용례</h3>
+
+<p><code class="highlighter-rouge">zip()</code>은 리스트들을 투입받아 묶어 주는 역할을 합니다. 이 기능을 이용해서 m * n 자료를 n * m 자료로 변환하는 데 쓰이기도 하지요. 행렬의 transpose 격입니다. m * n 자료를 <code class="highlighter-rouge">zip()</code>에 투입하려면 그 속에 들어 있는 길이 n의 리스트를 m번 투입해야 하겠지요. 한두 개라면 별일 아니지만 m이 커진다면 가독성과 생산성, 확정성이 매우 떨어지게 됩니다. 이때 <code class="highlighter-rouge">*args</code>를 활용할 수 있습니다. 아래처럼 말이죠.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">two_col_tuple</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s">'a'</span><span class="p">,</span> <span class="s">'b'</span><span class="p">,</span> <span class="s">'c'</span><span class="p">,</span> <span class="s">'d'</span><span class="p">))</span>
+<span class="n">four_col_tuple1</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">two_col_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">two_col_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="c"># long way</span>
+<span class="k">print</span><span class="p">(</span><span class="n">four_col_tuple1</span><span class="p">)</span>
+<span class="c"># ((1, 'a'), (2, 'b'), (3, 'c'), (4, 'd'))</span>
+<span class="n">four_col_tuple2</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">two_col_tuple</span><span class="p">))</span> <span class="c"># short way</span>
+<span class="k">print</span><span class="p">(</span><span class="n">four_col_tuple2</span><span class="p">)</span>
+<span class="c"># ((1, 'a'), (2, 'b'), (3, 'c'), (4, 'd'))</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">cx_Oracle</code>의 <code class="highlighter-rouge">connect()</code>는 데이터베이스의 접속 정보(URL, 포트, 서비스명, ID, PW 등을 아규먼트로 받습니다. 이를 모두 <code class="highlighter-rouge">connect()</code> 메서드에 투입하려면 헷갈려 실수하기 쉽습니다. 물론 사용에 숙달되면 일도 아닐 정도로 쉽겠지만 ‘나만 잘 짜고 잘 읽고 잘 고치는 코드’가 능사는 아니지요. 이 경우 아규먼트를 딕셔너리로 정의한 후 그것을 <code class="highlighter-rouge">**kwargs</code> 형태로 <code class="highlighter-rouge">connect()</code> 메서드에 투입하는 방법이 있습니다. 향후 데이터베이스 접속 정보가 바뀌어 수정해야 할 때 딕셔너리 속 요소들을 쉽게 읽어 바꾸면 되니 관리하기 좋겠지요.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">cx_Oracle</span>
+<span class="c"># express way</span>
+<span class="n">dsn</span> <span class="o">=</span> <span class="n">cx_Oracle</span><span class="o">.</span><span class="n">makedsn</span><span class="p">(</span><span class="s">'localhost'</span><span class="p">,</span> <span class="mi">1521</span><span class="p">,</span> <span class="s">'orcl'</span><span class="p">)</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">cx_Oracle</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'sys'</span><span class="p">,</span> <span class="s">'orange'</span><span class="p">,</span> <span class="n">dsn</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">cx_Oracle</span><span class="o">.</span><span class="n">SYSDBA</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="c"># tidy and readable way</span>
+<span class="n">conn_conf</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="s">'user'</span><span class="p">:</span> <span class="s">'sys'</span><span class="p">,</span>
+	<span class="s">'password'</span><span class="p">:</span> <span class="s">'orange'</span><span class="p">,</span>
+	<span class="s">'dsn'</span><span class="p">:</span> <span class="n">dsn</span><span class="p">,</span>
+	<span class="s">'mode'</span><span class="p">:</span> <span class="n">cx_Oracle</span><span class="o">.</span><span class="n">SYSDBA</span>
+<span class="p">}</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">cx_Oracle</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="o">**</span><span class="n">conn_conf</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="참고자료">참고자료</h3>
+<p>https://www.geeksforgeeks.org/args-kwargs-python/</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>Python 정규표현식(regular expression) 그룹 이름 붙이기(named group)</title>
 	  <link>//python-re-named-group</link>
 	  <author></author>
@@ -435,53 +519,6 @@ print(a[-3:-1]) # [7, 8]
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>print(a[::-1]) # [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 print(a[-1:-3:-1]) # [9, 8]
 </code></pre></div></div>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>Windows CLI로 구동한 웹 서버 멈춤 현상 해결 - 빠른 편집 모드 해제</title>
-	  <link>//making-windows-web-server-not-stopping</link>
-	  <author></author>
-	  <pubDate>2018-09-21T09:00:00+09:00</pubDate>
-	  <guid>//making-windows-web-server-not-stopping</guid>
-	  <description><![CDATA[
-	     <p>Windows OS에서 웹 서버를 구동해야 할 일이 종종 있습니다. Microsoft IIS가 Windows의 대표적인 웹 서버 소프트웨어인데 Windows Server OS를 꼭 써야 할 상황이 아니고선 흔히 쓰이지 않지요. Apache가 가장 보편적으로 널리 쓰이는 웹 서버 소프트웨어가 아닐까 합니다. Windows에서도 WAMP를 통해 MySQL(MariaDB), PHP까지 통합하여 간편하게 설치해 사용하라 수 있습니다.</p>
-
-<p>Apache는 아무래도 무겁습니다. 요즘 핫한 Python과도 궁합이 아주 맞지는 않는 편이지요. Apache의 아성은 여전히 건재하지만 ‘그렇게나 제대로된 웹 서버가 아니더라도 성능은 적당하고 간편한 게 좋다’면 Apache 외에도 다른 선택지들이 많습니다.</p>
-
-<p>Python 사용자들에게 가장 친숙한 웹 프레임워크는 Django와 Flask입니다. 아직 Python 기반의 웹 서버를 이야기하고 있지 않습니다. Python 기반 웹 프레임워크에 관해 이야기하고 있습니다. Maximal한 기능을 제공하는 Django와 Minimalism을 추구하는 Flask, 둘 다 매력이 있는 웹 프레임워크이지요.</p>
-
-<p>Django와 Flask는 모두 웹 서버는 아니지만 개발용 간이 서버 기능을 포함하고 있기는 합니다. 프로덕션 차원에서는 쓰지 않기를 권장하고 있지만 서비스 트래픽이 과대하지 않다면 또는 접속량이 많지 않다면 임시적으로 프로덕션에 활용할 수도 있습니다. 좀 더 안정적인 웹 서비스를 위해서는 제대로 된 웹 서버 소프트웨어를 써야 하겠지요. Django, Flask와 궁합이 잘 맞는 웹 서버가 물론 있습니다.</p>
-
-<p>대표적인 Python 기반의 웹 서버로 Gunicorn, Waitress 등이 있습니다. Django, Flask와 같이 WSGI 사양을 준수하는 웹 프레임워크는 WSGI 사양을 준수하는 웹 서버와 최적의 호환성을 자랑합니다. Gunicorn과 Waitress는 WSGI 웹 서버이고 Django, Flask는 WSGI 웹 프레임워크이지요. 이들 간에 최고의 궁합을 볼 수 있습니다.</p>
-
-<p>저는 Waitress를 좋아하는데 Linux뿐 아니라 Windows에서도 잘 구동되기 때문입니다. Gunicorn이 사실 더 유명하긴 하지만 UNIX/Linux 전용이라 Windows에서는 사용하기 힘들죠. 이런 차원에서 Waitress는 Python의 가장 큰 장점인 크로스 플랫폼 지원이 더 빛을 발하게 해 줍니다.</p>
-
-<p>서론이 좀 길었습니다만, Django 또는 Flask의 개발용 간이 서버를 이용하든, Gunicorn이나 Waitress 등의 웹 서버를 이용하든, Windows에서 서버 구동을 하기 위해서는 종종 CLI(DOS 창 또는 cmd라고 부르는)를 이용해야 할 상황이 많습니다. 다음과 같은 Python 파일을 CLI에서 실행하게 되겠죠.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># 파일명: server.py
-from waitress import serve
-serve(wsgiapp, host='0.0.0.0', port=8080) # wsgiapp: WSGI 사양을 준수한 웹 어플리케이션이라 가정
-</code></pre></div></div>
-
-<p>Windows CLI에서 <code class="highlighter-rouge">python server.py</code>와 같이 위 Python 파일을 구동합니다. 웹 서버 프로세스가 생성되어 실행되고 Busy Running하게 되겠죠. 명령이 종료되지 않고 Listening 모드로 유지된 채 커서만 깜빡거리고 있겠지요. 당연한 상황입니다. 쉬운 말로 설명하려는 시도가 오히려 어색할 따름입니다.</p>
-
-<p>그런데 그런 경험 없나요? CLI 창(DOS 창)은 Listening 모드로 열러 있고 컴퓨터도 정상적으로 켜져 있으며 웹 서버 구동 직후 접속이 잘 됐었는데, 두어 시간 후 다시 접속하려면 접속되지 않는 현상을 겪은 적이 있나요? 원인을 찾을 수 없어 리부팅까지 해 봤는데도 여전히 반복되지요.</p>
-
-<p>혹시나 해서 CLI 창(Busy Running 중인)에 엔터 키를 입력해 보니, 접속 안될 때 서버로 들어 왔던 트래픽들이 버퍼링되어 있다가 한꺼번에 밀려 들어와 당황했던 적이 있나요? 몇 시간에 한 번씩 CLI 창에 엔터 키를 반복해서 눌러 줘야 하는 건가, 정녕 다른 방법은 없는 것인가 고민도 많이 했습니다.</p>
-
-<p>Linux Shell에 똑같이 하면 이런 문제가 없는데 왜 Windows에서만 문제일까 궁금합니다. 사실 명확한 원인은 모르겠습니다. 추측건대 CLI가 사용자 입력을 받기 위해 대기하는 가운데 키보드 입출력을 버퍼링하는 기능이 있어서 그것이 웹 서버의 출력까지 버퍼링 처리하고, 그 과정에서 무언가 꼬여서 먹통이 되는 게 아닐까 합니다. 이때 사용자로부터 엔터 키 입력이 들어오자 버퍼가 비워지고 먿었던 서버가 작동하게 되는 것이고요.</p>
-
-<p>원인은 잘 모르지만 어쨌든 해결책이 있어 소개드리겠습니다. Windows CLI 창이 열려 있다는 가정 하에(<code class="highlighter-rouge">Win+R</code> 후 <code class="highlighter-rouge">cmd</code> 실행) 다음과 같이 해 보시지요.</p>
-
-<ul>
-  <li>Windows CLI 창의 타이틀 바 위에서 우클릭</li>
-  <li>컨텍스트 메뉴에서 ‘속성(P)’ 선택</li>
-  <li>‘편집 옵션’의 ‘빠른 편집 모드(Q)’ 체크박스 해제</li>
-</ul>
-
-<p>이와 같이 처리한 후 CLI로 웹 서버를 구동하면 입출력 버퍼링이 원인으로 추측되는 웹 서버 멈춤 현상이 발생하지 않게 됩니다. 사실 이 글의 목적은 이 방법을 알려 드리기 위함입니다. 결론에 앞서 서론이 너무 길었는데요, 서론 없이 바로 방법을 설명했다면 어떤 상황에 대한 공감이 잘 되지 않았을 것 같습니다.</p>
 
 	  ]]></description>
 	</item>
