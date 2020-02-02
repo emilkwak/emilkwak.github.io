@@ -4,7 +4,182 @@
     <title>직장인을 위한 Python - Articles</title>
     <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
     <link>
-    https://emilkwak.github.io</link>
+    http://0.0.0.0:7070</link>
+    
+      
+      <item>
+        <title>데이터프레임(DataFrame) 인덱싱(indexing), 셀렉팅(selecting)한 상태에서 값 수정하기(loc[] 사용)</title>
+        
+          <description>&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pandas&lt;/code&gt;를 사용하다 보면 &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;의 일부 행과 일부 열에 대해서만 부분적으로 수정을 가해야 할 때가 생깁니다. 인덱싱(indexing)과 셀렉팅(selecting)을 통해 수정을 가할 부분을 어떻게든 찾은 다음에, 어떤 방법을 써야 실제적인 수정이 이뤄지는지 알아 보겠습니다.&lt;/p&gt;
+
+&lt;p&gt;선 다음과 같은 샘플 데이터셋을 통해 &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;을 만들어 보겠습니다. Forbes가 발표한 2019년 미국 최우수 대학교 순위 자료입니다. 1위부터 10위까지만 추렸고 4개의 헤더(&lt;code class=&quot;highlighter-rouge&quot;&gt;RANK&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;NAME&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;STATE&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;SALARY&lt;/code&gt;)는 각각 순위, 대학교명, 소재주, 평균초봉에 해당합니다.
+(참고: &lt;a href=&quot;https://www.forbes.com/top-colleges/#53e27aed1987&quot;&gt;[Forbes] America’s Top Colleges 2019&lt;/a&gt;)&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'RANK'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'NAME'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'STATE'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'SALARY'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;\
+&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Harvard University'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Massachusetts'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'74800'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Stanford University'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'California'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'79000'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'3'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Yale University'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Connecticut'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'70300'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'4'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Massachusetts Institute of Technology'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Massachusetts'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'86300'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'5'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Princeton University'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'New Jersey'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'75200'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'6'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'University of Pennsylvania'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Pennsylvania'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'72800'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'7'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Brown University'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Rhode Island'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'68200'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'California Institute of Technology'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'California'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'84100'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'9'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Duke University'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'North Carolina'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'71100'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'10'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Dartmouth College'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'New Hampshire'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'71500'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;header&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SALARY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SALARY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;위 &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt; 변수에 완성된 데이터가 들어가 있습니다. 어떻게 생긴 데이터인지 한번 볼까요?&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
+	RANK	NAME	STATE	SALARY
+0	1	Harvard University	Massachusetts	74800
+1	2	Stanford University	California	79000
+2	3	Yale University	Connecticut	70300
+3	4	Massachusetts Institute of Technology	Massachusetts	86300
+4	5	Princeton University	New Jersey	75200
+5	6	University of Pennsylvania	Pennsylvania	72800
+6	7	Brown University	Rhode Island	68200
+7	8	California Institute of Technology	California	84100
+8	9	Duke University	North Carolina	71100
+9	10	Dartmouth College	New Hampshire	71500
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;STATE&lt;/code&gt;가 캘리포니아(California)인 것만 찾아 그 &lt;code class=&quot;highlighter-rouge&quot;&gt;STATE&lt;/code&gt; CALIFORNIA로 변경해 보겠습니다.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STATE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'California'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;STATE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'CALIFORNIA'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
+/usr/anaconda3/lib/python3.7/site-packages/pandas/core/generic.py:5208: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  self[name] = value
+  
+	RANK	NAME	STATE	SALARY
+0	1	Harvard University	Massachusetts	74800
+1	2	Stanford University	California	79000
+2	3	Yale University	Connecticut	70300
+3	4	Massachusetts Institute of Technology	Massachusetts	86300
+4	5	Princeton University	New Jersey	75200
+5	6	University of Pennsylvania	Pennsylvania	72800
+6	7	Brown University	Rhode Island	68200
+7	8	California Institute of Technology	California	84100
+8	9	Duke University	North Carolina	71100
+9	10	Dartmouth College	New Hampshire	71500
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SettingWithCopyWarning&lt;/code&gt;이 발생했고 변경하려 했던 &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt;의 부분도 바뀌지 않고 그대로 있습니다. 우리가 했던 변경 작업이 &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt; 원본이 아니라 그것을 복사(copy)한 후 변경 처리한 결과라는 것입니다. 당연히 원본인 &lt;code class=&quot;highlighter-rouge&quot;&gt;df&lt;/code&gt;는 아무런 영향을 받지 않은 것이고요.&lt;/p&gt;
+
+&lt;p&gt;그러면 어떻게 해야 할까요? 다음과 같이 &lt;code class=&quot;highlighter-rouge&quot;&gt;loc[]&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;mask&lt;/code&gt;를 이용한 방법이 가장 깔끔합니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mask = df.STATE == 'California'
+df.loc[mask, 'STATE'] = 'CALIFORNIA'
+display(df)
+'''
+	RANK	NAME	STATE	SALARY
+0	1	Harvard University	Massachusetts	74800
+1	2	Stanford University	CALIFORNIA	79000
+2	3	Yale University	Connecticut	70300
+3	4	Massachusetts Institute of Technology	Massachusetts	86300
+4	5	Princeton University	New Jersey	75200
+5	6	University of Pennsylvania	Pennsylvania	72800
+6	7	Brown University	Rhode Island	68200
+7	8	California Institute of Technology	CALIFORNIA	84100
+8	9	Duke University	North Carolina	71100
+9	10	Dartmouth College	New Hampshire	71500
+'''
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;STATE&lt;/code&gt; 열을 보면 california였던 것이 모두 CALIFORNIA로 바뀌었습니다. 마찬가지 방법으로, 조금 더 복잡한 작업을 해 보시죠. 평균초봉이 80000 이상이면 대학교명을 모두 대문자 처리하는 코드를 작성해 보겠습니다.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mask = df.SALARY &amp;gt; 80000
+df.loc[mask, 'NAME'] = df[mask].NAME.str.upper()
+display(df)
+'''
+	RANK	NAME	STATE	SALARY
+0	1	Harvard University	Massachusetts	74800
+1	2	Stanford University	CALIFORNIA	79000
+2	3	Yale University	Connecticut	70300
+3	4	MASSACHUSETTS INSTITUTE OF TECHNOLOGY	Massachusetts	86300
+4	5	Princeton University	New Jersey	75200
+5	6	University of Pennsylvania	Pennsylvania	72800
+6	7	Brown University	Rhode Island	68200
+7	8	CALIFORNIA INSTITUTE OF TECHNOLOGY	CALIFORNIA	84100
+8	9	Duke University	North Carolina	71100
+9	10	Dartmouth College	New Hampshire	71500
+'''
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;평균초봉이 86300인 MIT와 84100인 CALTECH, 두 군데의 학교명이 대문자 처리되었습니다. 세계적인 공과대학 두 곳인데, 역시 대단하군요.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;을 인덱싱, 셀렉팅할 경우 원래의 &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;이 아닌 그것의 복사본을 생성해 반환하게 됩니다. 따라서 그것에 수정을 가해도 원본이 바뀌지는 않는 것입니다. 한편, &lt;code class=&quot;highlighter-rouge&quot;&gt;mask&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;loc[]&lt;/code&gt;을 이용하면 복사본을 생성하지 않고 원본을 유지하고 수정도 원본에 직접 가할 수 있습니다.&lt;/p&gt;
+</description>
+        
+        <pubDate>Mon, 03 Feb 2020 08:00:00 +0900</pubDate>
+        <link>
+        http://0.0.0.0:7070/dataframe-update-after-indexing-selecting</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/dataframe-update-after-indexing-selecting</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>ast.literal_eval()로 문자열(str) 속 표현식(expression) 인식하기</title>
+        
+          <description>&lt;p&gt;#&lt;/p&gt;
+
+&lt;p&gt;가만히 보면 Python 표현식(expression statement)도 문자열(str)입니다. 좀 애매한 말이지요? 예를 들어 &lt;code class=&quot;highlighter-rouge&quot;&gt;a = 1 + 2&lt;/code&gt;라는 구문(statement)가 있을 때 ‘1 더하기 2’를 나타낸 우변도 결국 &lt;code class=&quot;highlighter-rouge&quot;&gt;'1 + 2'&lt;/code&gt; 형태의 문자열이라는 것이지요.&lt;/p&gt;
+
+&lt;p&gt;Python 작업을 하다 보면 이렇게 문자열에 담겨 있는 표현식을 꺼내 써야 할 때가 종종 있습니다. 메모리에 있는 중간 처리 결과를 문자열로 출력한 후 메모장 같은 곳에 저장해 두었다가 나중에 쓰기도 합니다. 리스트(list) 표현식을 통째로 문자열로 메모해 두었다가 쓸 일도 많구요.&lt;/p&gt;
+
+&lt;p&gt;가령, 동창회 멤버 10명의 생년월일 데이터를 자주 사용하는 모임 총무가 있다고 칩시다. 길이(len)가 고작 10이고 각 요소(element)도 8자리 정수(int)인 자그마한 데이터를 굳이 &lt;code class=&quot;highlighter-rouge&quot;&gt;pickle&lt;/code&gt; 같은 것을 사용해 보관할 필요는 없습니다.(오히려 번거롭지요.)&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;birth_day_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'19950415'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'19950527'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'19951103'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'19950606'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'19950717'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'19950327'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'19951030'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'19950424'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'19950815'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'19950901'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;birth_day_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 10&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;birth_day_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 8&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;대신 이 정도의 데이터는 Python 표현식 모양 그대로 메모장이나 클라우드 노트(Evernote, OneNote 따위)에 저장해 놓았다가 복사/붙여넣기로 다시 가져다 씁니다. 그런데 이렇게 문자열로 메모해 놓은 표현식이 한두 개면 몰라도 개수가 많아지면 매번 복사/붙여넣기 식으로 하기 번거로워집니다.&lt;/p&gt;
+
+&lt;p&gt;그렇다면 문자열로 기록된 표현식들을 일괄로 읽어 들여 와 Python 문자열 변수로 만들고 이를 이용해 원래의 Python 데이터를 얻어 내는 방법이 있을까요? 표현식의 일괄 읽기는 그렇게 어렵지 않습니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;open()&lt;/code&gt;과 &lt;code class=&quot;highlighter-rouge&quot;&gt;read()&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;readlines()&lt;/code&gt; 등을 적절히 써 주면 됩니다. 관건은 ‘문자열 변수에 할당된 표현식으로부터 원래의 데이터를 얻는 방법’에 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;list_in_str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'[1, 2, 3, 4, 5]'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;list_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list_in_str&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# str - wrong solution&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;위 방법은 &lt;code class=&quot;highlighter-rouge&quot;&gt;list_in_str&lt;/code&gt;을 그대로 재할당하는 작업일 뿐입니다. 그러면 어떻게 해야 &lt;code class=&quot;highlighter-rouge&quot;&gt;list_in_str&lt;/code&gt;에 내포된 데이터를 복구해 낼 수 있을까요? &lt;code class=&quot;highlighter-rouge&quot;&gt;ast.literal_eval()&lt;/code&gt;을 사용하는 것입니다.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;ast&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;list_in_str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'[1, 2, 3, 4, 5]'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;list_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ast&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;literal_eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list_in_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# list - correct solution&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;아래처럼 딕셔너리(dict)도 동일한 방법으로 처리가 가능합니다.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;ast&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;list_in_str&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;{'a': 1, 'b': 2, 'c': 3}&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;list_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ast&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;literal_eval&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list_in_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# dict&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;사실 &lt;code class=&quot;highlighter-rouge&quot;&gt;eval()&lt;/code&gt;이라는 내장(built-in) 함수가 있습니다. 그렇지만 이 함수는 악용될 소지가 커 가급적 사용을 자제해야 합니다.(참고: &lt;a href=&quot;https://bluese05.tistory.com/64&quot;&gt;python eval() 함수 - 사용을 조심해야 하는 이유&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;한편, &lt;code class=&quot;highlighter-rouge&quot;&gt;ast.literal_eval()&lt;/code&gt;은 위에서 우리가 하려고 했던 목적을 이루게 해 주면서도, 안전성을 보장합니다. 정확히 이야기하자면, 인자(parameter)로 주어진 표현식을 실행하기 전에 그것이 ‘수상한 표현식’인지 아닌지 먼저 검증합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ast.listeral_eval()&lt;/code&gt;은 이처럼 안전한 대신 인자로, 제한된 리터럴(literal)로 구성된 표현식만 허용합니다. 즉, 다음과 같은 리터럴들만 표현식에 등장할 수 있다는 뜻이죠.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;문자열, 바이트, 수, 튜플, 리스트, 딕셔너리, 셋, 불리언, None
+(참고: &lt;a href=&quot;https://docs.python.org/3/library/ast.html&quot;&gt;ast — Abstract Syntax Trees&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;eval()&lt;/code&gt;이 내장 함수이기도 하고 Python이 아닌 다른 언어에도 보통 등장하는 기능이라, 무심코 사용하는 경향이 있습니다. 물론 개인적인 용도로 사용할 프로그램이거나 믿을 수 있는 사용자들만 사용할 프로그램이라면 괜찮겠으나, 믿을 수 있는 그룹이 아닌 불특정 다수 그룹이 사용할 것이라면, &lt;code class=&quot;highlighter-rouge&quot;&gt;eval()&lt;/code&gt;의 사용을 최소한으로 하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;ast.literal_eval()&lt;/code&gt;과 같은 대체 기능을 사용해야 합니다.&lt;/p&gt;
+</description>
+        
+        <pubDate>Sun, 02 Feb 2020 07:00:00 +0900</pubDate>
+        <link>
+        http://0.0.0.0:7070/literal-eval-str-expression</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/literal-eval-str-expression</guid>
+      </item>
+      
     
       
       <item>
@@ -64,8 +239,8 @@
         
         <pubDate>Tue, 16 Jul 2019 07:30:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/itertools-chain-list-concatenation-append</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/itertools-chain-list-concatenation-append</guid>
+        http://0.0.0.0:7070/itertools-chain-list-concatenation-append</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/itertools-chain-list-concatenation-append</guid>
       </item>
       
     
@@ -150,8 +325,8 @@
         
         <pubDate>Wed, 10 Jul 2019 07:30:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/defaultdict-rather-than-dict</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/defaultdict-rather-than-dict</guid>
+        http://0.0.0.0:7070/defaultdict-rather-than-dict</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/defaultdict-rather-than-dict</guid>
       </item>
       
     
@@ -247,8 +422,8 @@
         
         <pubDate>Tue, 09 Jul 2019 08:00:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/pandas-dataframe-settingwithcopywarning</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/pandas-dataframe-settingwithcopywarning</guid>
+        http://0.0.0.0:7070/pandas-dataframe-settingwithcopywarning</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/pandas-dataframe-settingwithcopywarning</guid>
       </item>
       
     
@@ -333,8 +508,8 @@
         
         <pubDate>Sat, 06 Jul 2019 07:00:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/python-star-asterisk-args-kwargs</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-star-asterisk-args-kwargs</guid>
+        http://0.0.0.0:7070/python-star-asterisk-args-kwargs</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/python-star-asterisk-args-kwargs</guid>
       </item>
       
     
@@ -396,8 +571,8 @@
         
         <pubDate>Thu, 02 May 2019 10:35:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/python-re-named-group</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-re-named-group</guid>
+        http://0.0.0.0:7070/python-re-named-group</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/python-re-named-group</guid>
       </item>
       
     
@@ -458,8 +633,8 @@
         
         <pubDate>Wed, 24 Apr 2019 20:30:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/python-inline-if-statement-elif</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-inline-if-statement-elif</guid>
+        http://0.0.0.0:7070/python-inline-if-statement-elif</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/python-inline-if-statement-elif</guid>
       </item>
       
     
@@ -524,8 +699,8 @@
         
         <pubDate>Sat, 20 Apr 2019 21:30:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/python-2d-list-certain-column</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-2d-list-certain-column</guid>
+        http://0.0.0.0:7070/python-2d-list-certain-column</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/python-2d-list-certain-column</guid>
       </item>
       
     
@@ -559,8 +734,8 @@ jupyter.exe notebook
         
         <pubDate>Thu, 18 Apr 2019 07:30:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/jupyter-notebook-conda-activate</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/jupyter-notebook-conda-activate</guid>
+        http://0.0.0.0:7070/jupyter-notebook-conda-activate</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/jupyter-notebook-conda-activate</guid>
       </item>
       
     
@@ -590,8 +765,8 @@ jupyter.exe notebook
         
         <pubDate>Mon, 15 Apr 2019 08:30:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/dict-to-var</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/dict-to-var</guid>
+        http://0.0.0.0:7070/dict-to-var</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/dict-to-var</guid>
       </item>
       
     
@@ -637,8 +812,8 @@ jupyter.exe notebook
         
         <pubDate>Sat, 13 Apr 2019 08:55:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/numpy-argmax-argmin-argwhere</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/numpy-argmax-argmin-argwhere</guid>
+        http://0.0.0.0:7070/numpy-argmax-argmin-argwhere</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/numpy-argmax-argmin-argwhere</guid>
       </item>
       
     
@@ -679,8 +854,8 @@ dtype: object
         
         <pubDate>Wed, 23 Jan 2019 08:30:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/pandas-contains-multiple</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/pandas-contains-multiple</guid>
+        http://0.0.0.0:7070/pandas-contains-multiple</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/pandas-contains-multiple</guid>
       </item>
       
     
@@ -714,8 +889,8 @@ sudo bundle exec jekyll serve --host 0.0.0.0 --port 7070
         
         <pubDate>Thu, 17 Jan 2019 07:30:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/jekyll-sitemap-plugin-installation</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/jekyll-sitemap-plugin-installation</guid>
+        http://0.0.0.0:7070/jekyll-sitemap-plugin-installation</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/jekyll-sitemap-plugin-installation</guid>
       </item>
       
     
@@ -766,8 +941,8 @@ df_accum = pd.concat(list_of_df) # list 속 DataFrame들을 일괄 병합함.
         
         <pubDate>Tue, 15 Jan 2019 07:00:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/pandas-dataframe-concat-efficiently</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/pandas-dataframe-concat-efficiently</guid>
+        http://0.0.0.0:7070/pandas-dataframe-concat-efficiently</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/pandas-dataframe-concat-efficiently</guid>
       </item>
       
     
@@ -814,8 +989,8 @@ print(a[-1:-3:-1]) # [9, 8]
         
         <pubDate>Thu, 27 Sep 2018 09:00:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/python-list-indexing-slicing-using-minus-integer</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-list-indexing-slicing-using-minus-integer</guid>
+        http://0.0.0.0:7070/python-list-indexing-slicing-using-minus-integer</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/python-list-indexing-slicing-using-minus-integer</guid>
       </item>
       
     
@@ -863,8 +1038,8 @@ serve(wsgiapp, host='0.0.0.0', port=8080) # wsgiapp: WSGI 사양을 준수한 �
         
         <pubDate>Fri, 21 Sep 2018 09:00:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/making-windows-web-server-not-stopping</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/making-windows-web-server-not-stopping</guid>
+        http://0.0.0.0:7070/making-windows-web-server-not-stopping</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/making-windows-web-server-not-stopping</guid>
       </item>
       
     
@@ -966,8 +1141,8 @@ git push -f origin master
         
         <pubDate>Sat, 15 Sep 2018 09:00:00 +0900</pubDate>
         <link>
-        https://emilkwak.github.io/jekyll-github-pages</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/jekyll-github-pages</guid>
+        http://0.0.0.0:7070/jekyll-github-pages</link>
+        <guid isPermaLink="true">http://0.0.0.0:7070/jekyll-github-pages</guid>
       </item>
       
     
