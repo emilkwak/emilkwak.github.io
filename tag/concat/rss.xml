@@ -5,7 +5,7 @@
    
       <title>emilkwak.github.io/</title>
    
-   <link>http://0.0.0.0:7070</link>
+   <link>https://emilkwak.github.io</link>
    <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
    <language>en-uk</language>
    <managingEditor> </managingEditor>
@@ -15,7 +15,7 @@
 	  <title>메모리 덜 쓰고 Pandas DataFrame 병합을 빠르게 하는 방법(여러 개의 용량 큰 파일)</title>
 	  <link>//pandas-dataframe-concat-efficiently</link>
 	  <author></author>
-	  <pubDate>2019-01-15T07:00:00+09:00</pubDate>
+	  <pubDate>2019-01-14T22:00:00+00:00</pubDate>
 	  <guid>//pandas-dataframe-concat-efficiently</guid>
 	  <description><![CDATA[
 	     <p>여러 개의 Excel 파일(또는 csv, pickle 등)로부터 같은 형태의 DataFrame을 차례로 읽어 들여 하나의 큰 DataFrame으로 합치려 한다고 합시다. 각 Excel 파일의 DataFrame의 컬럼 목록은 모두 같다고 하죠. 실제 사례를 상상해 보면, 날짜별, 시간별 로그 데이터가 파일 형태로 저장되어 있는 경우를 생각해 볼 수 있겠네요.</p>

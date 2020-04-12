@@ -4,7 +4,319 @@
     <title>직장인을 위한 Python - Articles</title>
     <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
     <link>
-    http://0.0.0.0:7070</link>
+    https://emilkwak.github.io</link>
+    
+      
+      <item>
+        <title>NumPy(넘파이) PyInstaller 패키징 시 실행파일(exe) 용량이 너무 큰 경우 해결책</title>
+        
+          <description>&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt;는 Python 프로그램 배포를 목적으로 많은 분들이 사용하는 패키지입니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;cx_Freeze&lt;/code&gt;나 &lt;code class=&quot;highlighter-rouge&quot;&gt;py2exe&lt;/code&gt; 등 같은 용도의 패키지가 대체재로 존재하지만 사용법이 간단해 더 인기가 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;는 Python 사용자라면 한번쯤 사용해 본 패키지일 것입니다. Python이 대중적인 데이터 분석용 언어로 각광받게 만든 패키지 중 하나가 &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;라 보아도 무방하지요.(다른 하나는 &lt;code class=&quot;highlighter-rouge&quot;&gt;pandas&lt;/code&gt;라 할 수 있지요.)&lt;/p&gt;
+
+&lt;p&gt;Windows 10 환경에서 &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;를 사용하는 Python 프로그램을 작성한 후 &lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt;로 패키징하면 패키징된 용량이 지나치게 큰 경향이 있어 의아한 분들이 많을 것입니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;를 포함해 두세 개 패키지만 &lt;code class=&quot;highlighter-rouge&quot;&gt;import&lt;/code&gt;했는데 용량이 200 ~ 300MB라니, 당혹스럽지 않을 수 없습니다.&lt;/p&gt;
+
+&lt;p&gt;혹시, Windows 10에 Ananconda나 Miniconda를 설치해 쓰고 계신 가운데, &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt; 패키지를 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda&lt;/code&gt;로 설치하지는 않았나요? Anaconda 또는 Miniconda를 쓰는 것은 상관 없지만, &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda install numpy&lt;/code&gt;로 설치한 경우 &lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt; 패키징 용량이 매우 커진다는 사실을 발견했습니다. 반면, &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;로 설치하면 적정한 수준의 용량으로 패키징이 가능합니다.&lt;/p&gt;
+
+&lt;p&gt;이는 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda install numpy&lt;/code&gt; 시 mkl 계열의 dll 파일이 대거 패키징되기 때문입니다. 한편, 똑같은 &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;로 설치하면 mkl 계열 dll이 제외되는데 덕분에 용량을 덜 차지하지요. 실제 용량 차이가 어느정도까지 나는지 실험을 통해 알아봤습니다.&lt;/p&gt;
+
+&lt;p&gt;실험의 공통적인 시스템 환경은 다음과 같습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Windows 10, 64비트, Anaconda 3 설치&lt;/li&gt;
+  &lt;li&gt;Python 3.7&lt;/li&gt;
+  &lt;li&gt;Python 가상환경 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda create&lt;/code&gt;로 생성&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt;: 3.6&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;conda install&lt;/code&gt;: 1.18.1&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pip install&lt;/code&gt;: 1.18.2&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;실험-1-conda-install-numpy-후-pyinstaller-패키징&quot;&gt;실험 1: &lt;code class=&quot;highlighter-rouge&quot;&gt;conda install numpy&lt;/code&gt; 후 &lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt; 패키징&lt;/h2&gt;
+
+&lt;p&gt;우선 Python 3.7 기준의 Python 가상환경을 만들고, &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda install&lt;/code&gt;로 설치합니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt;까지 설치(&lt;code class=&quot;highlighter-rouge&quot;&gt;pip install&lt;/code&gt;로)합니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda create -n numpy_from_conda python=3.7
+conda activate numpy_from_conda
+conda install numpy
+pip install pyinstaller
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이제 &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;를 쓰는 간단한 Python 프로그램을 작성합니다. 임의의 행렬 두 개를 행렬곱하는 예제입니다. 오로지 &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;만 &lt;code class=&quot;highlighter-rouge&quot;&gt;import&lt;/code&gt;해 사용한 간단한 소스코드라고 할 수 있지요. 똑같은 예제를 두 번째 &lt;code class=&quot;highlighter-rouge&quot;&gt;pip install numpy&lt;/code&gt; 실험에도 사용할 예정입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# matmul_example.py&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mat_a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mat_b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matmul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mat_a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mat_b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이제 &lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt;로 패키징을 해 보겠습니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;--onefile&lt;/code&gt; 옵션을 적용한 경우와 그렇지 않은 경우, 두 경우를 모두 보겠습니다. 참고로, &lt;code class=&quot;highlighter-rouge&quot;&gt;numpy_from_conda&lt;/code&gt;로 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda activate&lt;/code&gt;된 상태를 유지해야 합니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pyinstaller --onefile matmul_example.py
+dir dist\matmul_example.exe
+
+2020-04-11  오후 ..:..       206,681,582 matmul_example.exe
+               1개 파일         206,681,582 바이트
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--onefile&lt;/code&gt; 옵션 없이 패키징하면 어떻게 될까요?&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pyinstaller --onefile matmul_example.py
+dir dist\matmul_example
+
+2020-04-11  오후 ..:..    &amp;lt;DIR&amp;gt;          .
+2020-04-11  오후 ..:..    &amp;lt;DIR&amp;gt;          ..
+2020-04-11  오후 ..:..         3,554,703 matmul_example.exe
+2020-04-11  오후 ..:..             1,037 matmul_example.exe.manifest
+2020-04-03  오후 ..:..            19,208 api-ms-win-core-console-l1-1-0.dll
+2020-04-03  오후 ..:..            18,696 api-ms-win-core-datetime-l1-1-0.dll
+2020-04-03  오후 ..:..            18,696 api-ms-win-core-debug-l1-1-0.dll
+.......
+2020-04-11  오후 ..:..    &amp;lt;DIR&amp;gt;          mkl
+2020-04-06  오전 ..:..        43,504,000 mkl_avx.dll
+2020-04-06  오전 ..:..        40,924,032 mkl_avx2.dll
+2020-04-06  오전 ..:..        51,629,952 mkl_avx512.dll
+.......
+2020-04-06  오전 ..:..        71,339,904 mkl_core.dll
+2020-04-06  오전 ..:..        35,575,168 mkl_def.dll
+2020-04-06  오전 ..:..        32,865,664 mkl_intel_thread.dll
+2020-04-06  오전 ..:..        41,196,416 mkl_mc.dll
+2020-04-06  오전 ..:..        42,454,400 mkl_mc3.dll
+.......
+2020-04-06  오전 ..:..        28,328,832 mkl_pgi_thread.dll
+2020-04-06  오전 ..:..        15,146,880 mkl_rt.dll
+2020-04-06  오전 ..:..         7,586,176 mkl_scalapack_ilp64.dll
+2020-04-06  오전 ..:..         7,527,296 mkl_scalapack_lp64.dll
+2020-04-06  오전 ..:..        18,359,168 mkl_sequential.dll
+2020-04-06  오전 ..:..        20,887,936 mkl_tbb_thread.dll
+2020-04-06  오전 ..:..        13,028,224 mkl_vml_avx.dll
+2020-04-06  오전 ..:..        12,949,376 mkl_vml_avx2.dll
+2020-04-06  오전 ..:..        12,604,800 mkl_vml_avx512.dll
+2020-04-06  오전 ..:..         6,645,632 mkl_vml_cmpt.dll
+2020-04-06  오전 ..:..         6,877,056 mkl_vml_def.dll
+2020-04-06  오전 ..:..        12,032,896 mkl_vml_mc.dll
+2020-04-06  오전 ..:..        11,888,512 mkl_vml_mc2.dll
+2020-04-06  오전 ..:..        11,977,088 mkl_vml_mc3.dll
+...
+              91개 파일         565,684,976 바이트
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;요컨대 &lt;code class=&quot;highlighter-rouge&quot;&gt;--onefile&lt;/code&gt; 때는 206MB, &lt;code class=&quot;highlighter-rouge&quot;&gt;--onefile&lt;/code&gt; 아닐 때는 무려 565MB로 패키징됩니다. 행렬곱 하나 하는 장난감 프로그램의 크기가 이정도라는 게 말이 안되지요? mkl 계열 dll들이 큰 용량의 주범인데 이것들을 어떻게 제외시킬 수 있을까요?&lt;/p&gt;
+
+&lt;h2 id=&quot;실험-2-pip-install-numpy-후-pyinstaller-패키징&quot;&gt;실험 2: &lt;code class=&quot;highlighter-rouge&quot;&gt;pip install numpy&lt;/code&gt; 후 &lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt; 패키징&lt;/h2&gt;
+
+&lt;p&gt;이번에는 Python 3.7 기준 가상환경을 만들고, &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;pip install&lt;/code&gt;로 설치합니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt;까지 설치합니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;conda create -n numpy_from_pip python=3.7
+conda activate numpy_from_pip
+pip install numpy pyinstaller
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;첫 번째 실험(&lt;code class=&quot;highlighter-rouge&quot;&gt;conda install numpy&lt;/code&gt;)때의 예제 프로그램을 &lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt;로 패키징해 보겠습니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;numpy_from_pip&lt;/code&gt;로 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda activate&lt;/code&gt;된 상태여야 합니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pyinstaller --onefile matmul_example.py
+dir dist\matmul_example.exe
+
+2020-04-11  오후 ..:..        19,334,062 matmul_example.exe
+               1개 파일          19,334,062 바이트
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--onefile&lt;/code&gt; 옵션을 적용해 보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pyinstaller --onefile matmul_example.py
+dir dist\matmul_example
+
+2020-04-11  오후 ..:..    &amp;lt;DIR&amp;gt;          .
+2020-04-11  오후 ..:..    &amp;lt;DIR&amp;gt;          ..
+2020-04-11  오후 ..:..         3,554,246 matmul_example.exe
+2020-04-11  오후 ..:..             1,037 matmul_example.exe.manifest
+2020-04-03  오후 ..:..            19,208 api-ms-win-core-console-l1-1-0.dll
+2020-04-03  오후 ..:..            18,696 api-ms-win-core-datetime-l1-1-0.dll
+2020-04-03  오후 ..:..            18,696 api-ms-win-core-debug-l1-1-0.dll
+...
+              59개 파일          49,431,319 바이트
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;--onefile&lt;/code&gt; 때는 19MB, &lt;code class=&quot;highlighter-rouge&quot;&gt;--onefile&lt;/code&gt; 아닐 때는 49MB로 패키징됩니다. 뭔가 딱 예상했던, 적정해 보이는 크기이죠? mkl 계열 dll이 하나도 생성되지 않았음을 볼 수 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dir dist\matmul_example
+
+파일을 찾을 수 없습니다.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt;를 사용한 Python 프로그램 패키징 배포 시 용량이 과도하게 크다 싶으면 &lt;code class=&quot;highlighter-rouge&quot;&gt;NumPy&lt;/code&gt;가 &lt;code class=&quot;highlighter-rouge&quot;&gt;conda&lt;/code&gt;로 설치되었는지 확인해 보시고 그렇다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;로 재설치해 보시기 바랍니다. 매우 간단한 행렬곱 프로그램을 패키징하는데, &lt;code class=&quot;highlighter-rouge&quot;&gt;--onefile&lt;/code&gt; 기준으로 19MB면 되었을 것이 206MB가 될 뻔 했으니까요.(&lt;code class=&quot;highlighter-rouge&quot;&gt;--onefile&lt;/code&gt; 아닌 경우에는 더 심각합니다. 49MB vs. 565MB이니까요.)&lt;/p&gt;
+
+&lt;h2 id=&quot;참고자료&quot;&gt;참고자료&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/pyinstaller/pyinstaller/issues/2270&quot;&gt;MKL DLLs cannot be excluded using –exclude-module&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        
+        <pubDate>Sun, 12 Apr 2020 15:00:00 +0000</pubDate>
+        <link>
+        https://emilkwak.github.io/numpy-pyinstaller-size-too-big</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/numpy-pyinstaller-size-too-big</guid>
+      </item>
+      
+    
+      
+      <item>
+        <title>DataFrame(데이터프레임)에 list(리스트)를 행 추가하기 &amp; ignore_index 관련 TypeError 처리</title>
+        
+          <description>&lt;p&gt;이미 있는 &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;(데이터프레임)에 행(row)으로 추가할 데이터가 &lt;code class=&quot;highlighter-rouge&quot;&gt;list&lt;/code&gt;(리스트)로 주어져 있다면 어떻게 해야 할까요? 데이터 재료부터 준비해 봅시다.&lt;/p&gt;
+
+&lt;p&gt;참고로, 편의상 &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;을 출력하기 위해 &lt;code class=&quot;highlighter-rouge&quot;&gt;tabulate&lt;/code&gt; 패키지를 활용한 &lt;code class=&quot;highlighter-rouge&quot;&gt;print_df()&lt;/code&gt;를 정의해 사용하였습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tabulate&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tabulate&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# DataFrame 출력을 위해 tabulate 패키지 활용&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tabulate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'keys'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tablefmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'psql'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 이미 있던 DataFrame&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'abcde'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
++----+-----+-----+-----+-----+-----+
+|    |   a |   b |   c |   d |   e |
+|----+-----+-----+-----+-----+-----|
+|  0 |   0 |   1 |   2 |   3 |   4 |
+|  1 |   5 |   6 |   7 |   8 |   9 |
+|  2 |  10 |  11 |  12 |  13 |  14 |
+|  3 |  15 |  16 |  17 |  18 |  19 |
+|  4 |  20 |  21 |  22 |  23 |  24 |
++----+-----+-----+-----+-----+-----+
+'''&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 행으로 추가할 list&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;101&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;102&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;103&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;104&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;105&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
+[101, 102 103, 104, 105]
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;쉬운 생각으로, 다음과 같이 하면 될 것 같지요? 그런데 그렇게 하면 조금 이상한 결과가 나옵니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
++----+-----+-----+-----+-----+-----+-----+
+|----+-----+-----+-----+-----+-----+-----|
+|  0 |   0 |   1 |   2 |   3 |   4 | nan |
+|  1 |   5 |   6 |   7 |   8 |   9 | nan |
+|  2 |  10 |  11 |  12 |  13 |  14 | nan |
+|  3 |  15 |  16 |  17 |  18 |  19 | nan |
+|  4 |  20 |  21 |  22 |  23 |  24 | nan |
+|  0 | nan | nan | nan | nan | nan | 101 |
+|  1 | nan | nan | nan | nan | nan | 102 |
+|  2 | nan | nan | nan | nan | nan | 103 |
+|  3 | nan | nan | nan | nan | nan | 104 |
+|  4 | nan | nan | nan | nan | nan | 105 |
++----+-----+-----+-----+-----+-----+-----+
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;왜 이럴까요? &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;에 &lt;code class=&quot;highlighter-rouge&quot;&gt;list&lt;/code&gt;가 &lt;code class=&quot;highlighter-rouge&quot;&gt;append()&lt;/code&gt;로 주어지면 &lt;code class=&quot;highlighter-rouge&quot;&gt;pandas&lt;/code&gt;는 이를 행이 아닌 열 데이터로 인식하기 때문입니다. 그렇다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;list&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;Series&lt;/code&gt;(시리즈)로 만들어서 해보면 어떨까요?&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# TypeError: Can only append a Series if ignore_index=True or if the Series has a name&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;잠깐! &lt;code class=&quot;highlighter-rouge&quot;&gt;TypeError&lt;/code&gt;가 발생했군요. &lt;code class=&quot;highlighter-rouge&quot;&gt;TypeError: Can only append a Series if ignore_index=True or if the Series has a name&lt;/code&gt;가 의미하는 것은 무엇일까요? 새로 추가되는 &lt;code class=&quot;highlighter-rouge&quot;&gt;Series&lt;/code&gt;는 행 데이터이기는 하지만 행의 이름으로서의 인덱스(index)가 없는 데이터이기 때문입니다. 인덱스를 명시적으로 부여하거나 ‘아무 인덱스가 부여되도 상관 없으니 무시하라’는 의사를 표시해야 합니다.&lt;/p&gt;
+
+&lt;p&gt;인덱스를 명시적으로 주려면 &lt;code class=&quot;highlighter-rouge&quot;&gt;Series&lt;/code&gt;에 &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt;을 부여해야 합니다. 즉, &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;에 &lt;code class=&quot;highlighter-rouge&quot;&gt;Series&lt;/code&gt;가 &lt;code class=&quot;highlighter-rouge&quot;&gt;append()&lt;/code&gt;될 때 &lt;code class=&quot;highlighter-rouge&quot;&gt;Series&lt;/code&gt;가 갖고 있는 &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt;이 새로 만들어질 행의 인덱스가 됩니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
++----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+|    |   a |   b |   c |   d |   e |   0 |   1 |   2 |   3 |   4 |
+|----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+|  0 |   0 |   1 |   2 |   3 |   4 | nan | nan | nan | nan | nan |
+|  1 |   5 |   6 |   7 |   8 |   9 | nan | nan | nan | nan | nan |
+|  2 |  10 |  11 |  12 |  13 |  14 | nan | nan | nan | nan | nan |
+|  3 |  15 |  16 |  17 |  18 |  19 | nan | nan | nan | nan | nan |
+|  4 |  20 |  21 |  22 |  23 |  24 | nan | nan | nan | nan | nan |
+| 10 | nan | nan | nan | nan | nan | 101 | 102 | 103 | 104 | 105 |
++----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt;을 임의로 &lt;code class=&quot;highlighter-rouge&quot;&gt;10&lt;/code&gt;으로 줬더니 기존 &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;의 인덱스와 연결성이 깨지는 결번 현상이 발생했습니다. 다른 방법, 즉, ‘아무 인덱스가 부여되도 상관 없으니 무시하라’는 의사를 표시하는 방법을 쓰면 결번 현상을 막을 수 있습니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;append()&lt;/code&gt;에 &lt;code class=&quot;highlighter-rouge&quot;&gt;ignore_index=True&lt;/code&gt;를 인자로 주면 됩니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ignore_index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
++----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+|    |   a |   b |   c |   d |   e |   0 |   1 |   2 |   3 |   4 |
+|----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----|
+|  0 |   0 |   1 |   2 |   3 |   4 | nan | nan | nan | nan | nan |
+|  1 |   5 |   6 |   7 |   8 |   9 | nan | nan | nan | nan | nan |
+|  2 |  10 |  11 |  12 |  13 |  14 | nan | nan | nan | nan | nan |
+|  3 |  15 |  16 |  17 |  18 |  19 | nan | nan | nan | nan | nan |
+|  4 |  20 |  21 |  22 |  23 |  24 | nan | nan | nan | nan | nan |
+|  5 | nan | nan | nan | nan | nan | 101 | 102 | 103 | 104 | 105 |
++----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;인덱스 결번 현상은 없어졌습니다. 자연스럽게 기존 &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;의 최대 인덱스를 1 증가(increment)시켜 새 인덱스로 삼았습니다. 그런데 해결되지 않은 문제가 남았습니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;의 헤더는 a ~ e의 알파벳이었죠? 그런데 새로운 행은 0 ~ 4라는 숫자 헤더를 불필요하게 만들었습니다. 의도한 결과가 아닐 뿐더러, 쓸모 없는 &lt;code class=&quot;highlighter-rouge&quot;&gt;nan&lt;/code&gt; 데이터도 무수히 생겨났지요. 아래처럼, &lt;code class=&quot;highlighter-rouge&quot;&gt;Series&lt;/code&gt;에 인덱스를 설정해 &lt;code class=&quot;highlighter-rouge&quot;&gt;append()&lt;/code&gt;하면 해결이 됩니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df6&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ignore_index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
++----+-----+-----+-----+-----+-----+
+|    |   a |   b |   c |   d |   e |
+|----+-----+-----+-----+-----+-----|
+|  0 |   0 |   1 |   2 |   3 |   4 |
+|  1 |   5 |   6 |   7 |   8 |   9 |
+|  2 |  10 |  11 |  12 |  13 |  14 |
+|  3 |  15 |  16 |  17 |  18 |  19 |
+|  4 |  20 |  21 |  22 |  23 |  24 |
+|  5 | 101 | 102 | 103 | 104 | 105 |
++----+-----+-----+-----+-----+-----+
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;깔끔하게 행 데이터로 삽입이 되었지요? 번외로 아래와 같은 트릭을 쓸 수도 있습니다. 위에서 논의한 방법과는 전혀 다른 방법입니다. 두 가지 방법 중 개인적으로 더 편리한 방법을 사용하면 될 것 같습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ignore_index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;'''
++----+-----+-----+-----+-----+-----+
+|    |   a |   b |   c |   d |   e |
+|----+-----+-----+-----+-----+-----|
+|  0 |   0 |   1 |   2 |   3 |   4 |
+|  1 |   5 |   6 |   7 |   8 |   9 |
+|  2 |  10 |  11 |  12 |  13 |  14 |
+|  3 |  15 |  16 |  17 |  18 |  19 |
+|  4 |  20 |  21 |  22 |  23 |  24 |
+|  5 | 101 | 102 | 103 | 104 | 105 |
++----+-----+-----+-----+-----+-----+
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;제대로 된 결과가 역시 잘 나왔습니다. 마지막 방법의 원리를 간단히 설명해 볼까요? 우선 기존 &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;의 마지막 행을 그대로 복제해 덧붙입니다. 덧붙여진 마지막 행에 &lt;code class=&quot;highlighter-rouge&quot;&gt;list&lt;/code&gt;를 할당(assign)합니다. 마지막 행을 복제한 목적은 새로운 &lt;code class=&quot;highlighter-rouge&quot;&gt;list&lt;/code&gt;가 삽입될 공간을 마련해 준 것뿐이지요.&lt;/p&gt;
+
+&lt;p&gt;메커니즘은 간단하지만, 앞서 위에서 설명한 방법과 비교할 때 ‘코딩량’은 크게 차이나지는 않습니다. 결국, 각자 스타일에 맞는 방법을 택하면 되겠지요?&lt;/p&gt;
+</description>
+        
+        <pubDate>Sun, 12 Apr 2020 15:00:00 +0000</pubDate>
+        <link>
+        https://emilkwak.github.io/dataframe-list-row-append-ignore-index</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/dataframe-list-row-append-ignore-index</guid>
+      </item>
+      
     
       
       <item>
@@ -117,10 +429,10 @@ display(df)
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;을 인덱싱, 셀렉팅할 경우 원래의 &lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;이 아닌 그것의 복사본을 생성해 반환하게 됩니다. 따라서 그것에 수정을 가해도 원본이 바뀌지는 않는 것입니다. 한편, &lt;code class=&quot;highlighter-rouge&quot;&gt;mask&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;loc[]&lt;/code&gt;을 이용하면 복사본을 생성하지 않고 원본을 유지하고 수정도 원본에 직접 가할 수 있습니다.&lt;/p&gt;
 </description>
         
-        <pubDate>Mon, 03 Feb 2020 08:00:00 +0900</pubDate>
+        <pubDate>Sun, 02 Feb 2020 23:00:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/dataframe-update-after-indexing-selecting</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/dataframe-update-after-indexing-selecting</guid>
+        https://emilkwak.github.io/dataframe-update-after-indexing-selecting</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/dataframe-update-after-indexing-selecting</guid>
       </item>
       
     
@@ -174,10 +486,10 @@ display(df)
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;eval()&lt;/code&gt;이 내장 함수이기도 하고 Python이 아닌 다른 언어에도 보통 등장하는 기능이라, 무심코 사용하는 경향이 있습니다. 물론 개인적인 용도로 사용할 프로그램이거나 믿을 수 있는 사용자들만 사용할 프로그램이라면 괜찮겠으나, 믿을 수 있는 그룹이 아닌 불특정 다수 그룹이 사용할 것이라면, &lt;code class=&quot;highlighter-rouge&quot;&gt;eval()&lt;/code&gt;의 사용을 최소한으로 하고 &lt;code class=&quot;highlighter-rouge&quot;&gt;ast.literal_eval()&lt;/code&gt;과 같은 대체 기능을 사용해야 합니다.&lt;/p&gt;
 </description>
         
-        <pubDate>Sun, 02 Feb 2020 07:00:00 +0900</pubDate>
+        <pubDate>Sat, 01 Feb 2020 22:00:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/literal-eval-str-expression</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/literal-eval-str-expression</guid>
+        https://emilkwak.github.io/literal-eval-str-expression</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/literal-eval-str-expression</guid>
       </item>
       
     
@@ -237,10 +549,10 @@ display(df)
 &lt;p&gt;별것 아닌 것 같아도, 때때로 수백, 수천 개의 리스트를 붙인 후 가공해야 할 일이 종종 생깁니다. 덧셈 기호를 쓰더라도 어떻게든 할 수는 있지만, 보다 Python스럽게 &lt;code class=&quot;highlighter-rouge&quot;&gt;itertools&lt;/code&gt;의 &lt;code class=&quot;highlighter-rouge&quot;&gt;chain&lt;/code&gt;을 써 보는 것은 어떨까요?&lt;/p&gt;
 </description>
         
-        <pubDate>Tue, 16 Jul 2019 07:30:00 +0900</pubDate>
+        <pubDate>Mon, 15 Jul 2019 22:30:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/itertools-chain-list-concatenation-append</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/itertools-chain-list-concatenation-append</guid>
+        https://emilkwak.github.io/itertools-chain-list-concatenation-append</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/itertools-chain-list-concatenation-append</guid>
       </item>
       
     
@@ -323,10 +635,10 @@ display(df)
 &lt;p&gt;역시, &lt;code class=&quot;highlighter-rouge&quot;&gt;defaultdict&lt;/code&gt;를 사용한 코드가 훨씬 읽기 좋다는 점을 알 수 있겠죠? 어떤가요? &lt;code class=&quot;highlighter-rouge&quot;&gt;dict&lt;/code&gt; 대신 무조건 &lt;code class=&quot;highlighter-rouge&quot;&gt;defaultdict&lt;/code&gt;를 사용할 필요는 없습니다. 그렇지만 위에서 살표본 예시들과 비슷한 상황에서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;dict&lt;/code&gt; 대신 &lt;code class=&quot;highlighter-rouge&quot;&gt;defaultdict&lt;/code&gt;를 사용해 훨씬 읽기 좋고 관리하기 편한 코드를 작성할 수 있습니다.&lt;/p&gt;
 </description>
         
-        <pubDate>Wed, 10 Jul 2019 07:30:00 +0900</pubDate>
+        <pubDate>Tue, 09 Jul 2019 22:30:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/defaultdict-rather-than-dict</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/defaultdict-rather-than-dict</guid>
+        https://emilkwak.github.io/defaultdict-rather-than-dict</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/defaultdict-rather-than-dict</guid>
       </item>
       
     
@@ -420,10 +732,10 @@ display(df)
 
 </description>
         
-        <pubDate>Tue, 09 Jul 2019 08:00:00 +0900</pubDate>
+        <pubDate>Mon, 08 Jul 2019 23:00:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/pandas-dataframe-settingwithcopywarning</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/pandas-dataframe-settingwithcopywarning</guid>
+        https://emilkwak.github.io/pandas-dataframe-settingwithcopywarning</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/pandas-dataframe-settingwithcopywarning</guid>
       </item>
       
     
@@ -506,10 +818,10 @@ display(df)
 &lt;p&gt;https://www.geeksforgeeks.org/args-kwargs-python/&lt;/p&gt;
 </description>
         
-        <pubDate>Sat, 06 Jul 2019 07:00:00 +0900</pubDate>
+        <pubDate>Fri, 05 Jul 2019 22:00:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/python-star-asterisk-args-kwargs</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/python-star-asterisk-args-kwargs</guid>
+        https://emilkwak.github.io/python-star-asterisk-args-kwargs</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-star-asterisk-args-kwargs</guid>
       </item>
       
     
@@ -569,10 +881,10 @@ display(df)
 &lt;p&gt;위 코드를 보면, &lt;code class=&quot;highlighter-rouge&quot;&gt;result_a&lt;/code&gt;에서는 정규표현식의 앞부분에서 찾은 패턴 Michael이 뒤에 다시 등장하여 정상적으로 탐색(search)이 된 것을 알 수 있습니다. 반면 &lt;code class=&quot;highlighter-rouge&quot;&gt;result_b&lt;/code&gt;에서는 앞부분 패턴은 Thomas지만 뒷부분 패턴은 Paul입니다. 앞뒤 패턴이 달라 탐색이 실패한 것이지요. 참고로, re 라이브러리의 정규표현식 결과를 &lt;code class=&quot;highlighter-rouge&quot;&gt;bool()&lt;/code&gt;로 캐스팅(casting)하면, 패턴이 찾아진 경우 True, 아닌 경우 False를 반환합니다.&lt;/p&gt;
 </description>
         
-        <pubDate>Thu, 02 May 2019 10:35:00 +0900</pubDate>
+        <pubDate>Thu, 02 May 2019 01:35:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/python-re-named-group</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/python-re-named-group</guid>
+        https://emilkwak.github.io/python-re-named-group</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-re-named-group</guid>
       </item>
       
     
@@ -631,10 +943,10 @@ display(df)
 &lt;p&gt;앞서 보신 것처럼 elif의 표현이 많은 inline if절은 가독성이 떨어집니다. 이를 항상 유념하고 사용하면 보다 좋겠지요?&lt;/p&gt;
 </description>
         
-        <pubDate>Wed, 24 Apr 2019 20:30:00 +0900</pubDate>
+        <pubDate>Wed, 24 Apr 2019 11:30:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/python-inline-if-statement-elif</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/python-inline-if-statement-elif</guid>
+        https://emilkwak.github.io/python-inline-if-statement-elif</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-inline-if-statement-elif</guid>
       </item>
       
     
@@ -697,10 +1009,10 @@ display(df)
 &lt;p&gt;Python 2차원 리스트의 특정 열만 골라서 선택적으로 취하는 방법을 알아 봤습니다. C/C++식 루프 돌리는 방법, inline for loop 이용한 방법, zip 이용한 방법, numpy나 pandas를 통한 방법이 있었습니다.&lt;/p&gt;
 </description>
         
-        <pubDate>Sat, 20 Apr 2019 21:30:00 +0900</pubDate>
+        <pubDate>Sat, 20 Apr 2019 12:30:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/python-2d-list-certain-column</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/python-2d-list-certain-column</guid>
+        https://emilkwak.github.io/python-2d-list-certain-column</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-2d-list-certain-column</guid>
       </item>
       
     
@@ -732,10 +1044,10 @@ jupyter.exe notebook
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;activate.bat&lt;/code&gt;을 하고 나면 명령 프롬프트 커서 행의 좌측에 ‘(base)’라는 표시가 생깁니다. conda 환경, 정확히는 conda의 base 환경이 갖춰진 상태임을 뜻합니다. 이 상태에서는 Jupyter Notebook뿐 아니라 Spyder도 오류 없이 정상 구동됩니다.&lt;/p&gt;
 </description>
         
-        <pubDate>Thu, 18 Apr 2019 07:30:00 +0900</pubDate>
+        <pubDate>Wed, 17 Apr 2019 22:30:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/jupyter-notebook-conda-activate</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/jupyter-notebook-conda-activate</guid>
+        https://emilkwak.github.io/jupyter-notebook-conda-activate</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/jupyter-notebook-conda-activate</guid>
       </item>
       
     
@@ -763,10 +1075,10 @@ jupyter.exe notebook
 &lt;p&gt;생각보다 간단하고 짧은 &lt;code class=&quot;highlighter-rouge&quot;&gt;for&lt;/code&gt; 루프만으로 딕셔너리 각 요소의 변수로의 전환이 가능하지요?&lt;/p&gt;
 </description>
         
-        <pubDate>Mon, 15 Apr 2019 08:30:00 +0900</pubDate>
+        <pubDate>Sun, 14 Apr 2019 23:30:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/dict-to-var</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/dict-to-var</guid>
+        https://emilkwak.github.io/dict-to-var</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/dict-to-var</guid>
       </item>
       
     
@@ -810,10 +1122,10 @@ jupyter.exe notebook
 &lt;p&gt;바로 위 코드에서 볼 수 있듯이 argwhere()의 용법은 argmax(), argmin()과 다소 다르니 참고하세요.&lt;/p&gt;
 </description>
         
-        <pubDate>Sat, 13 Apr 2019 08:55:00 +0900</pubDate>
+        <pubDate>Fri, 12 Apr 2019 23:55:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/numpy-argmax-argmin-argwhere</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/numpy-argmax-argmin-argwhere</guid>
+        https://emilkwak.github.io/numpy-argmax-argmin-argwhere</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/numpy-argmax-argmin-argwhere</guid>
       </item>
       
     
@@ -852,10 +1164,10 @@ dtype: object
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         
-        <pubDate>Wed, 23 Jan 2019 08:30:00 +0900</pubDate>
+        <pubDate>Tue, 22 Jan 2019 23:30:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/pandas-contains-multiple</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/pandas-contains-multiple</guid>
+        https://emilkwak.github.io/pandas-contains-multiple</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/pandas-contains-multiple</guid>
       </item>
       
     
@@ -887,10 +1199,10 @@ sudo bundle exec jekyll serve --host 0.0.0.0 --port 7070
 &lt;p&gt;이제 &lt;code class=&quot;highlighter-rouge&quot;&gt;your.jekyll.blog.url/sitemap.xml&lt;/code&gt;로 사이트맵 접속이 가능합니다. 이 주소를 Google Search Console에 사이트맵으로 제출하세요. 그러면 블로그 포스팅이 늘어날 때 Google이 보다 효율적으로 주소를 긁어 갈 수 있게 됩니다.&lt;/p&gt;
 </description>
         
-        <pubDate>Thu, 17 Jan 2019 07:30:00 +0900</pubDate>
+        <pubDate>Wed, 16 Jan 2019 22:30:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/jekyll-sitemap-plugin-installation</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/jekyll-sitemap-plugin-installation</guid>
+        https://emilkwak.github.io/jekyll-sitemap-plugin-installation</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/jekyll-sitemap-plugin-installation</guid>
       </item>
       
     
@@ -939,10 +1251,10 @@ df_accum = pd.concat(list_of_df) # list 속 DataFrame들을 일괄 병합함.
 &lt;p&gt;말씀드린 것처럼 메모리 효율성을 급격하게 높일 수는 없겠지만, 속도 향상은 확실히 느낄 수 있을 것입니다.&lt;/p&gt;
 </description>
         
-        <pubDate>Tue, 15 Jan 2019 07:00:00 +0900</pubDate>
+        <pubDate>Mon, 14 Jan 2019 22:00:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/pandas-dataframe-concat-efficiently</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/pandas-dataframe-concat-efficiently</guid>
+        https://emilkwak.github.io/pandas-dataframe-concat-efficiently</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/pandas-dataframe-concat-efficiently</guid>
       </item>
       
     
@@ -987,10 +1299,10 @@ print(a[-1:-3:-1]) # [9, 8]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         
-        <pubDate>Thu, 27 Sep 2018 09:00:00 +0900</pubDate>
+        <pubDate>Thu, 27 Sep 2018 00:00:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/python-list-indexing-slicing-using-minus-integer</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/python-list-indexing-slicing-using-minus-integer</guid>
+        https://emilkwak.github.io/python-list-indexing-slicing-using-minus-integer</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-list-indexing-slicing-using-minus-integer</guid>
       </item>
       
     
@@ -1036,10 +1348,10 @@ serve(wsgiapp, host='0.0.0.0', port=8080) # wsgiapp: WSGI 사양을 준수한 �
 &lt;p&gt;이와 같이 처리한 후 CLI로 웹 서버를 구동하면 입출력 버퍼링이 원인으로 추측되는 웹 서버 멈춤 현상이 발생하지 않게 됩니다. 사실 이 글의 목적은 이 방법을 알려 드리기 위함입니다. 결론에 앞서 서론이 너무 길었는데요, 서론 없이 바로 방법을 설명했다면 어떤 상황에 대한 공감이 잘 되지 않았을 것 같습니다.&lt;/p&gt;
 </description>
         
-        <pubDate>Fri, 21 Sep 2018 09:00:00 +0900</pubDate>
+        <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/making-windows-web-server-not-stopping</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/making-windows-web-server-not-stopping</guid>
+        https://emilkwak.github.io/making-windows-web-server-not-stopping</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/making-windows-web-server-not-stopping</guid>
       </item>
       
     
@@ -1139,10 +1451,10 @@ git push -f origin master
 &lt;/ul&gt;
 </description>
         
-        <pubDate>Sat, 15 Sep 2018 09:00:00 +0900</pubDate>
+        <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
         <link>
-        http://0.0.0.0:7070/jekyll-github-pages</link>
-        <guid isPermaLink="true">http://0.0.0.0:7070/jekyll-github-pages</guid>
+        https://emilkwak.github.io/jekyll-github-pages</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/jekyll-github-pages</guid>
       </item>
       
     

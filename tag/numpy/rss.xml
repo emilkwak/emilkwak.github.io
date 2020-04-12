@@ -5,7 +5,7 @@
    
       <title>emilkwak.github.io/</title>
    
-   <link>http://0.0.0.0:7070</link>
+   <link>https://emilkwak.github.io</link>
    <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
    <language>en-uk</language>
    <managingEditor> </managingEditor>
@@ -15,7 +15,7 @@
 	  <title>Python 2차원 리스트(list)의 특정 열(column) 골라 취하기</title>
 	  <link>//python-2d-list-certain-column</link>
 	  <author></author>
-	  <pubDate>2019-04-20T21:30:00+09:00</pubDate>
+	  <pubDate>2019-04-20T12:30:00+00:00</pubDate>
 	  <guid>//python-2d-list-certain-column</guid>
 	  <description><![CDATA[
 	     <p>C나 C++에서 2차원 배열(2-dimension array) 개념을 많이 사용합니다. 배열을 요소(element)로 하는 배열로 표현을 하지요. Python에서도 리스트(list)를 2차원으로 사용하여 2차원 배열과 동일한 효과를 낼 수 있습니다.</p>
@@ -79,7 +79,7 @@
 	  <title>Python 딕셔너리(dict) 키(key)를 변수로 만들기</title>
 	  <link>//dict-to-var</link>
 	  <author></author>
-	  <pubDate>2019-04-15T08:30:00+09:00</pubDate>
+	  <pubDate>2019-04-14T23:30:00+00:00</pubDate>
 	  <guid>//dict-to-var</guid>
 	  <description><![CDATA[
 	     <p>Python의 딕셔너리(<code class="highlighter-rouge">dict</code>)는 C++나 Java의 그것보다 훨씬 유연하고 사용하기도 편합니다. 딕셔너리가 Python에서 자주 사용되는 이유이기도 하지요. 딕셔너리를 선언하고 정의하는 방법도 매우 간단합니다.</p>
@@ -108,7 +108,7 @@
 	  <title>numpy의 argmax(), argmin() 그리고 argwhere() - 최대, 최소, 특정 값 찾기</title>
 	  <link>//numpy-argmax-argmin-argwhere</link>
 	  <author></author>
-	  <pubDate>2019-04-13T08:55:00+09:00</pubDate>
+	  <pubDate>2019-04-12T23:55:00+00:00</pubDate>
 	  <guid>//numpy-argmax-argmin-argwhere</guid>
 	  <description><![CDATA[
 	     <p>학부 저학년 시절 첫 프로그래밍 언어를 접할 때, 정수형 array에서 최대 값의 위치를 찾기 위해 자연스럽게 loop을 사용했습니다. 아래처럼 말이죠.</p>

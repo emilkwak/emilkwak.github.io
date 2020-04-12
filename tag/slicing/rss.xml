@@ -5,7 +5,7 @@
    
       <title>emilkwak.github.io/</title>
    
-   <link>http://0.0.0.0:7070</link>
+   <link>https://emilkwak.github.io</link>
    <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
    <language>en-uk</language>
    <managingEditor> </managingEditor>
@@ -15,7 +15,7 @@
 	  <title>Python 리스트 인덱싱 & 슬라이싱에 음의 값(마이너스) 사용해 보기</title>
 	  <link>//python-list-indexing-slicing-using-minus-integer</link>
 	  <author></author>
-	  <pubDate>2018-09-27T09:00:00+09:00</pubDate>
+	  <pubDate>2018-09-27T00:00:00+00:00</pubDate>
 	  <guid>//python-list-indexing-slicing-using-minus-integer</guid>
 	  <description><![CDATA[
 	     <p>Python의 가장 큰 매력 중 하나가 리스트 인덱싱과 슬라이싱(list slicing and slicing)입니다. 각괄호와 콜론을 이용해서 리스트의 원소나 리스트의 일부를 쉽게 취할 수 있지요. C나 Java에서 배열 인덱싱, 슬라이싱했던 것과 비교하면 가독성과 간결성 측면에서 비교가 되지 않습니다.</p>

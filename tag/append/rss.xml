@@ -5,7 +5,7 @@
    
       <title>emilkwak.github.io/</title>
    
-   <link>http://0.0.0.0:7070</link>
+   <link>https://emilkwak.github.io</link>
    <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
    <language>en-uk</language>
    <managingEditor> </managingEditor>
@@ -15,7 +15,7 @@
 	  <title>Python의 itertools의 chain()으로 리스트(list) 붙이기(접합, concatenation)</title>
 	  <link>//itertools-chain-list-concatenation-append</link>
 	  <author></author>
-	  <pubDate>2019-07-16T07:30:00+09:00</pubDate>
+	  <pubDate>2019-07-15T22:30:00+00:00</pubDate>
 	  <guid>//itertools-chain-list-concatenation-append</guid>
 	  <description><![CDATA[
 	     <p>Python의 매력은 그 어떤 프로그래밍 언어보다 리스트(<code class="highlighter-rouge">list</code>) 다루는 방법이 우아(elegant)한 데 있습니다. 리스트 컴프리헨션(list comprehension)은 물론이거니와, <code class="highlighter-rouge">itertools</code>, <code class="highlighter-rouge">numpy</code>, <code class="highlighter-rouge">pandas</code> 같은 라이브러리도 이 우아함에 한 몫씩 하지요.</p>

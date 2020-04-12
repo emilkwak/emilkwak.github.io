@@ -5,7 +5,7 @@
    
       <title>emilkwak.github.io/</title>
    
-   <link>http://0.0.0.0:7070</link>
+   <link>https://emilkwak.github.io</link>
    <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
    <language>en-uk</language>
    <managingEditor> </managingEditor>
@@ -15,7 +15,7 @@
 	  <title>ast.literal_eval()로 문자열(str) 속 표현식(expression) 인식하기</title>
 	  <link>//literal-eval-str-expression</link>
 	  <author></author>
-	  <pubDate>2020-02-02T07:00:00+09:00</pubDate>
+	  <pubDate>2020-02-01T22:00:00+00:00</pubDate>
 	  <guid>//literal-eval-str-expression</guid>
 	  <description><![CDATA[
 	     <p>#</p>
