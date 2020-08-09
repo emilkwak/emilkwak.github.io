@@ -8,6 +8,21 @@
     
       
       <item>
+        <title>Python 토이 데이터셋 3대장 - Scikit-Learn, Statsmodels, Vega Datasets</title>
+        
+          <description>&lt;p&gt;Pandas, NumPy, SciPy 등 Python 패키지 또는 Python 자체를 사용해서 데이터 처리를 하다 보면 연습용 데이터가 필요할 때가 있습니다. 데이터 처리는 여러 데이터에 걸쳐 두루 쓸 수 있는 공통의 기술이기 때문에 연습용 데이터를 충분히 확보하고 두루 다뤄 보는 것이 중요합니다. 연습용 데이터를 토이(toy) 데이터라고도 하는데 이와 같은 토이 데이터셋을 제공해 주는 패키지가 있어 있어 소개합니다. Scikit-Learn 패키지, Statsmodels 패키지, Vega Datasets 패키지에서 제공하는 토이 데이터셋을 차례로 소개할 예정입니다.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Mon, 10 Aug 2020 00:30:00 +0000</pubDate>
+        <link>
+        https://emilkwak.github.io/python-toy-datasets</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-toy-datasets</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>NumPy(넘파이) PyInstaller 패키징 시 실행파일(exe) 용량이 너무 큰 경우 해결책</title>
         
           <description>&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PyInstaller&lt;/code&gt;는 Python 프로그램 배포를 목적으로 많은 분들이 사용하는 패키지입니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;cx_Freeze&lt;/code&gt;나 &lt;code class=&quot;highlighter-rouge&quot;&gt;py2exe&lt;/code&gt; 등 같은 용도의 패키지가 대체재로 존재하지만 사용법이 간단해 더 인기가 있습니다.&lt;/p&gt;

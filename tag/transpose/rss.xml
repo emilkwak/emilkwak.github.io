@@ -15,7 +15,7 @@
 	  <title>Python 2차원 리스트(list)의 특정 열(column) 골라 취하기</title>
 	  <link>//python-2d-list-certain-column</link>
 	  <author></author>
-	  <pubDate>2019-04-20T12:30:00+00:00</pubDate>
+	  <pubDate>2019-04-20T21:30:00+09:00</pubDate>
 	  <guid>//python-2d-list-certain-column</guid>
 	  <description><![CDATA[
 	     <p>C나 C++에서 2차원 배열(2-dimension array) 개념을 많이 사용합니다. 배열을 요소(element)로 하는 배열로 표현을 하지요. Python에서도 리스트(list)를 2차원으로 사용하여 2차원 배열과 동일한 효과를 낼 수 있습니다.</p>

@@ -15,7 +15,7 @@
 	  <title>Python 인라인 if절(inline if statement)에 elif 표현하기</title>
 	  <link>//python-inline-if-statement-elif</link>
 	  <author></author>
-	  <pubDate>2019-04-24T11:30:00+00:00</pubDate>
+	  <pubDate>2019-04-24T20:30:00+09:00</pubDate>
 	  <guid>//python-inline-if-statement-elif</guid>
 	  <description><![CDATA[
 	     <p>Python은 컴팩트한 코드를 지향하기 때문에 다양한 장치를 제공하는데, 그중 대표적인 것이 inline if절(statement)입니다. 사실 C/C++나 Java에도 비슷한 문법이 있습니다. 아주 새롭지는 않지요.</p>

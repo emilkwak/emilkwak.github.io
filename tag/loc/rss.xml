@@ -15,7 +15,7 @@
 	  <title>NumPy(넘파이) PyInstaller 패키징 시 실행파일(exe) 용량이 너무 큰 경우 해결책</title>
 	  <link>//numpy-pyinstaller-size-too-big</link>
 	  <author></author>
-	  <pubDate>2020-04-12T15:00:00+00:00</pubDate>
+	  <pubDate>2020-04-13T00:00:00+09:00</pubDate>
 	  <guid>//numpy-pyinstaller-size-too-big</guid>
 	  <description><![CDATA[
 	     <p><code class="highlighter-rouge">PyInstaller</code>는 Python 프로그램 배포를 목적으로 많은 분들이 사용하는 패키지입니다. <code class="highlighter-rouge">cx_Freeze</code>나 <code class="highlighter-rouge">py2exe</code> 등 같은 용도의 패키지가 대체재로 존재하지만 사용법이 간단해 더 인기가 있습니다.</p>
@@ -172,7 +172,7 @@ dir dist\matmul_example
 	  <title>DataFrame(데이터프레임)에 list(리스트)를 행 추가하기 & ignore_index 관련 TypeError 처리</title>
 	  <link>//dataframe-list-row-append-ignore-index</link>
 	  <author></author>
-	  <pubDate>2020-04-12T15:00:00+00:00</pubDate>
+	  <pubDate>2020-04-13T00:00:00+09:00</pubDate>
 	  <guid>//dataframe-list-row-append-ignore-index</guid>
 	  <description><![CDATA[
 	     <p>이미 있는 <code class="highlighter-rouge">DataFrame</code>(데이터프레임)에 행(row)으로 추가할 데이터가 <code class="highlighter-rouge">list</code>(리스트)로 주어져 있다면 어떻게 해야 할까요? 데이터 재료부터 준비해 봅시다.</p>
@@ -323,7 +323,7 @@ dir dist\matmul_example
 	  <title>데이터프레임(DataFrame) 인덱싱(indexing), 셀렉팅(selecting)한 상태에서 값 수정하기(loc[] 사용)</title>
 	  <link>//dataframe-update-after-indexing-selecting</link>
 	  <author></author>
-	  <pubDate>2020-02-02T23:00:00+00:00</pubDate>
+	  <pubDate>2020-02-03T08:00:00+09:00</pubDate>
 	  <guid>//dataframe-update-after-indexing-selecting</guid>
 	  <description><![CDATA[
 	     <p><code class="highlighter-rouge">pandas</code>를 사용하다 보면 <code class="highlighter-rouge">DataFrame</code>의 일부 행과 일부 열에 대해서만 부분적으로 수정을 가해야 할 때가 생깁니다. 인덱싱(indexing)과 셀렉팅(selecting)을 통해 수정을 가할 부분을 어떻게든 찾은 다음에, 어떤 방법을 써야 실제적인 수정이 이뤄지는지 알아 보겠습니다.</p>

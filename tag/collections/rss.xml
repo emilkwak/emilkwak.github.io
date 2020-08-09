@@ -15,7 +15,7 @@
 	  <title>Python 딕셔너리(dict) 대신 쓰는 디폴트딕트(defaultdict)</title>
 	  <link>//defaultdict-rather-than-dict</link>
 	  <author></author>
-	  <pubDate>2019-07-09T22:30:00+00:00</pubDate>
+	  <pubDate>2019-07-10T07:30:00+09:00</pubDate>
 	  <guid>//defaultdict-rather-than-dict</guid>
 	  <description><![CDATA[
 	     <p>딕셔너리 자료구조는 Python뿐 아니라 Java나 C++에서더 유용히 사용됩니다. Python의 딕셔너리는 <code class="highlighter-rouge">dict</code>라는 키워드로 선언되는데 Java 등에 비해 그 사용법이 간편하여 여러가지 용도로 자주 사용됩니다.</p>

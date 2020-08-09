@@ -12,10 +12,251 @@
    <atom:link href="rss" rel="self" type="application/rss+xml" />
    
 	<item>
+	  <title>Python 토이 데이터셋 3대장 - Scikit-Learn, Statsmodels, Vega Datasets</title>
+	  <link>//python-toy-datasets</link>
+	  <author></author>
+	  <pubDate>2020-08-10T09:30:00+09:00</pubDate>
+	  <guid>//python-toy-datasets</guid>
+	  <description><![CDATA[
+	     <p>Pandas, NumPy, SciPy 등 Python 패키지 또는 Python 자체를 사용해서 데이터 처리를 하다 보면 연습용 데이터가 필요할 때가 있습니다. 데이터 처리는 여러 데이터에 걸쳐 두루 쓸 수 있는 공통의 기술이기 때문에 연습용 데이터를 충분히 확보하고 두루 다뤄 보는 것이 중요합니다. 연습용 데이터를 토이(toy) 데이터라고도 하는데 이와 같은 토이 데이터셋을 제공해 주는 패키지가 있어 있어 소개합니다. Scikit-Learn 패키지, Statsmodels 패키지, Vega Datasets 패키지에서 제공하는 토이 데이터셋을 차례로 소개할 예정입니다.</p>
+
+<ul>
+  <li>참고: <a href="https://python-data-science.readthedocs.io/en/latest/datasets.html">Data Science in Python - In-Built Datasets</a></li>
+</ul>
+
+<hr />
+
+<h2 id="1-scikit-learn의-datasets-패키지">1. Scikit-Learn의 datasets 패키지</h2>
+
+<p>머신러닝 교육을 위해 만들어진 Scikit-Learn은 원래 목적을 넘어서 개발 실무에도 널리 쓰이고 있죠? Scikit-Learn은 datasets 패키지를 통해 토이 데이터셋을 제공합니다. 단, 그 개수는 7개로 많지 않습니다만 머신러닝 작업을 Scikit-Learn으로 할 때 부담없이 간단히 사용할 수 있어 편리합니다.</p>
+
+<ul>
+  <li>참고: <a href="https://scikit-learn.org/stable/datasets/index.html#toy-datasets">(공식) Scikit-Learn - Toy datasets</a></li>
+</ul>
+
+<p>데이터를 읽어들여 Pandas의 DataFrame에 담아 편의성 있게 다룰 수 있게 해 보겠습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+
+<span class="n">df_iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">df_iris</span><span class="p">[</span><span class="s">'target'</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">df_iris</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="s">'keys'</span><span class="p">))</span>
+
+<span class="s">'''
+       sepal length (cm)    sepal width (cm)    petal length (cm)    petal width (cm)    target
+---  -------------------  ------------------  -------------------  ------------------  --------
+ 85                  6                   3.4                  4.5                 1.6         1
+ 52                  6.9                 3.1                  4.9                 1.5         1
+  8                  4.4                 2.9                  1.4                 0.2         0
+ 68                  6.2                 2.2                  4.5                 1.5         1
+ 67                  5.8                 2.7                  4.1                 1           1
+129                  7.2                 3                    5.8                 1.6         2
+ 76                  6.8                 2.8                  4.8                 1.4         1
+145                  6.7                 3                    5.2                 2.3         2
+105                  7.6                 3                    6.6                 2.1         2
+  7                  5                   3.4                  1.5                 0.2         0
+'''</span>
+</code></pre></div></div>
+
+<p>Scikit-Learn의 datasets 패키지로부터 iris 데이터셋을 불러 왔습니다. Scikit-Learn 토이 데이터셋은 DataFrame 형태로 제공되지 않기 때문에 얻어진 데이터를 DataFrame으로 전환하는 작업을 따로 해 줘야 합니다. <code class="highlighter-rouge">pd.DataFrame()</code>으로 <code class="highlighter-rouge">iris.data</code>를 DataFrame으로 전환했습니다. 이때 <code class="highlighter-rouge">columns</code>로 <code class="highlighter-rouge">iris.feature_names</code>를 설정해 DataFrame의 헤더명을 부여합니다. <code class="highlighter-rouge">iris.target</code>은 머신러닝 지도학습(supervised learning) 시 필요한 타겟(target) 또는 레이블(label)인데 이를 위한 컬럼을 별도로 생성해 줍니다.(<code class="highlighter-rouge">df_iris['target']</code>)</p>
+
+<p>아울러 DataFrame의 내용을 보기 좋게 표시하기 위해 tabulate 패키지를 사용했습니다.</p>
+
+<p>이 iris 데이터셋이 어떤 내용이고 각 컬럼이 무엇이며 타겟이 무엇을 나타내는지 등, 데이터셋에 대한 설명은 <code class="highlighter-rouge">iris.DESCR</code>에 기술되어 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">DESCR</span><span class="p">)</span>
+
+<span class="s">'''
+.. _iris_dataset:
+
+Iris plants dataset
+--------------------
+
+**Data Set Characteristics:**
+
+    :Number of Instances: 150 (50 in each of three classes)
+    :Number of Attributes: 4 numeric, predictive attributes and the class
+
+...
+...
+...
+
+The famous Iris database, first used by Sir R.A. Fisher. The dataset is taken
+from Fisher's paper. Note that it's the same as in R, but not as in the UCI
+Machine Learning Repository, which has two wrong data points.
+
+...
+...
+...
+'''</span>
+</code></pre></div></div>
+
+<p>Scikit-Learn 토이 데이터셋은 iris 데이터셋을 포함해 총 7개인데 <code class="highlighter-rouge">import load_iris</code> 부분을 바꿔 가면서 다른 데이터셋을 불러 올 수 있습니다. 예를 들어 boston 데이터셋을 불러 오기 위해서는 <code class="highlighter-rouge">import load_boston</code>을 실행한 뒤 함수 호출을 <code class="highlighter-rouge">load_boston()</code>와 같이 하면 됩니다.</p>
+
+<ul>
+  <li>참고: 사용 가능한 토이 데이터셋 7개는 <code class="highlighter-rouge">load_boston</code>, <code class="highlighter-rouge">load_iris</code>, <code class="highlighter-rouge">load_diabetes</code>, <code class="highlighter-rouge">load_digits</code>, <code class="highlighter-rouge">load_linnerud</code>, <code class="highlighter-rouge">load_wine</code>, <code class="highlighter-rouge">load_breast_cancer</code>입니다.</li>
+</ul>
+
+<p>Scikit-Learn은 토이 데이터셋 외에도 실제(real word) 데이터셋 또한 제공합니다. 실제 데이터셋 또한 연습용으로 쓸 수 있지만 데이터의 용량이 크기 때문에(수십 MB 또는 그 이상) 실제적이고 양이 많은 데이터가 필요한 경우에 한해 사용하는 게 좋습니다.</p>
+
+<ul>
+  <li>참고: <a href="https://scikit-learn.org/stable/datasets/index.html#real-world-datasets">참고: (공식) Scikit-Learn - Real word datasets</a></li>
+</ul>
+
+<hr />
+
+<h2 id="2-statsmodels의-datasets-패키지">2. Statsmodels의 datasets 패키지</h2>
+
+<p>데이터 과학 분야의 주요 도구로서 Python과 쌍벽을 이루던 R이 있습니다. R은 Python보다 역사가 길어서 데이터셋 또한 매우 풍부합니다. Statsmodels는 datasets 패키지의 <code class="highlighter-rouge">get_rdataset()</code> 함수를 통해 R이 제공하는 데이터를 Python에서도 이용할 수 있게 해 줍니다.</p>
+
+<ul>
+  <li>참고: <a href="https://www.statsmodels.org/devel/datasets/index.html">(공식) Statsmodels - The Datasets Package</a></li>
+</ul>
+
+<p>데이터를 불러 와 DataFrame에 담아 줘야 했던 Scikit-Learn과 달리, Statsmodels는 DataFrame 상태로 데이터를 제공합니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="n">sm</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="n">ces11</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">get_rdataset</span><span class="p">(</span><span class="s">'CES11'</span><span class="p">,</span> <span class="s">'carData'</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">ces11</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="s">'keys'</span><span class="p">))</span>
+
+<span class="s">'''
+        id  province      population    weight  gender    abortion    importance    education    urban
+----  ----  ----------  ------------  --------  --------  ----------  ------------  -----------  -------
+1761  2050  QC               5996930   6153.85  Female    No          not           higher       rural
+ 535  2297  QC               5996930   6153.85  Female    Yes         notvery       lessHS       urban
+ 778  2164  QC               5996930   6153.85  Male      No          notvery       college      rural
+ 149  1830  NS                729545   6399.52  Male      Yes         very          HS           rural
+1459   248  SK                734250   7082.8   Male      No          very          HS           rural
+1205  3189  ON               9439960   4488.81  Female    No          somewhat      lessHS       urban
+ 902   527  ON               9439960  13466.4   Male      No          somewhat      bachelors    urban
+2009  1948  AB               2515180  17406.1   Female    No          somewhat      college      urban
+1198  1186  ON               9439960   8977.61  Male      No          somewhat      college      urban
+1821  1488  ON               9439960   8977.61  Male      No          notvery       bachelors    urban
+'''</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">get_rdataset()</code>에서 얻어진 데이터를 <code class="highlighter-rouge">ces11</code> 변수에 담고 <code class="highlighter-rouge">ces11.data</code>를 사용하면 바로 DataFrame에 담겨진 데이터를 쓸 수 있게 됩니다. 그리고 타겟(레이블) 또한 이미 이 DataFrame에 포함되어 있는 상태이지요.(urban 컬럼) 데이터셋의 내용, 컬럼별 정의, 타겟의 의미 등은 <code class="highlighter-rouge">ces11.__doc__</code>으로 확인할 수 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">ces11</span><span class="o">.</span><span class="n">__doc__</span><span class="p">)</span>
+
+<span class="s">'''
+===== ===============
+CES11 R Documentation
+===== ===============
+
+2011 Canadian National Election Study, With Attitude Toward Abortion
+--------------------------------------------------------------------
+
+Description
+~~~~~~~~~~~
+
+Data are drawn from the 2011 Canadian National Election Study, including
+a question on banning abortion and variables related to the sampling
+design.
+
+...
+...
+...
+
+Details
+~~~~~~~
+
+This is an extract from the data set for the 2011 Canadian National
+Election Study distributed by the Institute for Social Research, York
+University.
+
+...
+...
+...
+'''</span>
+</code></pre></div></div>
+
+<p>R의 데이터셋은 종류가 매우 다양하고 양이 무척 많습니다. 당연히 모든 종류를 기억할 수 없습니다. 다음 목록을 보고 필요에 따라 찾아 사용해야 합니다.</p>
+
+<ul>
+  <li>참고: <a href="https://vincentarelbundock.github.io/Rdatasets/articles/data.html">Rdatasets - List of Datasets</a></li>
+</ul>
+
+<p>위 목록을 보고 <code class="highlighter-rouge">get_rdataset()</code>에 해당하는 인자를 잘 설정해 호출해 주면 데이터를 얻을 수 있습니다. 인자를 설정하는 법은 간단합니다. 목록의 패키지(package)와 아이템(item)을 찾아서 아래처럼 함수를 호출해 보시죠.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">get_rdataset()</code> 호출 방법: <code class="highlighter-rouge">get_rdataset(item, package)</code></li>
+</ul>
+
+<p>예를 들어 목록 페이지 가장 위에 존재하는 Monthly Excess Return 자료는 패키지가 boot, 아이템이 acme이니 <code class="highlighter-rouge">sm.datasets.get_rdataset('acme', 'boot')</code>와 같이 호출할 수 있겠죠?</p>
+
+<hr />
+
+<h2 id="3-vega-datasets의-data-패키지">3. Vega Datasets의 data 패키지</h2>
+
+<p>마지막으로 Vega 데이터셋의 data 패키지를 이용해 보겠습니다.</p>
+
+<ul>
+  <li>참고: <a href="https://github.com/vega/vega-datasets/blob/master/SOURCES.md">(공식 - 데이터셋) Vega Datasets</a></li>
+  <li>참고: <a href="https://github.com/jakevdp/vega_datasets">(공식 - 패키지) vega_datasets 패키지</a></li>
+</ul>
+
+<p>Vega 데이터셋도 데이터를 DataFrame 형태로 바로 제공하고 있습니다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">vega_datasets</span> <span class="kn">import</span> <span class="n">data</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="n">airports</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">airports</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">airports</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">headers</span><span class="o">=</span><span class="s">'keys'</span><span class="p">))</span>
+
+<span class="s">'''
+      iata    name                        city          state    country      latitude    longitude
+----  ------  --------------------------  ------------  -------  ---------  ----------  -----------
+ 301  35A     Union County, Troy Shelton  Union         SC       USA           34.6868     -81.6412
+ 936  BDX     Broadus                     Broadus       MT       USA           45.4333    -105.417
+1739  HNR     Harlan Municipal            Harlan        IA       USA           41.5844     -95.3396
+1672  H05     Wilburton Municipal         Wilburton     OK       USA           34.9195     -95.3947
+ 270  2O3     Angwin-Parrett              Angwin        CA       USA           38.5785    -122.435
+1295  DRI     Beauregard Parish           De Ridder     LA       USA           30.8315     -93.3396
+ 895  AVO     Avon Park Municipal         Avon Park     FL       USA           27.5911     -81.5279
+ 846  ANY     Anthony Municipal           Anthony       KS       USA           37.1585     -98.0796
+2696  PVC     Provincetown Municipal      Provincetown  MA       USA           42.072      -70.2214
+2514  ONM     Socorro Municipal           Socorro       NM       USA           34.0225    -106.903
+'''</span>
+</code></pre></div></div>
+
+<p>Vega 데이터셋은 데이터 불러오는 방법이 조금 특이하지요? 데이터셋 제목(여기서는 airports)을 함수처럼 호출하는 방식입니다. <code class="highlighter-rouge">data.airports()</code> 호출에 의해 airports 데이터셋이 불려 온 것이지요. 마찬가지로 만약 budgets 데이터셋을 불러오려 한다면 <code class="highlighter-rouge">data.budgets()</code>와 같이 호출하면 되겠습니다.</p>
+
+<p>데이터셋에 대한 설명은 <code class="highlighter-rouge">data.airports.description</code>과 같은 구문으로 확인 가능합니다. 데이터셋 불러올 때는 함수 호출(<code class="highlighter-rouge">airports()</code>) 형태를 썼지만, 설명을 불러 올 때는 호출자에 쓰이는 괄호가 없다는 점에 유의해 주십시오. Vega 데이터셋의 데이터 설명은 앞의 두 패키지에 비해 조금 간략한 면이 있네요.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">airports</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+
+<span class="s">'''
+This dataset lists US airports, including airport code, city, state, latitude, and longitude. This dataset is a subset of the data compiled and published at http://ourairports.com/data/, and is in the public domain.
+'''</span>
+</code></pre></div></div>
+
+<p>Vega 데이터셋의 데이터 종류는 다음 링크를 통해서 확인할 수 있고, 패키지 자체적으로 목록을 확인할 수 있는 함수도 제공합니다.(<code class="highlighter-rouge">data.list_datasets()</code>)</p>
+
+<ul>
+  <li>참고: <a href="https://github.com/vega/vega-datasets/blob/master/SOURCES.md">(공식) Vega Datasets - Sources</a></li>
+</ul>
+
+<hr />
+
+<p>이상으로 쉽고 간편하게 쓸 수 있는 토이 데이터셋 세 가지, Scikit-Learn 데이터셋, Statsmodels R 데이터셋, Vega 데이터셋에 대해 알아 보았습니다. 토이 데이터셋을 통한 연습으로 쌓은 분석 및 처리 기술이 보다 방대한 실제 데이터를 자유자재로 다루는 데 도움이 되기를 기대합니다.</p>
+
+	  ]]></description>
+	</item>
+
+	<item>
 	  <title>NumPy(넘파이) PyInstaller 패키징 시 실행파일(exe) 용량이 너무 큰 경우 해결책</title>
 	  <link>//numpy-pyinstaller-size-too-big</link>
 	  <author></author>
-	  <pubDate>2020-04-12T15:00:00+00:00</pubDate>
+	  <pubDate>2020-04-13T00:00:00+09:00</pubDate>
 	  <guid>//numpy-pyinstaller-size-too-big</guid>
 	  <description><![CDATA[
 	     <p><code class="highlighter-rouge">PyInstaller</code>는 Python 프로그램 배포를 목적으로 많은 분들이 사용하는 패키지입니다. <code class="highlighter-rouge">cx_Freeze</code>나 <code class="highlighter-rouge">py2exe</code> 등 같은 용도의 패키지가 대체재로 존재하지만 사용법이 간단해 더 인기가 있습니다.</p>
@@ -172,7 +413,7 @@ dir dist\matmul_example
 	  <title>DataFrame(데이터프레임)에 list(리스트)를 행 추가하기 & ignore_index 관련 TypeError 처리</title>
 	  <link>//dataframe-list-row-append-ignore-index</link>
 	  <author></author>
-	  <pubDate>2020-04-12T15:00:00+00:00</pubDate>
+	  <pubDate>2020-04-13T00:00:00+09:00</pubDate>
 	  <guid>//dataframe-list-row-append-ignore-index</guid>
 	  <description><![CDATA[
 	     <p>이미 있는 <code class="highlighter-rouge">DataFrame</code>(데이터프레임)에 행(row)으로 추가할 데이터가 <code class="highlighter-rouge">list</code>(리스트)로 주어져 있다면 어떻게 해야 할까요? 데이터 재료부터 준비해 봅시다.</p>
@@ -323,7 +564,7 @@ dir dist\matmul_example
 	  <title>데이터프레임(DataFrame) 인덱싱(indexing), 셀렉팅(selecting)한 상태에서 값 수정하기(loc[] 사용)</title>
 	  <link>//dataframe-update-after-indexing-selecting</link>
 	  <author></author>
-	  <pubDate>2020-02-02T23:00:00+00:00</pubDate>
+	  <pubDate>2020-02-03T08:00:00+09:00</pubDate>
 	  <guid>//dataframe-update-after-indexing-selecting</guid>
 	  <description><![CDATA[
 	     <p><code class="highlighter-rouge">pandas</code>를 사용하다 보면 <code class="highlighter-rouge">DataFrame</code>의 일부 행과 일부 열에 대해서만 부분적으로 수정을 가해야 할 때가 생깁니다. 인덱싱(indexing)과 셀렉팅(selecting)을 통해 수정을 가할 부분을 어떻게든 찾은 다음에, 어떤 방법을 써야 실제적인 수정이 이뤄지는지 알아 보겠습니다.</p>
@@ -439,7 +680,7 @@ display(df)
 	  <title>ast.literal_eval()로 문자열(str) 속 표현식(expression) 인식하기</title>
 	  <link>//literal-eval-str-expression</link>
 	  <author></author>
-	  <pubDate>2020-02-01T22:00:00+00:00</pubDate>
+	  <pubDate>2020-02-02T07:00:00+09:00</pubDate>
 	  <guid>//literal-eval-str-expression</guid>
 	  <description><![CDATA[
 	     <p>#</p>
@@ -494,7 +735,7 @@ display(df)
 	  <title>Python의 itertools의 chain()으로 리스트(list) 붙이기(접합, concatenation)</title>
 	  <link>//itertools-chain-list-concatenation-append</link>
 	  <author></author>
-	  <pubDate>2019-07-15T22:30:00+00:00</pubDate>
+	  <pubDate>2019-07-16T07:30:00+09:00</pubDate>
 	  <guid>//itertools-chain-list-concatenation-append</guid>
 	  <description><![CDATA[
 	     <p>Python의 매력은 그 어떤 프로그래밍 언어보다 리스트(<code class="highlighter-rouge">list</code>) 다루는 방법이 우아(elegant)한 데 있습니다. 리스트 컴프리헨션(list comprehension)은 물론이거니와, <code class="highlighter-rouge">itertools</code>, <code class="highlighter-rouge">numpy</code>, <code class="highlighter-rouge">pandas</code> 같은 라이브러리도 이 우아함에 한 몫씩 하지요.</p>
@@ -555,7 +796,7 @@ display(df)
 	  <title>Python 딕셔너리(dict) 대신 쓰는 디폴트딕트(defaultdict)</title>
 	  <link>//defaultdict-rather-than-dict</link>
 	  <author></author>
-	  <pubDate>2019-07-09T22:30:00+00:00</pubDate>
+	  <pubDate>2019-07-10T07:30:00+09:00</pubDate>
 	  <guid>//defaultdict-rather-than-dict</guid>
 	  <description><![CDATA[
 	     <p>딕셔너리 자료구조는 Python뿐 아니라 Java나 C++에서더 유용히 사용됩니다. Python의 딕셔너리는 <code class="highlighter-rouge">dict</code>라는 키워드로 선언되는데 Java 등에 비해 그 사용법이 간편하여 여러가지 용도로 자주 사용됩니다.</p>
@@ -639,7 +880,7 @@ display(df)
 	  <title>Pandas의 DataFrame 사용 중 SettingWithCopyWarning 발생할 때</title>
 	  <link>//pandas-dataframe-settingwithcopywarning</link>
 	  <author></author>
-	  <pubDate>2019-07-08T23:00:00+00:00</pubDate>
+	  <pubDate>2019-07-09T08:00:00+09:00</pubDate>
 	  <guid>//pandas-dataframe-settingwithcopywarning</guid>
 	  <description><![CDATA[
 	     <p>Python의 Pandas 라이브러리 사용자에게 DataFrame은 매우 중요한 도구입니다. R 언어의 데이터프레임을 대체하기 위해 고안된 Pandas DataFrame은 이제 R을 훨씬 뛰어넘어 데이터 처리의 절대적인 도구로서 위치를 점하고 있습니다.</p>
@@ -734,7 +975,7 @@ display(df)
 	  <title>Python 별표(*) 문법(asterisk/star syntax), *args와 **kwargs</title>
 	  <link>//python-star-asterisk-args-kwargs</link>
 	  <author></author>
-	  <pubDate>2019-07-05T22:00:00+00:00</pubDate>
+	  <pubDate>2019-07-06T07:00:00+09:00</pubDate>
 	  <guid>//python-star-asterisk-args-kwargs</guid>
 	  <description><![CDATA[
 	     <p>Python에는 우리나라에서 흔히 별표라 부르는 asterisk(<code class="highlighter-rouge">*</code>)를 활용한 특이한 문법(syntax)가 있습니다. <code class="highlighter-rouge">*args</code>, <code class="highlighter-rouge">**kwargs</code>라고 해도 통합니다. C나 C++이 아닌 Python에서 <code class="highlighter-rouge">*</code>와 <code class="highlighter-rouge">**</code>를 문두에 사용하는 문법이 있다니 어색하긴 하지만, 용도를 제대로 알면 유용히 쓸 수 있습니다.</p>
@@ -818,7 +1059,7 @@ display(df)
 	  <title>Python 정규표현식(regular expression) 그룹 이름 붙이기(named group)</title>
 	  <link>//python-re-named-group</link>
 	  <author></author>
-	  <pubDate>2019-05-02T01:35:00+00:00</pubDate>
+	  <pubDate>2019-05-02T10:35:00+09:00</pubDate>
 	  <guid>//python-re-named-group</guid>
 	  <description><![CDATA[
 	     <p>지금의 Python은 데이터 과학(data science)의 주류 언어로 각광받으면서, 프로그래밍 언어로서 황혼기를 누리고 있습니다. 데이터 과학의 러브콜을 받기 전 Python이 대중화가 될 수 있었던 이유는 강력한 문자열 처리에 있습니다. 사실 데이터 과학 분야에서도 Python의 문자열 처리 기능이 매우 유용하게 사용되지요. Tesorflow나 PyTorch 등 기계학습(machine learning) 및 인공지능(AI)라이브러리 또한 Python의 문자열 처리 기능 덕분에 더 빛을 발하지요.</p>
@@ -871,66 +1112,6 @@ display(df)
 </code></pre></div></div>
 
 <p>위 코드를 보면, <code class="highlighter-rouge">result_a</code>에서는 정규표현식의 앞부분에서 찾은 패턴 Michael이 뒤에 다시 등장하여 정상적으로 탐색(search)이 된 것을 알 수 있습니다. 반면 <code class="highlighter-rouge">result_b</code>에서는 앞부분 패턴은 Thomas지만 뒷부분 패턴은 Paul입니다. 앞뒤 패턴이 달라 탐색이 실패한 것이지요. 참고로, re 라이브러리의 정규표현식 결과를 <code class="highlighter-rouge">bool()</code>로 캐스팅(casting)하면, 패턴이 찾아진 경우 True, 아닌 경우 False를 반환합니다.</p>
-
-	  ]]></description>
-	</item>
-
-	<item>
-	  <title>Python 인라인 if절(inline if statement)에 elif 표현하기</title>
-	  <link>//python-inline-if-statement-elif</link>
-	  <author></author>
-	  <pubDate>2019-04-24T11:30:00+00:00</pubDate>
-	  <guid>//python-inline-if-statement-elif</guid>
-	  <description><![CDATA[
-	     <p>Python은 컴팩트한 코드를 지향하기 때문에 다양한 장치를 제공하는데, 그중 대표적인 것이 inline if절(statement)입니다. 사실 C/C++나 Java에도 비슷한 문법이 있습니다. 아주 새롭지는 않지요.</p>
-
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
-<span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>Python도 거의 유사한 문법을 제공합니다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">b</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
-</code></pre></div></div>
-
-<p>Python의 inline if절이 가독성 면에서 뛰어나지요. 그리고 Python에서 손쉽게 사용되는 lambda 함수(function)와 어우러져 사용하면 용도가 더 빛나게 됩니다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
-</code></pre></div></div>
-
-<p>Python inline if절을 쓰다보면 if와 else 말고 elif를 쓰는 방법은 없을까 싶지요. 물론 inline if절의 문법에 elif를 쓸 수 없게 되어 있습니다. 그럼에도 불구하고 사실상 elif를 구현하는 방법이 있습니다. 아래와 같은 inline이 아닌 if 조건 분기가 있다고 가정해 보지요.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s">'dog'</span><span class="p">:</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="s">'woof'</span>
-<span class="k">elif</span> <span class="n">a</span> <span class="o">==</span> <span class="s">'cat'</span><span class="p">:</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="s">'meow'</span>
-<span class="k">elif</span> <span class="n">a</span> <span class="o">==</span> <span class="s">'pig'</span><span class="p">:</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="s">'oink'</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="s">'hello'</span>
-</code></pre></div></div>
-
-<p>어떻게 이것을 inline if절로 표현할 수 있을까요? inline if절의 else 부분에 괄호로 싸인 또 다른 inline if절을 사용하면 됩니다. 위 if 조건 분기는 아래처럼 바뀔 수 있겠지요.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">b</span> <span class="o">=</span> <span class="s">'bark'</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s">'dog'</span> <span class="k">else</span> <span class="p">(</span><span class="s">'meow'</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s">'cat'</span> <span class="k">else</span> <span class="p">(</span><span class="s">'oink'</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s">'pig'</span> <span class="k">else</span> <span class="s">'hello'</span><span class="p">))</span>
-</code></pre></div></div>
-
-<p>한 줄이 좀 길긴 하지만, 어쨌든 inline은 맞지요? 물론 이런 경우에는 inline화 시키면서 가독성이 오히려 떨어집니다. 그럼에도 불구하고 가끔 이렇게 긴 inline if절이 유용할 때가 있지요. lambda 함수로 정의할 때가 그렇습니다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="s">'bark'</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s">'dog'</span> <span class="k">else</span> <span class="p">(</span><span class="s">'meow'</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s">'cat'</span> <span class="k">else</span> <span class="p">(</span><span class="s">'oink'</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s">'pig'</span> <span class="k">else</span> <span class="s">'hello'</span><span class="p">))</span>
-</code></pre></div></div>
-
-<p>간혹 lambda 함수에 elif를 표현하고 싶은 때가 있죠? 그럴 때 활용하면 좋은 방법입니다. 실제로 위 lambda 함수에 각 인자를 입력하면 의도된 값이 잘 나옴을 볼 수 있습니다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="s">'dog'</span><span class="p">))</span>
-<span class="c"># 'bark'</span>
-<span class="k">print</span><span class="p">(</span><span class="n">func</span><span class="p">(</span><span class="s">'human'</span><span class="p">))</span>
-<span class="c"># 'hello'</span>
-</code></pre></div></div>
-
-<p>앞서 보신 것처럼 elif의 표현이 많은 inline if절은 가독성이 떨어집니다. 이를 항상 유념하고 사용하면 보다 좋겠지요?</p>
 
 	  ]]></description>
 	</item>

@@ -15,7 +15,7 @@
 	  <title>Python 정규표현식(regular expression) 그룹 이름 붙이기(named group)</title>
 	  <link>//python-re-named-group</link>
 	  <author></author>
-	  <pubDate>2019-05-02T01:35:00+00:00</pubDate>
+	  <pubDate>2019-05-02T10:35:00+09:00</pubDate>
 	  <guid>//python-re-named-group</guid>
 	  <description><![CDATA[
 	     <p>지금의 Python은 데이터 과학(data science)의 주류 언어로 각광받으면서, 프로그래밍 언어로서 황혼기를 누리고 있습니다. 데이터 과학의 러브콜을 받기 전 Python이 대중화가 될 수 있었던 이유는 강력한 문자열 처리에 있습니다. 사실 데이터 과학 분야에서도 Python의 문자열 처리 기능이 매우 유용하게 사용되지요. Tesorflow나 PyTorch 등 기계학습(machine learning) 및 인공지능(AI)라이브러리 또한 Python의 문자열 처리 기능 덕분에 더 빛을 발하지요.</p>

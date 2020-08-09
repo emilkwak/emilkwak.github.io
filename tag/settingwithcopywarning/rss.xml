@@ -15,7 +15,7 @@
 	  <title>Pandas의 DataFrame 사용 중 SettingWithCopyWarning 발생할 때</title>
 	  <link>//pandas-dataframe-settingwithcopywarning</link>
 	  <author></author>
-	  <pubDate>2019-07-08T23:00:00+00:00</pubDate>
+	  <pubDate>2019-07-09T08:00:00+09:00</pubDate>
 	  <guid>//pandas-dataframe-settingwithcopywarning</guid>
 	  <description><![CDATA[
 	     <p>Python의 Pandas 라이브러리 사용자에게 DataFrame은 매우 중요한 도구입니다. R 언어의 데이터프레임을 대체하기 위해 고안된 Pandas DataFrame은 이제 R을 훨씬 뛰어넘어 데이터 처리의 절대적인 도구로서 위치를 점하고 있습니다.</p>
