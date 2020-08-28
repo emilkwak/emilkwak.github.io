@@ -3,7 +3,21 @@
   <channel>
     <title>직장인을 위한 Python - Articles</title>
     <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
-    <link>https://emilkwak.github.io</link>
+    <link>http://localhost:4000</link>
+    
+      
+      <item>
+        <title>Python과 궁합 맞는 설정 파일 4총사 - ini, json, yaml, py</title>
+        
+          <description>&lt;p&gt;디스크에 설정(configuration)을 파일로 저장할 때 어떤 포맷(확장자)을 사용해야 하는지는 서비스를 개발할 때 누구나 고민하는 문제입니다. Python을 이용해 개발할 때도 당연한 일이지요.&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 29 Aug 2020 12:00:00 +0000</pubDate>
+        <link>http://localhost:4000/python-setting-file-ext</link>
+        <guid isPermaLink="true">http://localhost:4000/python-setting-file-ext</guid>
+      </item>
+      
     
       
       <item>
@@ -14,8 +28,8 @@
 </description>
         
         <pubDate>Mon, 10 Aug 2020 00:30:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/python-toy-datasets</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-toy-datasets</guid>
+        <link>http://localhost:4000/python-toy-datasets</link>
+        <guid isPermaLink="true">http://localhost:4000/python-toy-datasets</guid>
       </item>
       
     
@@ -172,8 +186,8 @@ dir dist\matmul_example
 </description>
         
         <pubDate>Sun, 12 Apr 2020 15:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/numpy-pyinstaller-size-too-big</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/numpy-pyinstaller-size-too-big</guid>
+        <link>http://localhost:4000/numpy-pyinstaller-size-too-big</link>
+        <guid isPermaLink="true">http://localhost:4000/numpy-pyinstaller-size-too-big</guid>
       </item>
       
     
@@ -324,8 +338,8 @@ dir dist\matmul_example
 </description>
         
         <pubDate>Sun, 12 Apr 2020 15:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/dataframe-list-row-append-ignore-index</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/dataframe-list-row-append-ignore-index</guid>
+        <link>http://localhost:4000/dataframe-list-row-append-ignore-index</link>
+        <guid isPermaLink="true">http://localhost:4000/dataframe-list-row-append-ignore-index</guid>
       </item>
       
     
@@ -441,8 +455,8 @@ display(df)
 </description>
         
         <pubDate>Sun, 02 Feb 2020 23:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/dataframe-update-after-indexing-selecting</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/dataframe-update-after-indexing-selecting</guid>
+        <link>http://localhost:4000/dataframe-update-after-indexing-selecting</link>
+        <guid isPermaLink="true">http://localhost:4000/dataframe-update-after-indexing-selecting</guid>
       </item>
       
     
@@ -497,8 +511,8 @@ display(df)
 </description>
         
         <pubDate>Sat, 01 Feb 2020 22:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/literal-eval-str-expression</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/literal-eval-str-expression</guid>
+        <link>http://localhost:4000/literal-eval-str-expression</link>
+        <guid isPermaLink="true">http://localhost:4000/literal-eval-str-expression</guid>
       </item>
       
     
@@ -559,8 +573,8 @@ display(df)
 </description>
         
         <pubDate>Mon, 15 Jul 2019 22:30:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/itertools-chain-list-concatenation-append</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/itertools-chain-list-concatenation-append</guid>
+        <link>http://localhost:4000/itertools-chain-list-concatenation-append</link>
+        <guid isPermaLink="true">http://localhost:4000/itertools-chain-list-concatenation-append</guid>
       </item>
       
     
@@ -644,8 +658,8 @@ display(df)
 </description>
         
         <pubDate>Tue, 09 Jul 2019 22:30:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/defaultdict-rather-than-dict</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/defaultdict-rather-than-dict</guid>
+        <link>http://localhost:4000/defaultdict-rather-than-dict</link>
+        <guid isPermaLink="true">http://localhost:4000/defaultdict-rather-than-dict</guid>
       </item>
       
     
@@ -740,8 +754,8 @@ display(df)
 </description>
         
         <pubDate>Mon, 08 Jul 2019 23:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/pandas-dataframe-settingwithcopywarning</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/pandas-dataframe-settingwithcopywarning</guid>
+        <link>http://localhost:4000/pandas-dataframe-settingwithcopywarning</link>
+        <guid isPermaLink="true">http://localhost:4000/pandas-dataframe-settingwithcopywarning</guid>
       </item>
       
     
@@ -825,8 +839,8 @@ display(df)
 </description>
         
         <pubDate>Fri, 05 Jul 2019 22:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/python-star-asterisk-args-kwargs</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-star-asterisk-args-kwargs</guid>
+        <link>http://localhost:4000/python-star-asterisk-args-kwargs</link>
+        <guid isPermaLink="true">http://localhost:4000/python-star-asterisk-args-kwargs</guid>
       </item>
       
     
@@ -887,8 +901,8 @@ display(df)
 </description>
         
         <pubDate>Thu, 02 May 2019 01:35:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/python-re-named-group</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-re-named-group</guid>
+        <link>http://localhost:4000/python-re-named-group</link>
+        <guid isPermaLink="true">http://localhost:4000/python-re-named-group</guid>
       </item>
       
     
@@ -948,8 +962,8 @@ display(df)
 </description>
         
         <pubDate>Wed, 24 Apr 2019 11:30:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/python-inline-if-statement-elif</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-inline-if-statement-elif</guid>
+        <link>http://localhost:4000/python-inline-if-statement-elif</link>
+        <guid isPermaLink="true">http://localhost:4000/python-inline-if-statement-elif</guid>
       </item>
       
     
@@ -1013,8 +1027,8 @@ display(df)
 </description>
         
         <pubDate>Sat, 20 Apr 2019 12:30:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/python-2d-list-certain-column</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-2d-list-certain-column</guid>
+        <link>http://localhost:4000/python-2d-list-certain-column</link>
+        <guid isPermaLink="true">http://localhost:4000/python-2d-list-certain-column</guid>
       </item>
       
     
@@ -1047,8 +1061,8 @@ jupyter.exe notebook
 </description>
         
         <pubDate>Wed, 17 Apr 2019 22:30:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/jupyter-notebook-conda-activate</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/jupyter-notebook-conda-activate</guid>
+        <link>http://localhost:4000/jupyter-notebook-conda-activate</link>
+        <guid isPermaLink="true">http://localhost:4000/jupyter-notebook-conda-activate</guid>
       </item>
       
     
@@ -1077,8 +1091,8 @@ jupyter.exe notebook
 </description>
         
         <pubDate>Sun, 14 Apr 2019 23:30:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/dict-to-var</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/dict-to-var</guid>
+        <link>http://localhost:4000/dict-to-var</link>
+        <guid isPermaLink="true">http://localhost:4000/dict-to-var</guid>
       </item>
       
     
@@ -1123,8 +1137,8 @@ jupyter.exe notebook
 </description>
         
         <pubDate>Fri, 12 Apr 2019 23:55:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/numpy-argmax-argmin-argwhere</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/numpy-argmax-argmin-argwhere</guid>
+        <link>http://localhost:4000/numpy-argmax-argmin-argwhere</link>
+        <guid isPermaLink="true">http://localhost:4000/numpy-argmax-argmin-argwhere</guid>
       </item>
       
     
@@ -1164,8 +1178,8 @@ dtype: object
 </description>
         
         <pubDate>Tue, 22 Jan 2019 23:30:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/pandas-contains-multiple</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/pandas-contains-multiple</guid>
+        <link>http://localhost:4000/pandas-contains-multiple</link>
+        <guid isPermaLink="true">http://localhost:4000/pandas-contains-multiple</guid>
       </item>
       
     
@@ -1198,8 +1212,8 @@ sudo bundle exec jekyll serve --host 0.0.0.0 --port 7070
 </description>
         
         <pubDate>Wed, 16 Jan 2019 22:30:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/jekyll-sitemap-plugin-installation</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/jekyll-sitemap-plugin-installation</guid>
+        <link>http://localhost:4000/jekyll-sitemap-plugin-installation</link>
+        <guid isPermaLink="true">http://localhost:4000/jekyll-sitemap-plugin-installation</guid>
       </item>
       
     
@@ -1249,8 +1263,8 @@ df_accum = pd.concat(list_of_df) # list 속 DataFrame들을 일괄 병합함.
 </description>
         
         <pubDate>Mon, 14 Jan 2019 22:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/pandas-dataframe-concat-efficiently</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/pandas-dataframe-concat-efficiently</guid>
+        <link>http://localhost:4000/pandas-dataframe-concat-efficiently</link>
+        <guid isPermaLink="true">http://localhost:4000/pandas-dataframe-concat-efficiently</guid>
       </item>
       
     
@@ -1296,8 +1310,8 @@ print(a[-1:-3:-1]) # [9, 8]
 </description>
         
         <pubDate>Thu, 27 Sep 2018 00:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/python-list-indexing-slicing-using-minus-integer</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/python-list-indexing-slicing-using-minus-integer</guid>
+        <link>http://localhost:4000/python-list-indexing-slicing-using-minus-integer</link>
+        <guid isPermaLink="true">http://localhost:4000/python-list-indexing-slicing-using-minus-integer</guid>
       </item>
       
     
@@ -1344,8 +1358,8 @@ serve(wsgiapp, host='0.0.0.0', port=8080) # wsgiapp: WSGI 사양을 준수한 �
 </description>
         
         <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/making-windows-web-server-not-stopping</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/making-windows-web-server-not-stopping</guid>
+        <link>http://localhost:4000/making-windows-web-server-not-stopping</link>
+        <guid isPermaLink="true">http://localhost:4000/making-windows-web-server-not-stopping</guid>
       </item>
       
     
@@ -1446,8 +1460,8 @@ git push -f origin master
 </description>
         
         <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
-        <link>https://emilkwak.github.io/jekyll-github-pages</link>
-        <guid isPermaLink="true">https://emilkwak.github.io/jekyll-github-pages</guid>
+        <link>http://localhost:4000/jekyll-github-pages</link>
+        <guid isPermaLink="true">http://localhost:4000/jekyll-github-pages</guid>
       </item>
       
     
