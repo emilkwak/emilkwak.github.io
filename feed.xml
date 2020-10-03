@@ -3,7 +3,87 @@
   <channel>
     <title>직장인을 위한 Python - Articles</title>
     <description>Python, Pandas를 Excel보다 사랑하는 직장인을 위한 블로그 </description>
-    <link>http://localhost:4000</link>
+    <link>https://emilkwak.github.io</link>
+    
+      
+      <item>
+        <title>with 문(statement)으로 파일, DB 커서 등을 놓지지 않고 닫고 관리하기</title>
+        
+          <description>&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문(statement)을 잘 쓰면 Python을 매우 간결하고 Python스럽게(Pythonic하게) 작성할 수 있습니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt;와 &lt;code class=&quot;highlighter-rouge&quot;&gt;as&lt;/code&gt;에 의해 도출된 변수는 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문의 스코프(scope) 안에서만 유효하게 쓰인다는 ‘느낌(*)’을 줍니다. 이 ‘느낌’을 문법적인 장치로 구현해 낸 것이죠. 이 문법적인 장치를 통해 코드의 작성자뿐 아니라 읽는 사람도 코드 속 논리의 경계를 쉽게 구분할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;as&lt;/code&gt;에 의한 변수가 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문의 스코프 안에서만 유효하다 단정지은 게 아니라 ‘유효한 느낌(*)’이라고 한 데에는 이유가 있습니다. 사실, &lt;code class=&quot;highlighter-rouge&quot;&gt;as&lt;/code&gt;에 의한 변수는 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문 스코프 밖에서도 사용할 수 있습니다. 그렇지만 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문 밖에서는 그 ‘변수’가 ‘닫혀진(**)’ 상태일 것입니다. 그 변수는 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문 속에서 열려 있다가 밖으로 나가는 순간 닫히는 것이지요.&lt;/p&gt;
+
+&lt;p&gt;가장 대표적인 용례는 파일 열기입니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문을 사용하지 않으면 파일 열기를 다음과 같이 할 수 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 파일 열기 - with 문 미사용&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/path/to/file'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fcont&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;한편, &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt;를 사용하면 다음과 같죠.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 파일 열기 - with 문 사용&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/path/to/file'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;`&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fcont&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt;를 쓴 파일 열기 코드에는, 쓰지 않은 코드와 다른 점 두 가지가 있습니다. 우선, 코드의 길이가 짧습니다. 줄(line) 개수를 하나 줄일 수 있었지요. 두 번째로, &lt;code class=&quot;highlighter-rouge&quot;&gt;open()&lt;/code&gt;으로 연 파일을 별도로 &lt;code class=&quot;highlighter-rouge&quot;&gt;close()&lt;/code&gt;해 주지 않았습니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문의 스코프를 벗어나면서 파일 객체 &lt;code class=&quot;highlighter-rouge&quot;&gt;f&lt;/code&gt;가 자동으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;close()&lt;/code&gt;되기 때문입니다.&lt;/p&gt;
+
+&lt;p&gt;이쯤되면 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문을 사용한 뒤의 코드가 보다 Python스럽다(Pythonic)는 느낌을 받으시나요? 파이썬스럽다는 느낌을 차치하고도 뒤 코드는 여러 장점들이 있습니다. 첫째, 코드의 길이가 짧고(한 줄 차이이긴 하지만), 둘째, 변수가 지니는 논리의 경계가 정규 문법 차원에서 뚜렷히 분리되며, 셋째, 열고(&lt;code class=&quot;highlighter-rouge&quot;&gt;open()&lt;/code&gt;) 나서 까먹고 닫지(&lt;code class=&quot;highlighter-rouge&quot;&gt;close()&lt;/code&gt;) 않을 위험이 해소됩니다.&lt;/p&gt;
+
+&lt;p&gt;이제까지는 이해하기 편하게 ‘닫다(**)’라는 표현을 썼지만 엄밀히는 닫는 게 아니라 &lt;code class=&quot;highlighter-rouge&quot;&gt;__exit__()&lt;/code&gt;한다라고 말해야 합니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문의 &lt;code class=&quot;highlighter-rouge&quot;&gt;as&lt;/code&gt;에 의해 변수가 될 수 있는 표현(expression)은 컨텍스트 매니저(context manager)이어야 하는데, &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문의 스코프가 끝날 때 컨텍스트 매니저가 스스로 지닌 멤버 메서드(method) &lt;code class=&quot;highlighter-rouge&quot;&gt;__exit__()&lt;/code&gt;를 자동으로 호출하는 게, &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문의 실제 작동 원리이기 때문입니다.&lt;/p&gt;
+
+&lt;p&gt;파일의 &lt;code class=&quot;highlighter-rouge&quot;&gt;open()&lt;/code&gt;의 경우 &lt;code class=&quot;highlighter-rouge&quot;&gt;__exit__()&lt;/code&gt;가 &lt;code class=&quot;highlighter-rouge&quot;&gt;close()&lt;/code&gt;를 호출해 주도록 되어 있기 때문에 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문 밖으로 나감과 동시에 파일이 닫히게 되는 효과를 보는 것입니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문과 컨택스트 매니저에 대해서는 보다 깊은 내용이 있으나 여기서는 상세한 부분을 생략하고 다음의 참고자료(링크)로 대신하겠습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.python.org/3/reference/compound_stmts.html#the-with-statement&quot;&gt;The Python Language Reference - The with statement&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.python.org/3/reference/datamodel.html#with-statement-context-managers&quot;&gt;The Python Language Reference - With Statement Context Managers&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문을 파일 열기 외에도 사용할 수 있을까요? 다음처럼 데이터베이스(DB)의 커서를 관리하는 데 쓰기도 합니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 데이터베이스(DB) 커서 관리 - with 문 사용&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sqlite3&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;conn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqlite3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/path/to/file'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;conn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'select * from table_name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetchall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Pandas의 옵션 컨텍스트(option context)를 임시적으로 적용할 때에도 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문을 사용할 수 있습니다. 데이터프레임(DataFrame)을 표시(display)할 때 특정 옵션을 설정하고 싶으나 전역적이지 않고 지엽적으로 임시 설정하려 할 때 자주 사용하는 기법입니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 데이터베이스(DB) 커서 관리 - with 문 사용&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;mat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 100행 10열 행렬&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# 100행 10열 데이터프레임&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;option_context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'display.max_rows'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;위 용례에서, 행이 100개 정도로 많은 데이터프레임을 표시하려 하는데, Pandas는 데이터프레임을 표시할 때 기본적으로 중간에 있는 행들을 생략합니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;display.max_rows&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;None&lt;/code&gt;으로 하면 생략 없이 모든 행을 보여줍니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt; 문의 사용 없이 &lt;code class=&quot;highlighter-rouge&quot;&gt;pd.set_option()&lt;/code&gt;을 사용해 전역적으로 이 옵션을 적용할 수 있으나, 단발적, 일시적인 설정 효과를 내려면 &lt;code class=&quot;highlighter-rouge&quot;&gt;pd.option_context()&lt;/code&gt;를 &lt;code class=&quot;highlighter-rouge&quot;&gt;with&lt;/code&gt;와 함께 써 주면 됩니다.&lt;/p&gt;
+
+&lt;p&gt;앞서 살펴 본, 파일 열기, 데이터베이스 커서 관리하기, Pandas 옵션 컨텍스트 임시 적용하기의 용례 외에도, 자원(resource)의 락과 해제(lock, unlock) 등에도 사용할 수 있으며, 필요할 경웨 컨텍스트 매니저 자체를 직접 정의해 사용할 수도 있습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;참고자료
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;https://docs.python.org/3/library/contextlib.html?highlight=clause&quot;&gt;The Python Standard Library - contextlib - Utilities for with-statement contexts&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/with-statement-in-python/&quot;&gt;GeeksforGeeks - with statement in Python&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/31214658/can-i-use-pymysql-connect-with-with-statement&quot;&gt;Stack Overflow - Can I use pymysql.connect() with “with” statement?&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        
+        <pubDate>Sat, 03 Oct 2020 22:00:00 +0000</pubDate>
+        <link>https://emilkwak.github.io/with-statement</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/with-statement</guid>
+      </item>
+      
     
       
       <item>
@@ -11,11 +91,158 @@
         
           <description>&lt;p&gt;디스크에 설정(configuration)을 파일로 저장할 때 어떤 포맷(확장자)을 사용해야 하는지는 서비스를 개발할 때 누구나 고민하는 문제입니다. Python을 이용해 개발할 때도 당연한 일이지요.&lt;/p&gt;
 
+&lt;p&gt;서비스를 구현하는 데 꼭 필요하지만 프로그램 소스코드라고 하기에는 애매한 정보들이 이에 해당하는데, 영어 표현으로는 configuration, setting 또는 preference 등으로 표현합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;설정에 해당할 수 있는 사항의 예
+    &lt;ul&gt;
+      &lt;li&gt;접속 정보(서버 IP 주소, 포트 번호 등)&lt;/li&gt;
+      &lt;li&gt;각종 모드(운영, 개발, 시뮬레이션 등)&lt;/li&gt;
+      &lt;li&gt;언어(영어, 한국어, 독일어 등)&lt;/li&gt;
+      &lt;li&gt;제어값(업로드 용량 상한, 동시 처리량 등)&lt;/li&gt;
+      &lt;li&gt;경로(아이콘 이미지, 데이터 파일 등)&lt;/li&gt;
+      &lt;li&gt;기타&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;설정을 저장하는 데 어떤 포맷을 쓰는가에 따라 설정 파일 확장자만 바뀌는 게 아니라, 설정 항목들이 표현되는 형식이 달라지고 나아가 이 항목들이 파일을 이루는 형태도 달라집니다.&lt;/p&gt;
+
+&lt;p&gt;대표적인 설정 파일 포맷은 다음과 같습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;대표적인 설정 파일 포맷
+    &lt;ol&gt;
+      &lt;li&gt;ini&lt;/li&gt;
+      &lt;li&gt;json&lt;/li&gt;
+      &lt;li&gt;yaml&lt;/li&gt;
+      &lt;li&gt;py&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;위의 대표 설정 파일 포맷 네 가지에 대한 간단한 설명과 특징, 그리고 Python으로 읽는 방법을 소개합니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;1-ini---오랜-전통의-강자&quot;&gt;1. ini - 오랜 전통의 강자&lt;/h2&gt;
+
+&lt;p&gt;ini는 MS-DOS에서 초기 설정값을 저장해 두는 확장자였습니다. 초기화를 의미하는 initialization의 앞 세 자를 딴 것이죠. 오랜 전통을 자랑하며 많은 사람들이 ‘아, 저 파일은 설정 파일이구나!’라고 쉽게 인식하지요.&lt;/p&gt;
+
+&lt;p&gt;경우에 따라 확장자를 ini 대신 conf, cfg로 쓰기도 하지만 내용적인 형식은 ini, conf, cfg가 모두 같습(비슷합)니다. ini는 독특하게 섹션(section)의 개념이 있어 설정을 그룹화할 수 있습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;ini-파일-형식형태---confini&quot;&gt;ini 파일 형식/형태 - conf.ini&lt;/h4&gt;
+
+&lt;div class=&quot;language-ini highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nn&quot;&gt;[1st_section]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;1st_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;value_1&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;2nd_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;value_2&lt;/span&gt;
+
+&lt;span class=&quot;nn&quot;&gt;[2nd_section]&lt;/span&gt;
+&lt;span class=&quot;py&quot;&gt;last_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;value_last&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;python으로-ini-파일-읽기---confini&quot;&gt;Python으로 ini 파일 읽기 - conf.ini&lt;/h4&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;configparser&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ConfigParser&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ConfigParser&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'conf.ini'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'1st_section'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'1st_key'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# value_1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;2-json---최근-사실상-업계-표준&quot;&gt;2. json - 최근 사실상 업계 표준&lt;/h2&gt;
+
+&lt;p&gt;json은 xml를 대체하는 표준으로 급부상했는데 형태를 보면 Python의 딕셔너리(dict)와 닮아 있습니다. 구조적인 측면에서 사실상 동일하지요.&lt;/p&gt;
+
+&lt;p&gt;데이터 형(type)도 인식하기 때문에 수(number), 문자열(string), 부울(boolean), 배열(array), 객체(object), 널(null)로 세분화해 값을 표현할 수 있습니다.&lt;/p&gt;
+
+&lt;p&gt;우리나라 오픈 데이터 포맷으로도 json을 사실상 표준으로 인정하고 있고 업계에서도 키-값 구조의 데이터를 json이라 통칭하는 관례도 있습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;json-파일-형식형태---confjson&quot;&gt;json 파일 형식/형태 - conf.json&lt;/h4&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;1st_key&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;value_1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;value_2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;2nd_key&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;value_last&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;python으로-json-파일-읽기---confjson&quot;&gt;Python으로 json 파일 읽기 - conf.json&lt;/h4&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;json&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'conf.json'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;json&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'2nd_key'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# value_last&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;3-yaml---인간이-읽기-가장-편안한-형식&quot;&gt;3. yaml - 인간이 읽기 가장 편안한 형식&lt;/h2&gt;
+
+&lt;p&gt;yaml은 구조화된 데이터를 직렬화(serialization)하는 데 초점을 둡니다. 얼핏 보면 마크다운 문서와 비슷한 느낌을 줄 정도로, 사람이 읽기에도 가장 편안합니다.&lt;/p&gt;
+
+&lt;p&gt;yaml은 하이픈 불릿으로 열거된 값들이 주어지면 이를  리스트(또는 배열)로 인식한다는 특징이 있습니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;yaml-파일-형식형태---confyaml&quot;&gt;yaml 파일 형식/형태 - conf.yaml&lt;/h4&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;1st_key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;value_1&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;2nd_key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;value_2&lt;/span&gt;
+&lt;span class=&quot;na&quot;&gt;last_key&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;list_value_1&lt;/span&gt;
+  &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;list_value_2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;python으로-yaml-파일-읽기---confyaml&quot;&gt;Python으로 yaml 파일 읽기 - conf.yaml&lt;/h4&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;yaml&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'conf.yaml'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yaml&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'1st_key'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# value_1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;h2 id=&quot;4-py---python-파일을-그냥-그대로&quot;&gt;4. py - Python 파일을 그냥 그대로?&lt;/h2&gt;
+
+&lt;p&gt;굳이 ini, json, yaml을 사용할 것 없이, Python으로 개발중이라면 py 파일을 설정 파일로 써도 됩니다. Python의 딕셔너리 데이터 그 자체가 사실상 json과 마찬가지라는 것은 따로 설명드릴 필요 없겠지요?&lt;/p&gt;
+
+&lt;p&gt;py를 설정파일로 쓰면 ini의 configparser 같은 라이브러리를 별도로 쓸 필요가 없습니다. 그냥 설정 py 파일을 import해 주는 것으로 충분합니다.&lt;/p&gt;
+
+&lt;h4 id=&quot;py-설정-파일-형식형태---confpy&quot;&gt;py 설정 파일 형식/형태 - conf.py&lt;/h4&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;\
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'1st_key'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'value_1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'value_2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'2nd_key'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'value_last'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;python으로-py-설정-파일confpy-읽기---confpy&quot;&gt;Python으로 py 설정 파일(conf.py) 읽기 - conf.py&lt;/h4&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;conf&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'2nd_key'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# value_last&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이외에도, 또 다른 전통인 xml을 설정 파일로 쓰기도 하고, SQLite 파일을 쓰기도 합니다. toml과 같은 포맷도 쓰이기도 하나 자주 보지는 못한 것 같네요.&lt;/p&gt;
+
+&lt;p&gt;어떤 포맷을 쓸지는 구현할 서비스나 협업 그룹, 환경에 따라 달라질 수도 있습니다. 소개드린 네 종류 포맷 중 하나를 쓴다 생각하시면 충분하지 않을까 합니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;ul&gt;
+  &lt;li&gt;참고자료
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/19078170/python-how-would-you-save-a-simple-settings-config-file&quot;&gt;(stackoverflow) Python: How would you save a simple settings/config file?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/aio-libs/aiohttp-devtools/issues/2&quot;&gt;(github) Configuration files: ini, json, yaml or python&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/INI_file&quot;&gt;(wikipedia) INI file&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/JSON&quot;&gt;(wikipedia) JSON&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/YAML&quot;&gt;(wikipedia) YAML&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </description>
         
         <pubDate>Sat, 29 Aug 2020 12:00:00 +0000</pubDate>
-        <link>http://localhost:4000/python-setting-file-ext</link>
-        <guid isPermaLink="true">http://localhost:4000/python-setting-file-ext</guid>
+        <link>https://emilkwak.github.io/python-setting-file-ext</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-setting-file-ext</guid>
       </item>
       
     
@@ -25,11 +252,239 @@
         
           <description>&lt;p&gt;Pandas, NumPy, SciPy 등 Python 패키지 또는 Python 자체를 사용해서 데이터 처리를 하다 보면 연습용 데이터가 필요할 때가 있습니다. 데이터 처리는 여러 데이터에 걸쳐 두루 쓸 수 있는 공통의 기술이기 때문에 연습용 데이터를 충분히 확보하고 두루 다뤄 보는 것이 중요합니다. 연습용 데이터를 토이(toy) 데이터라고도 하는데 이와 같은 토이 데이터셋을 제공해 주는 패키지가 있어 있어 소개합니다. Scikit-Learn 패키지, Statsmodels 패키지, Vega Datasets 패키지에서 제공하는 토이 데이터셋을 차례로 소개할 예정입니다.&lt;/p&gt;
 
+&lt;ul&gt;
+  &lt;li&gt;참고: &lt;a href=&quot;https://python-data-science.readthedocs.io/en/latest/datasets.html&quot;&gt;Data Science in Python - In-Built Datasets&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;1-scikit-learn의-datasets-패키지&quot;&gt;1. Scikit-Learn의 datasets 패키지&lt;/h2&gt;
+
+&lt;p&gt;머신러닝 교육을 위해 만들어진 Scikit-Learn은 원래 목적을 넘어서 개발 실무에도 널리 쓰이고 있죠? Scikit-Learn은 datasets 패키지를 통해 토이 데이터셋을 제공합니다. 단, 그 개수는 7개로 많지 않습니다만 머신러닝 작업을 Scikit-Learn으로 할 때 부담없이 간단히 사용할 수 있어 편리합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;참고: &lt;a href=&quot;https://scikit-learn.org/stable/datasets/index.html#toy-datasets&quot;&gt;(공식) Scikit-Learn - Toy datasets&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;데이터를 읽어들여 Pandas의 DataFrame에 담아 편의성 있게 다룰 수 있게 해 보겠습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.datasets&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_iris&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tabulate&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tabulate&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_iris&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;df_iris&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;feature_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df_iris&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'target'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tabulate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'keys'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;'''
+       sepal length (cm)    sepal width (cm)    petal length (cm)    petal width (cm)    target
+---  -------------------  ------------------  -------------------  ------------------  --------
+ 85                  6                   3.4                  4.5                 1.6         1
+ 52                  6.9                 3.1                  4.9                 1.5         1
+  8                  4.4                 2.9                  1.4                 0.2         0
+ 68                  6.2                 2.2                  4.5                 1.5         1
+ 67                  5.8                 2.7                  4.1                 1           1
+129                  7.2                 3                    5.8                 1.6         2
+ 76                  6.8                 2.8                  4.8                 1.4         1
+145                  6.7                 3                    5.2                 2.3         2
+105                  7.6                 3                    6.6                 2.1         2
+  7                  5                   3.4                  1.5                 0.2         0
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Scikit-Learn의 datasets 패키지로부터 iris 데이터셋을 불러 왔습니다. Scikit-Learn 토이 데이터셋은 DataFrame 형태로 제공되지 않기 때문에 얻어진 데이터를 DataFrame으로 전환하는 작업을 따로 해 줘야 합니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;pd.DataFrame()&lt;/code&gt;으로 &lt;code class=&quot;highlighter-rouge&quot;&gt;iris.data&lt;/code&gt;를 DataFrame으로 전환했습니다. 이때 &lt;code class=&quot;highlighter-rouge&quot;&gt;columns&lt;/code&gt;로 &lt;code class=&quot;highlighter-rouge&quot;&gt;iris.feature_names&lt;/code&gt;를 설정해 DataFrame의 헤더명을 부여합니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;iris.target&lt;/code&gt;은 머신러닝 지도학습(supervised learning) 시 필요한 타겟(target) 또는 레이블(label)인데 이를 위한 컬럼을 별도로 생성해 줍니다.(&lt;code class=&quot;highlighter-rouge&quot;&gt;df_iris['target']&lt;/code&gt;)&lt;/p&gt;
+
+&lt;p&gt;아울러 DataFrame의 내용을 보기 좋게 표시하기 위해 tabulate 패키지를 사용했습니다.&lt;/p&gt;
+
+&lt;p&gt;이 iris 데이터셋이 어떤 내용이고 각 컬럼이 무엇이며 타겟이 무엇을 나타내는지 등, 데이터셋에 대한 설명은 &lt;code class=&quot;highlighter-rouge&quot;&gt;iris.DESCR&lt;/code&gt;에 기술되어 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DESCR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;'''
+.. _iris_dataset:
+
+Iris plants dataset
+--------------------
+
+**Data Set Characteristics:**
+
+    :Number of Instances: 150 (50 in each of three classes)
+    :Number of Attributes: 4 numeric, predictive attributes and the class
+
+...
+...
+...
+
+The famous Iris database, first used by Sir R.A. Fisher. The dataset is taken
+from Fisher's paper. Note that it's the same as in R, but not as in the UCI
+Machine Learning Repository, which has two wrong data points.
+
+...
+...
+...
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Scikit-Learn 토이 데이터셋은 iris 데이터셋을 포함해 총 7개인데 &lt;code class=&quot;highlighter-rouge&quot;&gt;import load_iris&lt;/code&gt; 부분을 바꿔 가면서 다른 데이터셋을 불러 올 수 있습니다. 예를 들어 boston 데이터셋을 불러 오기 위해서는 &lt;code class=&quot;highlighter-rouge&quot;&gt;import load_boston&lt;/code&gt;을 실행한 뒤 함수 호출을 &lt;code class=&quot;highlighter-rouge&quot;&gt;load_boston()&lt;/code&gt;와 같이 하면 됩니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;참고: 사용 가능한 토이 데이터셋 7개는 &lt;code class=&quot;highlighter-rouge&quot;&gt;load_boston&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;load_iris&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;load_diabetes&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;load_digits&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;load_linnerud&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;load_wine&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;load_breast_cancer&lt;/code&gt;입니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Scikit-Learn은 토이 데이터셋 외에도 실제(real word) 데이터셋 또한 제공합니다. 실제 데이터셋 또한 연습용으로 쓸 수 있지만 데이터의 용량이 크기 때문에(수십 MB 또는 그 이상) 실제적이고 양이 많은 데이터가 필요한 경우에 한해 사용하는 게 좋습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;참고: &lt;a href=&quot;https://scikit-learn.org/stable/datasets/index.html#real-world-datasets&quot;&gt;참고: (공식) Scikit-Learn - Real word datasets&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;2-statsmodels의-datasets-패키지&quot;&gt;2. Statsmodels의 datasets 패키지&lt;/h2&gt;
+
+&lt;p&gt;데이터 과학 분야의 주요 도구로서 Python과 쌍벽을 이루던 R이 있습니다. R은 Python보다 역사가 길어서 데이터셋 또한 매우 풍부합니다. Statsmodels는 datasets 패키지의 &lt;code class=&quot;highlighter-rouge&quot;&gt;get_rdataset()&lt;/code&gt; 함수를 통해 R이 제공하는 데이터를 Python에서도 이용할 수 있게 해 줍니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;참고: &lt;a href=&quot;https://www.statsmodels.org/devel/datasets/index.html&quot;&gt;(공식) Statsmodels - The Datasets Package&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;데이터를 불러 와 DataFrame에 담아 줘야 했던 Scikit-Learn과 달리, Statsmodels는 DataFrame 상태로 데이터를 제공합니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;statsmodels.api&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tabulate&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tabulate&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;ces11&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_rdataset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'CES11'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'carData'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tabulate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ces11&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'keys'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;'''
+        id  province      population    weight  gender    abortion    importance    education    urban
+----  ----  ----------  ------------  --------  --------  ----------  ------------  -----------  -------
+1761  2050  QC               5996930   6153.85  Female    No          not           higher       rural
+ 535  2297  QC               5996930   6153.85  Female    Yes         notvery       lessHS       urban
+ 778  2164  QC               5996930   6153.85  Male      No          notvery       college      rural
+ 149  1830  NS                729545   6399.52  Male      Yes         very          HS           rural
+1459   248  SK                734250   7082.8   Male      No          very          HS           rural
+1205  3189  ON               9439960   4488.81  Female    No          somewhat      lessHS       urban
+ 902   527  ON               9439960  13466.4   Male      No          somewhat      bachelors    urban
+2009  1948  AB               2515180  17406.1   Female    No          somewhat      college      urban
+1198  1186  ON               9439960   8977.61  Male      No          somewhat      college      urban
+1821  1488  ON               9439960   8977.61  Male      No          notvery       bachelors    urban
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;get_rdataset()&lt;/code&gt;에서 얻어진 데이터를 &lt;code class=&quot;highlighter-rouge&quot;&gt;ces11&lt;/code&gt; 변수에 담고 &lt;code class=&quot;highlighter-rouge&quot;&gt;ces11.data&lt;/code&gt;를 사용하면 바로 DataFrame에 담겨진 데이터를 쓸 수 있게 됩니다. 그리고 타겟(레이블) 또한 이미 이 DataFrame에 포함되어 있는 상태이지요.(urban 컬럼) 데이터셋의 내용, 컬럼별 정의, 타겟의 의미 등은 &lt;code class=&quot;highlighter-rouge&quot;&gt;ces11.__doc__&lt;/code&gt;으로 확인할 수 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ces11&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__doc__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;'''
+===== ===============
+CES11 R Documentation
+===== ===============
+
+2011 Canadian National Election Study, With Attitude Toward Abortion
+--------------------------------------------------------------------
+
+Description
+~~~~~~~~~~~
+
+Data are drawn from the 2011 Canadian National Election Study, including
+a question on banning abortion and variables related to the sampling
+design.
+
+...
+...
+...
+
+Details
+~~~~~~~
+
+This is an extract from the data set for the 2011 Canadian National
+Election Study distributed by the Institute for Social Research, York
+University.
+
+...
+...
+...
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;R의 데이터셋은 종류가 매우 다양하고 양이 무척 많습니다. 당연히 모든 종류를 기억할 수 없습니다. 다음 목록을 보고 필요에 따라 찾아 사용해야 합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;참고: &lt;a href=&quot;https://vincentarelbundock.github.io/Rdatasets/articles/data.html&quot;&gt;Rdatasets - List of Datasets&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;위 목록을 보고 &lt;code class=&quot;highlighter-rouge&quot;&gt;get_rdataset()&lt;/code&gt;에 해당하는 인자를 잘 설정해 호출해 주면 데이터를 얻을 수 있습니다. 인자를 설정하는 법은 간단합니다. 목록의 패키지(package)와 아이템(item)을 찾아서 아래처럼 함수를 호출해 보시죠.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;get_rdataset()&lt;/code&gt; 호출 방법: &lt;code class=&quot;highlighter-rouge&quot;&gt;get_rdataset(item, package)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;예를 들어 목록 페이지 가장 위에 존재하는 Monthly Excess Return 자료는 패키지가 boot, 아이템이 acme이니 &lt;code class=&quot;highlighter-rouge&quot;&gt;sm.datasets.get_rdataset('acme', 'boot')&lt;/code&gt;와 같이 호출할 수 있겠죠?&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;3-vega-datasets의-data-패키지&quot;&gt;3. Vega Datasets의 data 패키지&lt;/h2&gt;
+
+&lt;p&gt;마지막으로 Vega 데이터셋의 data 패키지를 이용해 보겠습니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;참고: &lt;a href=&quot;https://github.com/vega/vega-datasets/blob/master/SOURCES.md&quot;&gt;(공식 - 데이터셋) Vega Datasets&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;참고: &lt;a href=&quot;https://github.com/jakevdp/vega_datasets&quot;&gt;(공식 - 패키지) vega_datasets 패키지&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Vega 데이터셋도 데이터를 DataFrame 형태로 바로 제공하고 있습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;vega_datasets&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tabulate&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tabulate&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;airports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;airports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tabulate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;airports&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'keys'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;'''
+      iata    name                        city          state    country      latitude    longitude
+----  ------  --------------------------  ------------  -------  ---------  ----------  -----------
+ 301  35A     Union County, Troy Shelton  Union         SC       USA           34.6868     -81.6412
+ 936  BDX     Broadus                     Broadus       MT       USA           45.4333    -105.417
+1739  HNR     Harlan Municipal            Harlan        IA       USA           41.5844     -95.3396
+1672  H05     Wilburton Municipal         Wilburton     OK       USA           34.9195     -95.3947
+ 270  2O3     Angwin-Parrett              Angwin        CA       USA           38.5785    -122.435
+1295  DRI     Beauregard Parish           De Ridder     LA       USA           30.8315     -93.3396
+ 895  AVO     Avon Park Municipal         Avon Park     FL       USA           27.5911     -81.5279
+ 846  ANY     Anthony Municipal           Anthony       KS       USA           37.1585     -98.0796
+2696  PVC     Provincetown Municipal      Provincetown  MA       USA           42.072      -70.2214
+2514  ONM     Socorro Municipal           Socorro       NM       USA           34.0225    -106.903
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Vega 데이터셋은 데이터 불러오는 방법이 조금 특이하지요? 데이터셋 제목(여기서는 airports)을 함수처럼 호출하는 방식입니다. &lt;code class=&quot;highlighter-rouge&quot;&gt;data.airports()&lt;/code&gt; 호출에 의해 airports 데이터셋이 불려 온 것이지요. 마찬가지로 만약 budgets 데이터셋을 불러오려 한다면 &lt;code class=&quot;highlighter-rouge&quot;&gt;data.budgets()&lt;/code&gt;와 같이 호출하면 되겠습니다.&lt;/p&gt;
+
+&lt;p&gt;데이터셋에 대한 설명은 &lt;code class=&quot;highlighter-rouge&quot;&gt;data.airports.description&lt;/code&gt;과 같은 구문으로 확인 가능합니다. 데이터셋 불러올 때는 함수 호출(&lt;code class=&quot;highlighter-rouge&quot;&gt;airports()&lt;/code&gt;) 형태를 썼지만, 설명을 불러 올 때는 호출자에 쓰이는 괄호가 없다는 점에 유의해 주십시오. Vega 데이터셋의 데이터 설명은 앞의 두 패키지에 비해 조금 간략한 면이 있네요.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;airports&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;'''
+This dataset lists US airports, including airport code, city, state, latitude, and longitude. This dataset is a subset of the data compiled and published at http://ourairports.com/data/, and is in the public domain.
+'''&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Vega 데이터셋의 데이터 종류는 다음 링크를 통해서 확인할 수 있고, 패키지 자체적으로 목록을 확인할 수 있는 함수도 제공합니다.(&lt;code class=&quot;highlighter-rouge&quot;&gt;data.list_datasets()&lt;/code&gt;)&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;참고: &lt;a href=&quot;https://github.com/vega/vega-datasets/blob/master/SOURCES.md&quot;&gt;(공식) Vega Datasets - Sources&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;이상으로 쉽고 간편하게 쓸 수 있는 토이 데이터셋 세 가지, Scikit-Learn 데이터셋, Statsmodels R 데이터셋, Vega 데이터셋에 대해 알아 보았습니다. 토이 데이터셋을 통한 연습으로 쌓은 분석 및 처리 기술이 보다 방대한 실제 데이터를 자유자재로 다루는 데 도움이 되기를 기대합니다.&lt;/p&gt;
 </description>
         
         <pubDate>Mon, 10 Aug 2020 00:30:00 +0000</pubDate>
-        <link>http://localhost:4000/python-toy-datasets</link>
-        <guid isPermaLink="true">http://localhost:4000/python-toy-datasets</guid>
+        <link>https://emilkwak.github.io/python-toy-datasets</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-toy-datasets</guid>
       </item>
       
     
@@ -186,8 +641,8 @@ dir dist\matmul_example
 </description>
         
         <pubDate>Sun, 12 Apr 2020 15:00:00 +0000</pubDate>
-        <link>http://localhost:4000/numpy-pyinstaller-size-too-big</link>
-        <guid isPermaLink="true">http://localhost:4000/numpy-pyinstaller-size-too-big</guid>
+        <link>https://emilkwak.github.io/numpy-pyinstaller-size-too-big</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/numpy-pyinstaller-size-too-big</guid>
       </item>
       
     
@@ -338,8 +793,8 @@ dir dist\matmul_example
 </description>
         
         <pubDate>Sun, 12 Apr 2020 15:00:00 +0000</pubDate>
-        <link>http://localhost:4000/dataframe-list-row-append-ignore-index</link>
-        <guid isPermaLink="true">http://localhost:4000/dataframe-list-row-append-ignore-index</guid>
+        <link>https://emilkwak.github.io/dataframe-list-row-append-ignore-index</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/dataframe-list-row-append-ignore-index</guid>
       </item>
       
     
@@ -455,8 +910,8 @@ display(df)
 </description>
         
         <pubDate>Sun, 02 Feb 2020 23:00:00 +0000</pubDate>
-        <link>http://localhost:4000/dataframe-update-after-indexing-selecting</link>
-        <guid isPermaLink="true">http://localhost:4000/dataframe-update-after-indexing-selecting</guid>
+        <link>https://emilkwak.github.io/dataframe-update-after-indexing-selecting</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/dataframe-update-after-indexing-selecting</guid>
       </item>
       
     
@@ -511,8 +966,8 @@ display(df)
 </description>
         
         <pubDate>Sat, 01 Feb 2020 22:00:00 +0000</pubDate>
-        <link>http://localhost:4000/literal-eval-str-expression</link>
-        <guid isPermaLink="true">http://localhost:4000/literal-eval-str-expression</guid>
+        <link>https://emilkwak.github.io/literal-eval-str-expression</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/literal-eval-str-expression</guid>
       </item>
       
     
@@ -573,8 +1028,8 @@ display(df)
 </description>
         
         <pubDate>Mon, 15 Jul 2019 22:30:00 +0000</pubDate>
-        <link>http://localhost:4000/itertools-chain-list-concatenation-append</link>
-        <guid isPermaLink="true">http://localhost:4000/itertools-chain-list-concatenation-append</guid>
+        <link>https://emilkwak.github.io/itertools-chain-list-concatenation-append</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/itertools-chain-list-concatenation-append</guid>
       </item>
       
     
@@ -658,8 +1113,8 @@ display(df)
 </description>
         
         <pubDate>Tue, 09 Jul 2019 22:30:00 +0000</pubDate>
-        <link>http://localhost:4000/defaultdict-rather-than-dict</link>
-        <guid isPermaLink="true">http://localhost:4000/defaultdict-rather-than-dict</guid>
+        <link>https://emilkwak.github.io/defaultdict-rather-than-dict</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/defaultdict-rather-than-dict</guid>
       </item>
       
     
@@ -754,8 +1209,8 @@ display(df)
 </description>
         
         <pubDate>Mon, 08 Jul 2019 23:00:00 +0000</pubDate>
-        <link>http://localhost:4000/pandas-dataframe-settingwithcopywarning</link>
-        <guid isPermaLink="true">http://localhost:4000/pandas-dataframe-settingwithcopywarning</guid>
+        <link>https://emilkwak.github.io/pandas-dataframe-settingwithcopywarning</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/pandas-dataframe-settingwithcopywarning</guid>
       </item>
       
     
@@ -839,8 +1294,8 @@ display(df)
 </description>
         
         <pubDate>Fri, 05 Jul 2019 22:00:00 +0000</pubDate>
-        <link>http://localhost:4000/python-star-asterisk-args-kwargs</link>
-        <guid isPermaLink="true">http://localhost:4000/python-star-asterisk-args-kwargs</guid>
+        <link>https://emilkwak.github.io/python-star-asterisk-args-kwargs</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-star-asterisk-args-kwargs</guid>
       </item>
       
     
@@ -901,8 +1356,8 @@ display(df)
 </description>
         
         <pubDate>Thu, 02 May 2019 01:35:00 +0000</pubDate>
-        <link>http://localhost:4000/python-re-named-group</link>
-        <guid isPermaLink="true">http://localhost:4000/python-re-named-group</guid>
+        <link>https://emilkwak.github.io/python-re-named-group</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-re-named-group</guid>
       </item>
       
     
@@ -962,8 +1417,8 @@ display(df)
 </description>
         
         <pubDate>Wed, 24 Apr 2019 11:30:00 +0000</pubDate>
-        <link>http://localhost:4000/python-inline-if-statement-elif</link>
-        <guid isPermaLink="true">http://localhost:4000/python-inline-if-statement-elif</guid>
+        <link>https://emilkwak.github.io/python-inline-if-statement-elif</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-inline-if-statement-elif</guid>
       </item>
       
     
@@ -1027,8 +1482,8 @@ display(df)
 </description>
         
         <pubDate>Sat, 20 Apr 2019 12:30:00 +0000</pubDate>
-        <link>http://localhost:4000/python-2d-list-certain-column</link>
-        <guid isPermaLink="true">http://localhost:4000/python-2d-list-certain-column</guid>
+        <link>https://emilkwak.github.io/python-2d-list-certain-column</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-2d-list-certain-column</guid>
       </item>
       
     
@@ -1061,8 +1516,8 @@ jupyter.exe notebook
 </description>
         
         <pubDate>Wed, 17 Apr 2019 22:30:00 +0000</pubDate>
-        <link>http://localhost:4000/jupyter-notebook-conda-activate</link>
-        <guid isPermaLink="true">http://localhost:4000/jupyter-notebook-conda-activate</guid>
+        <link>https://emilkwak.github.io/jupyter-notebook-conda-activate</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/jupyter-notebook-conda-activate</guid>
       </item>
       
     
@@ -1091,8 +1546,8 @@ jupyter.exe notebook
 </description>
         
         <pubDate>Sun, 14 Apr 2019 23:30:00 +0000</pubDate>
-        <link>http://localhost:4000/dict-to-var</link>
-        <guid isPermaLink="true">http://localhost:4000/dict-to-var</guid>
+        <link>https://emilkwak.github.io/dict-to-var</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/dict-to-var</guid>
       </item>
       
     
@@ -1137,8 +1592,8 @@ jupyter.exe notebook
 </description>
         
         <pubDate>Fri, 12 Apr 2019 23:55:00 +0000</pubDate>
-        <link>http://localhost:4000/numpy-argmax-argmin-argwhere</link>
-        <guid isPermaLink="true">http://localhost:4000/numpy-argmax-argmin-argwhere</guid>
+        <link>https://emilkwak.github.io/numpy-argmax-argmin-argwhere</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/numpy-argmax-argmin-argwhere</guid>
       </item>
       
     
@@ -1178,8 +1633,8 @@ dtype: object
 </description>
         
         <pubDate>Tue, 22 Jan 2019 23:30:00 +0000</pubDate>
-        <link>http://localhost:4000/pandas-contains-multiple</link>
-        <guid isPermaLink="true">http://localhost:4000/pandas-contains-multiple</guid>
+        <link>https://emilkwak.github.io/pandas-contains-multiple</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/pandas-contains-multiple</guid>
       </item>
       
     
@@ -1212,8 +1667,8 @@ sudo bundle exec jekyll serve --host 0.0.0.0 --port 7070
 </description>
         
         <pubDate>Wed, 16 Jan 2019 22:30:00 +0000</pubDate>
-        <link>http://localhost:4000/jekyll-sitemap-plugin-installation</link>
-        <guid isPermaLink="true">http://localhost:4000/jekyll-sitemap-plugin-installation</guid>
+        <link>https://emilkwak.github.io/jekyll-sitemap-plugin-installation</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/jekyll-sitemap-plugin-installation</guid>
       </item>
       
     
@@ -1263,8 +1718,8 @@ df_accum = pd.concat(list_of_df) # list 속 DataFrame들을 일괄 병합함.
 </description>
         
         <pubDate>Mon, 14 Jan 2019 22:00:00 +0000</pubDate>
-        <link>http://localhost:4000/pandas-dataframe-concat-efficiently</link>
-        <guid isPermaLink="true">http://localhost:4000/pandas-dataframe-concat-efficiently</guid>
+        <link>https://emilkwak.github.io/pandas-dataframe-concat-efficiently</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/pandas-dataframe-concat-efficiently</guid>
       </item>
       
     
@@ -1310,8 +1765,8 @@ print(a[-1:-3:-1]) # [9, 8]
 </description>
         
         <pubDate>Thu, 27 Sep 2018 00:00:00 +0000</pubDate>
-        <link>http://localhost:4000/python-list-indexing-slicing-using-minus-integer</link>
-        <guid isPermaLink="true">http://localhost:4000/python-list-indexing-slicing-using-minus-integer</guid>
+        <link>https://emilkwak.github.io/python-list-indexing-slicing-using-minus-integer</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/python-list-indexing-slicing-using-minus-integer</guid>
       </item>
       
     
@@ -1358,8 +1813,8 @@ serve(wsgiapp, host='0.0.0.0', port=8080) # wsgiapp: WSGI 사양을 준수한 �
 </description>
         
         <pubDate>Fri, 21 Sep 2018 00:00:00 +0000</pubDate>
-        <link>http://localhost:4000/making-windows-web-server-not-stopping</link>
-        <guid isPermaLink="true">http://localhost:4000/making-windows-web-server-not-stopping</guid>
+        <link>https://emilkwak.github.io/making-windows-web-server-not-stopping</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/making-windows-web-server-not-stopping</guid>
       </item>
       
     
@@ -1460,8 +1915,8 @@ git push -f origin master
 </description>
         
         <pubDate>Sat, 15 Sep 2018 00:00:00 +0000</pubDate>
-        <link>http://localhost:4000/jekyll-github-pages</link>
-        <guid isPermaLink="true">http://localhost:4000/jekyll-github-pages</guid>
+        <link>https://emilkwak.github.io/jekyll-github-pages</link>
+        <guid isPermaLink="true">https://emilkwak.github.io/jekyll-github-pages</guid>
       </item>
       
     
